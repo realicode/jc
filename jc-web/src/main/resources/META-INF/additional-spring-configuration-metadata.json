@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "datasource.druid.url",
+      "type": "java.lang.String",
+      "description": "Description for datasource.druid.url."
+    }
+  ]
+}
