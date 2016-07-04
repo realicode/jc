@@ -21,4 +21,11 @@ public class DocController {
 
         return "doccenter/overview";
     }
+    @RequestMapping("/manager")
+    public String manager(@RequestParam(value = "name", required = false, defaultValue = "World V2") String name, Model model) {
+        model.addAttribute("name", name + "V2");
+        model.addAttribute("realsign", new Date());
+
+        return "doccenter/manager";
+    }
 }

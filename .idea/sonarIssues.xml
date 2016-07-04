@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="issues">
+    <option name="index">
+      <map>
+        <entry key="/Dummy.txt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/jc-parent/pom.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/jc-web/pom.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/jc-web/src/main/java/com/realaicy/product/jc/common/model/TreeModel.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/jc-web/src/main/java/com/realaicy/product/jc/modules/doccenter/DocController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/jc-web/src/main/resources/templates/doccenter/manager.html">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/jc-web/src/main/resources/templates/index.html">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="C:/RealStudy/spring-boot/spring-boot-mybatis-sample/README.md">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="C:/RealStudy/spring-boot/spring-boot-mybatis-sample/pom.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="C:/RealStudy/spring-boot/spring-boot-mybatis-sample/src/main/java/sample/mybatis/Application.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="C:/RealStudy/spring-boot/spring-boot-mybatis-sample/src/main/java/sample/mybatis/conf/CustomDataSourceProperties.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="C:/RealStudy/spring-boot/spring-boot-mybatis-sample/src/main/java/sample/mybatis/conf/MyBatisConfiguration.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="C:/RealStudy/spring-boot/spring-boot-mybatis-sample/src/main/java/sample/mybatis/mapper/UserMapper.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="C:/RealStudy/spring-boot/spring-boot-mybatis-sample/src/main/java/sample/mybatis/service/UserService.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="C:/RealStudy/spring-boot/spring-boot-mybatis-sample/src/main/java/sample/mybatis/web/UserController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="C:/RealStudy/spring-boot/spring-boot-mybatis-sample/src/main/resources/UserMapper.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="C:/RealStudy/spring-boot/spring-boot-mybatis-sample/src/main/resources/application.properties">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="C:/RealStudy/spring-boot/spring-boot-mybatis-sample/src/test/resources/application.properties">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$MAVEN_REPOSITORY$/com/realaicy/tna/modules/modules-core/2.0-SNAPSHOT/modules-core-2.0-SNAPSHOT.pom">
+          <value>
+            <set />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
