@@ -6,12 +6,30 @@ package com.realaicy.product.jc;
  */
 import java.util.Arrays;
 
+import com.alibaba.druid.pool.DruidDataSource;
+import com.realaicy.tna.modules.core.orm.jpa.RealRepositoryFactoryBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+import javax.sql.DataSource;
 
 @SpringBootApplication
+@EnableJpaRepositories(repositoryFactoryBeanClass = RealRepositoryFactoryBean.class)
 public class Application {
+    /**
+     * Data source.
+     *
+     * @return the data source
+     */
+    @Bean
+    @ConfigurationProperties(prefix = "datasource.druid")
+    public DataSource dataSource() {
+        return new DruidDataSource();
+    }
 
     public static void main(String[] args) {
 
