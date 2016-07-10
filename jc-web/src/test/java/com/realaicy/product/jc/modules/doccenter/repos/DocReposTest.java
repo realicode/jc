@@ -56,7 +56,7 @@ public class DocReposTest {
         docRes.setCreaterID(1L);
         docRes.setUpdaterID(1L);
         docRes.setUpdateTime(new Date());
-        docRes.setName("测试资源2");
+        docRes.setName("测试资源" + new Date());
         docRes.setResType(Short.valueOf("1"));
         docRes.setParent(docResParent);
         docRepos.save(docRes);
