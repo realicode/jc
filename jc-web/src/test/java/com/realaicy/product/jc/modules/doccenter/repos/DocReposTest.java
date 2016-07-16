@@ -1,8 +1,10 @@
 package com.realaicy.product.jc.modules.doccenter.repos;
 
 import com.realaicy.product.jc.Application;
+import com.realaicy.product.jc.PeopleFuncTest;
 import com.realaicy.product.jc.modules.doccenter.model.DocRes;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -25,6 +27,7 @@ public class DocReposTest {
     private DocRepos docRepos;
 
     @Test
+    @Category(PeopleFuncTest.class)
     public void testFindAllMenus() throws Exception {
         int sizeTemp = docRepos.findAllMenus().size();
         System.out.println("sizeTemp: " + sizeTemp);
