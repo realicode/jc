@@ -4,6 +4,7 @@ import com.realaicy.product.jc.modules.system.model.User;
 import com.realaicy.product.jc.modules.system.repos.UserRepos;
 import com.realaicy.product.jc.modules.system.service.UserService;
 import com.realaicy.tna.modules.core.service.DefaultServiceImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,12 @@ public class DefaultUserService extends DefaultServiceImpl<User, Long>
 
     @Override
     public User findByName(String username) {
-         return ((UserRepos) baseRepository).findByUsername(username);
+        return ((UserRepos) baseRepository).findByUsername(username);
+    }
+
+    @Override
+    public List<User> findAllUsersWithPage(PageRequest pageRequest) {
+
+        return ((UserRepos) baseRepository).findAll(pageRequest).getContent();
     }
 }

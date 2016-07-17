@@ -8,12 +8,22 @@
             <set />
           </value>
         </entry>
+        <entry key="/a.dummy">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/jc-parent/pom.xml">
           <value>
             <set />
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/jc-web/pom.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/jc-web/src/main/java/com/realaicy/product/jc/RealWebSecurityConfig.java">
           <value>
             <set />
           </value>
@@ -28,6 +38,31 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/jc-web/src/main/java/com/realaicy/product/jc/modules/system/model/User.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/jc-web/src/main/java/com/realaicy/product/jc/modules/system/service/UserService.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/jc-web/src/main/java/com/realaicy/product/jc/modules/system/service/impl/DefaultUserService.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/jc-web/src/main/java/com/realaicy/product/jc/modules/system/web/UserController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/jc-web/src/main/java/com/realaicy/product/jc/temp/RealTempController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/jc-web/src/main/resources/templates/doccenter/manager.html">
           <value>
             <set />
@@ -38,7 +73,37 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/jc-web/src/main/resources/templates/system/user.html">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/jc-web/src/main/resources/templates/system/user/user.html">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/jc-web/src/test/java/com/realaicy/product/jc/modules/doccenter/repos/DocReposTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/jc-web/src/test/java/com/realaicy/product/jc/modules/system/repos/UserReposTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/jc-web/src/test/java/com/realaicy/product/jc/modules/system/service/UserServiceTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="C:/RealStudy/spring-boot/example-spring-boot-security/pom.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="C:/RealStudy/spring-boot/example-spring-boot-security/src/main/resources/application.properties">
           <value>
             <set />
           </value>

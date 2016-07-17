@@ -2,6 +2,7 @@ package com.realaicy.product.jc.modules.system.service;
 
 import com.realaicy.product.jc.modules.system.model.User;
 import com.realaicy.tna.modules.core.service.BaseService;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
@@ -13,4 +14,6 @@ public interface UserService extends BaseService<User, Long> {
     List<User> findAllMenus();
 
     User findByName(String username);
+
+    List<User> findAllUsersWithPage(PageRequest pageRequest);
 }

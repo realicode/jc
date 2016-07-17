@@ -32,4 +32,16 @@ public class UserReposTest {
         user.setNickname("刘旭东");
         userRepos.save(user);
     }
+
+    @Test
+    public void testCreateBatchUser() throws Exception {
+        User user;
+        for (int i = 5; i < 100; i++) {
+            user = new User();
+            user.setUsername("test_" + i);
+            user.setNickname("刘旭东");
+            userRepos.save(user);
+        }
+
+    }
 }

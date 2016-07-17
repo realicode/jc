@@ -104,6 +104,7 @@ public class User extends BaseEntity<Long> {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "jc_sys_user_role", joinColumns = @JoinColumn(name = "USERID"),
             inverseJoinColumns = @JoinColumn(name = "ROLEID"))
+    @JsonIgnore
     private List<Role> roles;
 
     public String getUsername() {
