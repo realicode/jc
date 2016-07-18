@@ -17,3 +17,8 @@
  * - BODY
  * - CUSTOM STYLES
  */
+
+.realaicy_table_header {
+    font-family: "Arial","Microsoft YaHei","微软雅黑","宋体",sans-serif;
+    font-size: 14px;
+}

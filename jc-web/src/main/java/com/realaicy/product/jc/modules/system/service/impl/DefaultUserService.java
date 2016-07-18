@@ -4,7 +4,9 @@ import com.realaicy.product.jc.modules.system.model.User;
 import com.realaicy.product.jc.modules.system.repos.UserRepos;
 import com.realaicy.product.jc.modules.system.service.UserService;
 import com.realaicy.tna.modules.core.service.DefaultServiceImpl;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,5 +32,10 @@ public class DefaultUserService extends DefaultServiceImpl<User, Long>
     public List<User> findAllUsersWithPage(PageRequest pageRequest) {
 
         return ((UserRepos) baseRepository).findAll(pageRequest).getContent();
+    }
+
+    @Override
+    public Page<User> findTemp(Pageable pageable) {
+        return ((UserRepos) baseRepository).findAll(pageable);
     }
 }

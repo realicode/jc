@@ -84,6 +84,8 @@ public class UserController {
 
         info.put("data", userService.findAllUsersWithPage(pageRequest));
         info.put("recordsTotal", userService.count());
+        info.put("recordsFiltered", userService.count());
+        info.put("a", userService.count());
 
         return info;
     }

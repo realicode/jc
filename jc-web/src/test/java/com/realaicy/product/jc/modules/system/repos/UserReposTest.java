@@ -25,6 +25,12 @@ public class UserReposTest {
     @Autowired
     UserRepos userRepos;
 
+
+    @Test
+    public void testFindUser() throws Exception {
+        User user = userRepos.findOne(6L);
+    }
+
     @Test
     public void testCreateUser() throws Exception {
         User user = new User();

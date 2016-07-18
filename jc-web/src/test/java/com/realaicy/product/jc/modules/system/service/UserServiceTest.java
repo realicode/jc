@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -27,15 +28,18 @@ public class UserServiceTest {
 
     @Test
     public void findByName() throws Exception {
+        assertThat(userService.findByName("realaicy").getNickname(), equalTo("刘旭东"));
         assertThat(userService.findByName("test_1").getNickname(), equalTo("刘旭东"));
+
     }
 
     @Test
     public void findAllUsersWithPage() throws Exception {
 
-        PageRequest pageRequest = new PageRequest(0, 20, Sort.Direction.ASC, "username");
+        PageRequest pageRequest = new PageRequest(1, 20, Sort.Direction.ASC, "username");
         List<User> users = userService.findAllUsersWithPage(pageRequest);
-        System.out.println(users.size());
+        //Page<User> userPage = userService.findTemp(pageRequest);
+        //System.out.println(userPage.getSize());
     }
 
 }
