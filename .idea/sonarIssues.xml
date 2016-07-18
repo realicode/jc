@@ -73,6 +73,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/jc-web/src/main/resources/templates/project/project.html">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/jc-web/src/main/resources/templates/system/user.html">
           <value>
             <set />

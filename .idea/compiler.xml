@@ -22,8 +22,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="jc-libs" />
-        <module name="jc-web" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

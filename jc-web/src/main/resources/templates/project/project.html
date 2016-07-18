@@ -1,322 +1,479 @@
-<!-- Bread crumb is created dynamically -->
-<!-- row -->
 <div class="row">
-	
-	<!-- col -->
-	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
-		<h1 class="page-title txt-color-blueDark">
-			<!-- PAGE HEADER -->
-			<i class="fa-fw fa fa-puzzle-piece"></i> 
-				App Views 
-			<span>>  
-				Projects
+    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+        <h1 class="page-title txt-color-blueDark">
+            <i class="fa fa-table fa-fw "></i>
+            Table
+            <span>>
+				Data Tables
 			</span>
-		</h1>
-	</div>
-	<!-- end col -->
-	
-	<!-- right side of the page with the sparkline graphs -->
-	<!-- col -->
-	<div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
-		<!-- sparks -->
-		<ul id="sparks">
-			<li class="sparks-info">
-				<h5> My Income <span class="txt-color-blue">$47,171</span></h5>
-				<div class="sparkline txt-color-blue hidden-mobile hidden-md hidden-sm">
-					1300, 1877, 2500, 2577, 2000, 2100, 3000, 2700, 3631, 2471, 2700, 3631, 2471
-				</div>
-			</li>
-			<li class="sparks-info">
-				<h5> Site Traffic <span class="txt-color-purple"><i class="fa fa-arrow-circle-up" data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;45%</span></h5>
-				<div class="sparkline txt-color-purple hidden-mobile hidden-md hidden-sm">
-					110,150,300,130,400,240,220,310,220,300, 270, 210
-				</div>
-			</li>
-			<li class="sparks-info">
-				<h5> Site Orders <span class="txt-color-greenDark"><i class="fa fa-shopping-cart"></i>&nbsp;2447</span></h5>
-				<div class="sparkline txt-color-greenDark hidden-mobile hidden-md hidden-sm">
-					110,150,300,130,400,240,220,310,220,300, 270, 210
-				</div>
-			</li>
-		</ul>
-		<!-- end sparks -->
-	</div>
-	<!-- end col -->
-	
+        </h1>
+    </div>
+    <div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
+        <ul id="sparks" class="">
+            <li class="sparks-info">
+                <h5> My Income <span class="txt-color-blue">$47,171</span></h5>
+                <div class="sparkline txt-color-blue hidden-mobile hidden-md hidden-sm">
+                    1300, 1877, 2500, 2577, 2000, 2100, 3000, 2700, 3631, 2471, 2700, 3631, 2471
+                </div>
+            </li>
+            <li class="sparks-info">
+                <h5> Site Traffic <span class="txt-color-purple"><i class="fa fa-arrow-circle-up"
+                                                                    data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;45%</span>
+                </h5>
+                <div class="sparkline txt-color-purple hidden-mobile hidden-md hidden-sm">
+                    110,150,300,130,400,240,220,310,220,300, 270, 210
+                </div>
+            </li>
+            <li class="sparks-info">
+                <h5> Site Orders <span class="txt-color-greenDark"><i class="fa fa-shopping-cart"></i>&nbsp;2447</span>
+                </h5>
+                <div class="sparkline txt-color-greenDark hidden-mobile hidden-md hidden-sm">
+                    110,150,300,130,400,240,220,310,220,300, 270, 210
+                </div>
+            </li>
+        </ul>
+    </div>
 </div>
-<!-- end row -->
-
-<!--
-	The ID "widget-grid" will start to initialize all widgets below 
-	You do not need to use widgets if you dont want to. Simply remove 
-	the <section></section> and you can use wells or panels instead 
-	-->
 
 <!-- widget grid -->
 <section id="widget-grid" class="">
 
-	<!-- row -->
-	<div class="row">
-		
-		<!-- NEW WIDGET START -->
-		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			
-			<div class="alert alert-info">
-				<strong>NOTE:</strong> All the data is loaded from a seperate JSON file
-			</div>
+    <!-- row -->
+    <div class="row">
 
-			<!-- Widget ID (each widget will need unique ID)-->
-			<div class="jarviswidget well" id="wid-id-0">
-				<!-- widget options:
-					usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-					
-					data-widget-colorbutton="false"	
-					data-widget-editbutton="false"
-					data-widget-togglebutton="false"
-					data-widget-deletebutton="false"
-					data-widget-fullscreenbutton="false"
-					data-widget-custombutton="false"
-					data-widget-collapsed="true" 
-					data-widget-sortable="false"
-					
-				-->
-				<header>
-					<span class="widget-icon"> <i class="fa fa-comments"></i> </span>
-					<h2>Widget Title </h2>				
-					
-				</header>
+        <!-- NEW WIDGET START -->
+        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-				<!-- widget div-->
-				<div>
-					
-					<!-- widget edit box -->
-					<div class="jarviswidget-editbox">
-						<!-- This area used as dropdown edit box -->
-						<input class="form-control" type="text">	
-					</div>
-					<!-- end widget edit box -->
-					
-					<!-- widget content -->
-					<div class="widget-body no-padding">
-						
-						<table id="example" class="display projects-table table table-striped table-bordered table-hover" cellspacing="0" width="100%">
-					        <thead>
-					            <tr>
-					                <th></th><th>Projects</th><th><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> EST</th>
-					                <th>Contacts</th>
-					                <th>Status</th>
-					                <th><i class="fa fa-circle txt-color-darken font-xs"></i> Target/ <i class="fa fa-circle text-danger font-xs"></i> Actual</th>
-					                <th><i class="fa fa-fw fa-calendar text-muted hidden-md hidden-sm hidden-xs"></i> Starts</th>
-					                <th><i class="fa fa-fw fa-calendar text-muted hidden-md hidden-sm hidden-xs"></i> Ends</th>
-					                <th>Tracker</th>
-					            </tr>
-					        </thead>
-					    </table>
+            <div class="jarviswidget jarviswidget-color-darken" id="real_search" data-widget-editbutton="false" data-widget-collapsed="true"
+                 data-widget-deletebutton="false" data-widget-fullscreenbutton="false">
+                <!-- widget options:
+                usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
-					</div>
-					<!-- end widget content -->
-					
-				</div>
-				<!-- end widget div -->
-				
-			</div>
-			<!-- end widget -->
+                data-widget-colorbutton="false"
+                data-widget-editbutton="false"
+                data-widget-togglebutton="false"
+                data-widget-deletebutton="false"
+                data-widget-fullscreenbutton="false"
+                data-widget-custombutton="false"
+                data-widget-collapsed="true"
+                data-widget-sortable="false"
 
-		</article>
-		<!-- WIDGET END -->
-		
-	</div>
+                -->
+                <header>
+                    <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                    <h2>查询条件 </h2>
 
-	<!-- end row -->
+                </header>
 
-	<!-- row -->
+                <!-- widget div-->
+                <div>
 
-	<div class="row">
+                    <!-- widget edit box -->
+                    <div class="jarviswidget-editbox">
+                        <!-- This area used as dropdown edit box -->
 
-		<!-- a blank row to get started -->
-		<div class="col-sm-12">
-			<!-- your contents here -->
-		</div>
-			
-	</div>
+                    </div>
+                    <!-- end widget edit box -->
 
-	<!-- end row -->
+                    <!-- widget content -->
+                    <div class="widget-body no-padding">
+
+                        <form action="" id="checkout-form" class="smart-form" novalidate="novalidate">
+
+                            <fieldset>
+                                <div class="row">
+                                    <section class="col col-6">
+                                        <label class="input"> <i class="icon-prepend fa fa-user"></i>
+                                            <input type="text" name="fname" placeholder="First name">
+                                        </label>
+                                    </section>
+                                    <section class="col col-6">
+                                        <label class="input"> <i class="icon-prepend fa fa-user"></i>
+                                            <input type="text" name="lname" placeholder="Last name">
+                                        </label>
+                                    </section>
+                                </div>
+
+                                <div class="row">
+                                    <section class="col col-6">
+                                        <label class="input"> <i class="icon-prepend fa fa-envelope-o"></i>
+                                            <input type="email" name="email" placeholder="E-mail">
+                                        </label>
+                                    </section>
+                                    <section class="col col-6">
+                                        <label class="input"> <i class="icon-prepend fa fa-phone"></i>
+                                            <input type="tel" name="phone" placeholder="Phone" data-mask="(999) 999-9999">
+                                        </label>
+                                    </section>
+                                </div>
+                            </fieldset>
+
+                            <fieldset>
+                                <div class="row">
+                                    <section class="col col-4">
+                                        <label class="select">
+                                            <select name="country">
+                                                <option value="0" selected="" disabled="">用户状态</option>
+                                                <option value="244">正常</option>
+                                                <option value="233">停用</option>
+
+                                            </select> <i></i> </label>
+                                    </section>
+
+                                    <section class="col col-4">
+                                        <label class="select">
+                                            <select name="sex">
+                                                <option value="0" selected="" disabled="">用户性别</option>
+                                                <option value="244">男</option>
+                                                <option value="233">女</option>
+
+                                            </select> <i></i> </label>
+                                    </section>
+
+
+                                    <section class="col col-4">
+                                        <label class="select">
+                                            <select name="type">
+                                                <option value="0" selected="" disabled="">用户类型</option>
+                                                <option value="244">类型1</option>
+                                                <option value="233">类型2</option>
+
+                                            </select> <i></i> </label>
+                                    </section>
+
+                                </div>
+                                <div class="row">
+
+                                    <section>
+                                        <section class="col col-6">
+                                            <label class="input"> <i class="icon-append fa fa-calendar"></i>
+                                                <input type="text" name="startdate" id="startdate" placeholder="Expected start date">
+                                            </label>
+                                        </section>
+                                        <section class="col col-6">
+                                            <label class="input"> <i class="icon-append fa fa-calendar"></i>
+                                                <input type="text" name="finishdate" id="finishdate" placeholder="Expected finish date">
+                                            </label>
+                                        </section>
+                                    </section>
+                                </div>
+
+
+
+                            </fieldset>
+
+
+                            <footer>
+                                <button type="submit" class="btn btn-primary">
+                                    查询用户
+                                </button>
+                            </footer>
+                        </form>
+
+                    </div>
+                    <!-- end widget content -->
+
+                </div>
+                <!-- end widget div -->
+
+            </div>
+
+
+            <!-- Widget ID (each widget will need unique ID)-->
+            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-real0" data-widget-editbutton="false">
+
+                <header>
+                    <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                    <h2>用户列表</h2>
+
+                </header>
+
+                <!-- widget div-->
+                <div>
+
+                    <!-- widget edit box -->
+                    <div class="jarviswidget-editbox">
+                        <!-- This area used as dropdown edit box -->
+
+                    </div>
+                    <!-- end widget edit box -->
+
+                    <!-- widget content -->
+                    <div class="widget-body no-padding">
+
+                        <table id="dt_basic_real" class="table table-striped table-bordered table-hover" width="100%">
+                            <thead>
+                            <tr>
+                                <th data-class="expand" class="realaicy_table_header"><i
+                                        class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> 用户名称
+                                </th>
+                                <th data-hide="phone" class="realaicy_table_header"><i
+                                        class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> 密码
+                                </th>
+                                <th class="realaicy_table_header">昵称</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+
+                    </div>
+                    <!-- end widget content -->
+
+                </div>
+                <!-- end widget div -->
+
+            </div>
+
+
+
+            <!-- end widget -->
+
+        </article>
+        <!-- WIDGET END -->
+
+    </div>
+
+    <!-- end row -->
+
+    <!-- end row -->
 
 </section>
 <!-- end widget grid -->
 
 <script type="text/javascript">
-	
-	/* DO NOT REMOVE : GLOBAL FUNCTIONS!
-	 *
-	 * pageSetUp(); WILL CALL THE FOLLOWING FUNCTIONS
-	 *
-	 * // activate tooltips
-	 * $("[rel=tooltip]").tooltip();
-	 *
-	 * // activate popovers
-	 * $("[rel=popover]").popover();
-	 *
-	 * // activate popovers with hover states
-	 * $("[rel=popover-hover]").popover({ trigger: "hover" });
-	 *
-	 * // activate inline charts
-	 * runAllCharts();
-	 *
-	 * // setup widgets
-	 * setup_widgets_desktop();
-	 *
-	 * // run form elements
-	 * runAllForms();
-	 *
-	 ********************************
-	 *
-	 * pageSetUp() is needed whenever you load a page.
-	 * It initializes and checks for all basic elements of the page
-	 * and makes rendering easier.
-	 *
-	 */
 
-	pageSetUp();
-	
-	/*
-	 * ALL PAGE RELATED SCRIPTS CAN GO BELOW HERE
-	 * eg alert("my home function");
-	 * 
-	 * var pagefunction = function() {
-	 *   ...
-	 * }
-	 * loadScript("js/plugin/_PLUGIN_NAME_.js", pagefunction);
-	 * 
-	 * TO LOAD A SCRIPT:
-	 * var pagefunction = function (){ 
-	 *  loadScript(".../plugin.js", run_after_loaded);	
-	 * }
-	 * 
-	 * OR you can load chain scripts by doing
-	 * 
-	 * loadScript(".../plugin.js", function(){
-	 * 	 loadScript("../plugin.js", function(){
-	 * 	   ...
-	 *   })
-	 * });
-	 */
+    /* DO NOT REMOVE : GLOBAL FUNCTIONS!
+     *
+     * pageSetUp(); WILL CALL THE FOLLOWING FUNCTIONS
+     *
+     * // activate tooltips
+     * $("[rel=tooltip]").tooltip();
+     *
+     * // activate popovers
+     * $("[rel=popover]").popover();
+     *
+     * // activate popovers with hover states
+     * $("[rel=popover-hover]").popover({ trigger: "hover" });
+     *
+     * // activate inline charts
+     * runAllCharts();
+     *
+     * // setup widgets
+     * setup_widgets_desktop();
+     *
+     * // run form elements
+     * runAllForms();
+     *
+     ********************************
+     *
+     * pageSetUp() is needed whenever you load a page.
+     * It initializes and checks for all basic elements of the page
+     * and makes rendering easier.
+     *
+     */
 
-	// pagefunction
-	var pagefunction = function() {
+    pageSetUp();
 
-		/* Formatting function for row details - modify as you need */
-		function format ( d ) {
-		    // `d` is the original data object for the row
-		    return '<table cellpadding="5" cellspacing="0" border="0" class="table table-hover table-condensed">'+
-		        '<tr>'+
-		            '<td style="width:100px">Project Title:</td>'+
-		            '<td>'+d.name+'</td>'+
-		        '</tr>'+
-		        '<tr>'+
-		            '<td>Deadline:</td>'+
-		            '<td>'+d.ends+'</td>'+
-		        '</tr>'+
-		        '<tr>'+
-		            '<td>Extra info:</td>'+
-		            '<td>And any further details here (images etc)...</td>'+
-		        '</tr>'+
-		        '<tr>'+
-		            '<td>Comments:</td>'+
-		            '<td>'+d.comments+'</td>'+
-		        '</tr>'+
-		        '<tr>'+
-		            '<td>Action:</td>'+
-		            '<td>'+d.action+'</td>'+
-		        '</tr>'+
-		    '</table>';
-		}
+    /*
+     * ALL PAGE RELATED SCRIPTS CAN GO BELOW HERE
+     * eg alert("my home function");
+     *
+     * var pagefunction = function() {
+     *   ...
+     * }
+     * loadScript("js/plugin/_PLUGIN_NAME_.js", pagefunction);
+     *
+     */
 
-		// clears the variable if left blank
-	    var table = $('#example').DataTable( {
-			"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>"+
-				"t"+
-				"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-			"ajax": "smartadmin/data/dataList.json",
-	        "bDestroy": true,
-	        "iDisplayLength": 15,
-	        "columns": [
-	            {
-	                "class":          'details-control',
-	                "orderable":      false,
-	                "data":           null,
-	                "defaultContent": ''
-	            },
-	            { "data": "name" },
-	            { "data": "est" },
-	            { "data": "contacts" },
-	            { "data": "status" },
-	            { "data": "target-actual" },
-	            { "data": "starts" },
-	            { "data": "ends" },
-	            { "data": "tracker" },
-	        ],
-	        "order": [[1, 'asc']],
-	        "fnDrawCallback": function( oSettings ) {
-		       runAllCharts()
-		    }
-	    } );
+    // PAGE RELATED SCRIPTS
+
+    // pagefunction
+    var pagefunction = function () {
+        //console.log("cleared");
+
+        $(document).ready(function () {
+            var realtable = $('#dt_basic_real').DataTable(
+                    {
+                        "pagingType": "full_numbers",
+                        "searching": false,
+                        "language": {
+                            "processing": "处理中...",
+                            "lengthMenu": "每页显示 _MENU_ 项结果",
+                            "zeroRecords": "没有匹配结果",
+                            "info": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                            "infoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                            "infoFiltered": "(由 _MAX_ 项结果过滤)",
+                            "infoPostFix": "",
+                            "search": "搜索:",
+                            "searchPlaceholder": "搜索...",
+                            "url": "",
+                            "emptyTable": "表中数据为空",
+                            "loadingRecords": "载入中...",
+                            "infoThousands": ",",
+                            "paginate": {
+                                "first": "首页",
+                                "previous": "上页",
+                                "next": "下页",
+                                "last": "末页"
+                            },
+                            "aria": {
+                                paginate: {
+                                    first: '首页',
+                                    previous: '上页',
+                                    next: '下页',
+                                    last: '末页'
+                                },
+                                "sortAscending": ": 以升序排列此列",
+                                "sortDescending": ": 以降序排列此列"
+                            },
+                            "decimal": "-",
+                            "thousands": "."
+                        },
+                        // "dom": 'rt<"bottom"iflp<"clear">>',
+                        "dom": "<'dt-toolbar'<'col-xs-12 col-sm-6'B><'col-sm-6 col-xs-6 hidden-xs'C>r>" +
+                        "t" +
+                        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+                        "autoWidth": true,
+
+                        buttons: [
+                            'copy', 'csv', 'excel', 'pdf'
+                        ],
+                        /*"preDrawCallback": function () {
+                         // Initialize the responsive datatables helper once.
+                         if (!responsiveHelper_dt_basic_real) {
+                         responsiveHelper_dt_basic_real = new ResponsiveDatatablesHelper($('#dt_basic_real'), breakpointDefinition);
+                         }
+                         },
+                         "rowCallback": function (nRow) {
+                         responsiveHelper_dt_basic_real.createExpandIcon(nRow);
+                         },
+                         "drawCallback": function (oSettings) {
+                         responsiveHelper_dt_basic_real.respond();
+                         },*/
+
+                        ajax: {
+                            url: "/system/user/user/list",
+                            type: "POST",
+                            "data": function (d) {
+                                // d.custom = $('#myInput').val();
+                                // etc
+                            }
+                        },
+                        //processing: true,
+                        serverSide: true,
+                        columns: [
+                            {"data": "username"},
+                            {"data": "password"},
+                            {"data": "nickname"}
+                        ],
+                        "columnDefs": [{
+                            "searchable": false,
+                            "orderable": false,
+                            "targets": 0
+                        }],
+                        "order": [[1, 'asc']]
+                    });
+
+            /*realtable.on('order.dt search.dt', function () {
+             //alert('Table redraw');
+             realtable.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
+             cell.innerHTML = i + 1;
+             });
+
+             });*/
+        });
 
 
-	     
-	    // Add event listener for opening and closing details
-	    $('#example tbody').on('click', 'td.details-control', function () {
-	        var tr = $(this).closest('tr');
-	        var row = table.row( tr );
-	 
-	        if ( row.child.isShown() ) {
-	            // This row is already open - close it
-	            row.child.hide();
-	            tr.removeClass('shown');
-	        }
-	        else {
-	            // Open this row
-	            row.child( format(row.data()) ).show();
-	            tr.addClass('shown');
-	        }
-	    });
+        /* // DOM Position key index //
 
-	};
-	
-	// end pagefunction
+         l - Length changing (dropdown)
+         f - Filtering input (search)
+         t - The Table! (datatable)
+         i - Information (records)
+         p - Pagination (paging)
+         r - pRocessing
+         < and > - div elements
+         <"#id" and > - div with an id
+         <"class" and > - div with a class
+         <"#id.class" and > - div with an id and class
 
-	// destroy generated instances 
-	// pagedestroy is called automatically before loading a new page
-	// only usable in AJAX version!
+         Also see: http://legacy.datatables.net/usage/features
+         */
 
-	var pagedestroy = function(){
-		
-		/*
-		Example below:
+        /* BASIC ;*/
+        var responsiveHelper_dt_basic = undefined;
+        var responsiveHelper_datatable_fixed_column = undefined;
+        var responsiveHelper_datatable_col_reorder = undefined;
+        var responsiveHelper_datatable_tabletools = undefined;
 
-		$("#calednar").fullCalendar( 'destroy' );
-		if (debugState){
-			root.console.log("✔ Calendar destroyed");
-		} 
+        var responsiveHelper_dt_basic_real = undefined;
 
-		For common instances, such as Jarviswidgets, Google maps, and Datatables, are automatically destroyed through the app.js loadURL mechanic
+        var breakpointDefinition = {
+            tablet: 1024,
+            phone: 480
+        };
 
-		*/
-		//$('#example').find('*').addBack().off().remove();
-	
-	}
+        /*$('#dt_basic').dataTable({
+         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>" +
+         "t" +
+         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+         "oLanguage": {
+         "sSearch": '<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>'
+         },
+         "autoWidth": true,
+         "preDrawCallback": function () {
+         // Initialize the responsive datatables helper once.
+         if (!responsiveHelper_dt_basic) {
+         responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_basic'), breakpointDefinition);
+         }
+         },
+         "rowCallback": function (nRow) {
+         responsiveHelper_dt_basic.createExpandIcon(nRow);
+         },
+         "drawCallback": function (oSettings) {
+         responsiveHelper_dt_basic.respond();
+         }
+         });*/
 
-	// end destroy
-	
-	// load related plugins & run pagefunction
-	loadScript("smartadmin/js/plugin/datatables/jquery.dataTables.min.js", function(){
-		loadScript("smartadmin/js/plugin/datatables/dataTables.colVis.min.js", function(){
-			loadScript("smartadmin/js/plugin/datatables/dataTables.tableTools.min.js", function(){
-				loadScript("smartadmin/js/plugin/datatables/dataTables.bootstrap.min.js", function(){
-					loadScript("smartadmin/js/plugin/datatable-responsive/datatables.responsive.min.js", pagefunction)
-				});
-			});
-		});
-	});
-	
+
+        /* END BASIC */
+
+        /* COLUMN FILTER  */
+
+        // custom toolbar
+        $("div.toolbar").html('<div class="text-right"><img src="img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
+
+
+        /* END TABLETOOLS */
+
+    };
+
+    // load related plugins
+
+    loadScript("smartadmin/js/plugin/datatables/jquery.dataTables.min.js", function () {
+        loadScript("smartadmin/js/plugin/datatables/dataTables.bootstrap.min.js", function () {
+            loadScript("smartadmin/js/plugin/datatables/dataTables.buttons.min.js", function () {
+                loadScript("smartadmin/js/plugin/datatables/buttons.bootstrap.min.js", function () {
+                    loadScript("smartadmin/js/libs/jszip.min.js", function () {
+                        loadScript("smartadmin/js/plugin/datatables/pdfmake.min.js", function () {
+                            loadScript("smartadmin/js/plugin/datatables/vfs_fonts.js", function () {
+                                loadScript("smartadmin/js/plugin/datatables/buttons.html5.min.js", function () {
+                                    loadScript("smartadmin/js/plugin/datatables/buttons.print.min.js", function () {
+                                        loadScript("smartadmin/js/plugin/datatables/buttons.colVis.min.js", function () {
+
+                                            loadScript("smartadmin/js/plugin/datatables/datatables.colVis.min.js", function () {
+                                                loadScript("smartadmin/js/plugin/datatable-responsive/datatables.responsive.min.js", pagefunction);
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    });
+
+
 </script>
