@@ -23,4 +23,9 @@ public class StaticParams {
 
     }
 
+    public static final class CONSTVAR {
+        public static final Short DEFAULT_RESWeight = 1000;
+
+    }
+
 }

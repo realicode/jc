@@ -6,8 +6,12 @@ package com.realaicy.product.jc.modules.doccenter.model;
  * @author Realaicy
  */
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.realaicy.tna.modules.core.orm.jpa.BaseEntity;
+import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -19,7 +23,8 @@ import java.util.List;
  * 文档实体类
  */
 @Entity
-@Table(name = "jc_common_tree")
+@Table(name = "jc_m_doc_allinone")
+@JsonFilter("realFilter")
 @NamedNativeQueries({
         //@NamedNativeQuery(name = "realTestNativeQuery", query = "SELECT a.firstname, a.lastname FROM Author a"),
         //@NamedNativeQuery(name = "realTestNativeQuery", query = "SELECT a.id, a.name FROM jc_common_tree a",
@@ -41,6 +46,7 @@ public class DocRes extends BaseEntity<Long> {
      * 资源名称
      */
     @Column(name = "NAME")
+    @JsonProperty("title")
     private String name;
 
     /**
@@ -70,13 +76,15 @@ public class DocRes extends BaseEntity<Long> {
     /**
      * 资源是否是叶子节点
      */
-    @Column(name = "IS_LEAF")
-    private Boolean isLeaf = Boolean.FALSE;
+    @Column(name = "IS_FOLDER")
+    @JsonProperty("folder")
+    private Boolean isFolder = Boolean.FALSE;
 
     /**
      * 资源是否自动展开子孙节点
      */
     @Column(name = "IS_AUTO_EXPAND")
+    @JsonProperty("expanded")
     private Boolean isAutoExpand = Boolean.FALSE;
 
     /**
@@ -98,6 +106,7 @@ public class DocRes extends BaseEntity<Long> {
      */
     @Column(name = "CREATETIME")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
 
@@ -156,14 +165,14 @@ public class DocRes extends BaseEntity<Long> {
      * 孩子菜单对象
      */
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent")
-    @OrderBy("RES_WEIGHT")
-    @JsonIgnore
+    @OrderBy("resWeight")
+    @Where(clause = "IS_FOLDER='1'")
     private List<DocRes> children = new ArrayList<>();
 
     /*public DocRes() {
     }
 
-    public DocRes(short resType, String name, String uri, Short resIcon, Short resWeight, Boolean isShow, Boolean isLeaf,
+    public DocRes(short resType, String name, String uri, Short resIcon, Short resWeight, Boolean isShow, Boolean isFolder,
                   Boolean isAutoExpand, short status, String resIdentity, Date createTime, Long createrID,
                   Date updateTime, Long updaterID, String customCode, Long parentID, String cascadeID) {
         this.resType = resType;
@@ -172,7 +181,7 @@ public class DocRes extends BaseEntity<Long> {
         this.resIcon = resIcon;
         this.resWeight = resWeight;
         this.isShow = isShow;
-        this.isLeaf = isLeaf;
+        this.isFolder = isFolder;
         this.isAutoExpand = isAutoExpand;
         this.status = status;
         this.resIdentity = resIdentity;
@@ -241,12 +250,12 @@ public class DocRes extends BaseEntity<Long> {
         isShow = show;
     }
 
-    public Boolean getLeaf() {
-        return isLeaf;
+    public Boolean getFolder() {
+        return isFolder;
     }
 
-    public void setLeaf(Boolean leaf) {
-        isLeaf = leaf;
+    public void setFolder(Boolean folder) {
+        isFolder = folder;
     }
 
     public Boolean getAutoExpand() {

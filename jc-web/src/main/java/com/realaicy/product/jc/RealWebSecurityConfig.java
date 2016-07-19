@@ -56,7 +56,7 @@ public class RealWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin().loginPage("/login").permitAll()
                 .and()
-                .logout().permitAll().and().rememberMe().and().csrf().disable();
+                .logout().permitAll().and().csrf().disable();
 
     }
 

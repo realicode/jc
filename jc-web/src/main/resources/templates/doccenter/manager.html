@@ -2,53 +2,60 @@
 <!-- Include Fancytree skin and library -->
 <title>组织机构</title>
 <link rel="stylesheet" xmlns:th="http://www.thymeleaf.org"
-	  th:href="@{/realaicy/css/ui.fancytree.css}"
-	  href="../../static/realaicy/css/ui.fancytree.css"/>
+      th:href="@{/realaicy/css/ui.fancytree.css}"
+      href="../../static/realaicy/css/ui.fancytree.css"/>
+
+<link rel="stylesheet" xmlns:th="http://www.thymeleaf.org"
+      th:href="@{/smartadmin/css/realaicy.css}"
+      href="../../static/smartadmin/css/realaicy.css"/>
 <!-- row -->
 <div class="row">
-	
-	<!-- col -->
-	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
-		<h1 class="page-title txt-color-blueDark">
-			
-			<!-- PAGE HEADER -->
-			<i class="fa-fw fa fa-home"></i> 
-				Page Header 
-			<span>>  
-				Subtitle
+
+    <!-- col -->
+    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+        <h2 class="page-title txt-color-blueDark">
+
+            <!-- PAGE HEADER -->
+            <i class="fa-fw fa fa-home"></i>
+            文档管理中心
+            <span>>
+				文档类别管理
 			</span>
-		</h1>
-	</div>
-	<!-- end col -->
-	
-	<!-- right side of the page with the sparkline graphs -->
-	<!-- col -->
-	<div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
-		<!-- sparks -->
-		<ul id="sparks">
-			<li class="sparks-info">
-				<h5> My Income <span class="txt-color-blue">$47,171</span></h5>
-				<div class="sparkline txt-color-blue hidden-mobile hidden-md hidden-sm">
-					1300, 1877, 2500, 2577, 2000, 2100, 3000, 2700, 3631, 2471, 2700, 3631, 2471
-				</div>
-			</li>
-			<li class="sparks-info">
-				<h5> Site Traffic <span class="txt-color-purple"><i class="fa fa-arrow-circle-up" data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;45%</span></h5>
-				<div class="sparkline txt-color-purple hidden-mobile hidden-md hidden-sm">
-					110,150,300,130,400,240,220,310,220,300, 270, 210
-				</div>
-			</li>
-			<li class="sparks-info">
-				<h5> Site Orders <span class="txt-color-greenDark"><i class="fa fa-shopping-cart"></i>&nbsp;2447</span></h5>
-				<div class="sparkline txt-color-greenDark hidden-mobile hidden-md hidden-sm">
-					110,150,300,130,400,240,220,310,220,300, 270, 210
-				</div>
-			</li>
-		</ul>
-		<!-- end sparks -->
-	</div>
-	<!-- end col -->
-	
+        </h2>
+    </div>
+    <!-- end col -->
+
+    <!-- right side of the page with the sparkline graphs -->
+    <!-- col -->
+    <div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
+        <!-- sparks -->
+        <ul id="sparks">
+            <li class="sparks-info">
+                <h6> My Income <span class="txt-color-blue">$47,171</span></h6>
+                <div class="sparkline txt-color-blue hidden-mobile hidden-md hidden-sm">
+                    1300, 1877, 2500, 2577, 2000, 2100, 3000, 2700, 3631, 2471, 2700, 3631, 2471
+                </div>
+            </li>
+            <li class="sparks-info">
+                <h6> Site Traffic <span class="txt-color-purple"><i class="fa fa-arrow-circle-up"
+                                                                    data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;45%</span>
+                </h6>
+                <div class="sparkline txt-color-purple hidden-mobile hidden-md hidden-sm">
+                    110,150,300,130,400,240,220,310,220,300, 270, 210
+                </div>
+            </li>
+            <li class="sparks-info">
+                <h6> Site Orders <span class="txt-color-greenDark"><i class="fa fa-shopping-cart"></i>&nbsp;2447</span>
+                </h6>
+                <div class="sparkline txt-color-greenDark hidden-mobile hidden-md hidden-sm">
+                    110,150,300,130,400,240,220,310,220,300, 270, 210
+                </div>
+            </li>
+        </ul>
+        <!-- end sparks -->
+    </div>
+    <!-- end col -->
+
 </div>
 <!-- end row -->
 
@@ -61,217 +68,489 @@
 <!-- widget grid -->
 <section id="widget-grid" class="">
 
-	<!-- row -->
-	<div class="row">
-		
-		<!-- NEW WIDGET START -->
-		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			
-			<!-- Widget ID (each widget will need unique ID)-->
-			<div class="jarviswidget" id="wid-id-0">
-				<!-- widget options:
-					usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-					
-					data-widget-colorbutton="false"	
-					data-widget-editbutton="false"
-					data-widget-togglebutton="false"
-					data-widget-deletebutton="false"
-					data-widget-fullscreenbutton="false"
-					data-widget-custombutton="false"
-					data-widget-collapsed="true" 
-					data-widget-sortable="false"
-					
-				-->
-				<header>
-					<span class="widget-icon"> <i class="fa fa-comments"></i> </span>
-					<h2>Widget Title </h2>				
-					
-				</header>
+    <!-- row -->
+    <div class="row">
 
-				<!-- widget div-->
-				<div>
-					
-					<!-- widget edit box -->
-					<div class="jarviswidget-editbox">
-						<!-- This area used as dropdown edit box -->
-						<input class="form-control" type="text">	
-					</div>
-					<!-- end widget edit box -->
-					
-					<!-- widget content -->
-					<div class="widget-body">
-						
-						<!-- this is what the user will see -->
-						<!-- your contents here -->
-						<h1>Example: Default</h1>
-						<div class="description">
-							This tree uses default options.<br>
-							It is initialized from a hidden &lt;ul> element on this page.
-						</div>
-						<div>
-							<label for="skinswitcher">Skin:</label> <select id="skinswitcher"></select>
-						</div>
-						<div id="tree">
-							<ul id="treeData" style="display: none;">
-								<li id="id1" title="Look, a tool tip!">item1 with key and tooltip
-								<li id="id2">item2
-								<li id="id3" class="folder">Folder <em>with some</em> children
-									<ul>
-										<li id="id3.1">Sub-item 3.1
-											<ul>
-												<li id="id3.1.1">Sub-item 3.1.1
-												<li id="id3.1.2">Sub-item 3.1.2
-											</ul>
-										<li id="id3.2">Sub-item 3.2
-											<ul>
-												<li id="id3.2.1">Sub-item 3.2.1
-												<li id="id3.2.2">Sub-item 3.2.2
-											</ul>
-									</ul>
-								<li id="id4" class="expanded">Document with some children (expanded on init)
-									<ul>
-										<li id="id4.1"  class="active focused">Sub-item 4.1 (active and focus on init)
-											<ul>
-												<li id="id4.1.1">Sub-item 4.1.1
-												<li id="id4.1.2">Sub-item 4.1.2
-											</ul>
-										<li id="id4.2">Sub-item 4.2
-											<ul>
-												<li id="id4.2.1">Sub-item 4.2.1
-												<li id="id4.2.2">Sub-item 4.2.2
-											</ul>
-									</ul>
-							</ul>
-						</div>
+        <!-- NEW WIDGET START -->
+        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-					</div>
-					<!-- end widget content -->
-					
-				</div>
-				<!-- end widget div -->
-				
-			</div>
-			<!-- end widget -->
+            <!-- Widget ID (each widget will need unique ID)-->
+            <div class="jarviswidget" id="wid-id-0">
 
-		</article>
-		<!-- WIDGET END -->
-		
-	</div>
+                <header>
+                    <span class="widget-icon"> <i class="fa fa-comments"></i> </span>
+                    <h2>分档分类列表 </h2>
 
-	<!-- end row -->
+                </header>
 
-	<!-- row -->
+                <!-- widget div-->
+                <div>
 
-	<div class="row">
+                    <!-- widget edit box -->
+                    <div class="jarviswidget-editbox">
+                        <!-- This area used as dropdown edit box -->
+                    </div>
+                    <!-- end widget edit box -->
 
-		<!-- a blank row to get started -->
-		<div class="col-sm-12">
-			xxxx
+                    <!-- widget content -->
+                    <div class="widget-body">
+
+                        <div class="row">
+                            <div class="col-sm-12">
+
+                                <table id="realtree1">
+                                    <colgroup>
+                                        <col width="30px">
+                                        <col width="50px">
+                                        <col width="80%">
+                                        <col width="50px">
+                                        <col width="50px">
+                                        <col width="30px">
+                                        <col width="30px">
+                                        <col width="50px">
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>Ed1</th>
+                                        <th>Ed2</th>
+                                        <th>Rb1</th>
+                                        <th>Rb2</th>
+                                        <th>Cb</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <form id="movieForm" method="post" class="form-horizontal">
+
+                                <div class="col-sm-3">
+                                    <div class="input-group">
+                                        <input class="form-control" id="echoActive2" type="text" title="">
+                                        <div class="input-group-btn">
+                                            <a href="javascript:void(0);" onclick="realModifyName()"
+                                               class="btn btn-labeled btn-primary"> <span
+                                                    class="btn-label"><i class="fa fa-pencil"></i></span>修改文件夹名称 </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="input-group">
+                                        <input class="form-control" id="echoNewName" type="text" title="">
+                                        <div class="input-group-btn">
+                                            <a href="javascript:void(0);" onclick="realCreateCatalog()"
+                                               class="btn btn-labeled btn-primary"> <span
+                                                    class="btn-label"><i class="glyphicon glyphicon-ok"></i></span>新建同级文件夹
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="input-group">
+                                        <input class="form-control" id="echoNewName2" type="text" title="">
+                                        <div class="input-group-btn">
+                                            <a href="javascript:void(0);" onclick="realCreateSubCatalog()"
+                                               class="btn btn-labeled btn-info"> <span
+                                                    class="btn-label"><i class="glyphicon glyphicon-ok"></i></span>新建子目录文件夹
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <a href="javascript:void(0);" class="btn btn-labeled btn-danger"> <span
+                                            class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>删除当前文件夹
+                                    </a>
+
+                                </div>
+                            </form>
+                        </div>
 
 
-		</div>
-			
-	</div>
+                        <div id="tree2" data-source="ajax">
+                        </div>
 
-	<!-- end row -->
+                    </div>
+                    <!-- end widget content -->
+
+                </div>
+                <!-- end widget div -->
+
+            </div>
+            <!-- end widget -->
+
+        </article>
+        <!-- WIDGET END -->
+
+    </div>
+
+    <!-- end row -->
+
+    <!-- row -->
+
+    <div class="row">
+
+        <!-- a blank row to get started -->
+        <div class="col-sm-12">
+            <div>Active node: <span id="echoActive">-</span></div>
+
+
+        </div>
+
+    </div>
+
+    <!-- end row -->
 
 </section>
 <!-- end widget grid -->
 
 <script type="text/javascript">
-	
-	/* DO NOT REMOVE : GLOBAL FUNCTIONS!
-	 *
-	 * pageSetUp(); WILL CALL THE FOLLOWING FUNCTIONS
-	 *
-	 * // activate tooltips
-	 * $("[rel=tooltip]").tooltip();
-	 *
-	 * // activate popovers
-	 * $("[rel=popover]").popover();
-	 *
-	 * // activate popovers with hover states
-	 * $("[rel=popover-hover]").popover({ trigger: "hover" });
-	 *
-	 * // activate inline charts
-	 * runAllCharts();
-	 *
-	 * // setup widgets
-	 * setup_widgets_desktop();
-	 *
-	 * // run form elements
-	 * runAllForms();
-	 *
-	 ********************************
-	 *
-	 * pageSetUp() is needed whenever you load a page.
-	 * It initializes and checks for all basic elements of the page
-	 * and makes rendering easier.
-	 *
-	 */
 
-	pageSetUp();
-	
-	/*
-	 * ALL PAGE RELATED SCRIPTS CAN GO BELOW HERE
-	 * eg alert("my home function");
-	 * 
-	 * var pagefunction = function() {
-	 *   ...
-	 * }
-	 * loadScript("js/plugin/_PLUGIN_NAME_.js", pagefunction);
-	 * 
-	 * TO LOAD A SCRIPT:
-	 * var pagefunction = function (){ 
-	 *  loadScript(".../plugin.js", run_after_loaded);	
-	 * }
-	 * 
-	 * OR you can load chain scripts by doing
-	 * 
-	 * loadScript(".../plugin.js", function(){
-	 * 	 loadScript("../plugin.js", function(){
-	 * 	   ...
-	 *   })
-	 * });
-	 */
-	
-	// pagefunction
-	
-	var pagefunction = function() {
-		// clears the variable if left blank
-		$("#tree").fancytree();
 
-		// using default options
+    pageSetUp();
 
-	};
-	
-	// end pagefunction
+    var SOURCE = [
+                {
+                    title: "node 1", folder: true, expanded: true, children: [
+                    {title: "node 1.1"},
+                    {title: "node 1.2"}
+                ]
+                },
+                {
+                    title: "node 2", folder: true, expanded: false, children: [
+                    {title: "node 2.1"},
+                    {title: "node 2.2"}
+                ]
+                }
+            ],
+            CLIPBOARD = null;
 
-	// destroy generated instances 
-	// pagedestroy is called automatically before loading a new page
-	// only usable in AJAX version!
+    // pagefunction
+    function realModifyName() {
+        console.log("realModifyName");
+        console.log($("#echoActive2").val());
+        var node = $("#tree2").fancytree("getActiveNode");
+        console.log("待更新的原始数据： " + node.data.id + node.title);
+        $.ajax({
+            url: "/doccenter/catalog/edit",    //请求的url地址
+            async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+            data: {id: node.data.id, title: $("#echoActive2").val()},    //参数值
+            type: "GET",   //请求方式
+            success: function (data) {
+                console.log("success");
+                $("#tree2").fancytree("getTree").reload();
+                console.log("success2222");
+            }
+        });
+        console.log("End");
+    }
 
-	var pagedestroy = function(){
-		
-		/*
-		Example below:
 
-		$("#calednar").fullCalendar( 'destroy' );
-		if (debugState){
-			root.console.log("✔ Calendar destroyed");
-		} 
+    function realCreateCatalog() {
+        console.log("realCreateCatalog");
+        var node = $("#tree2").fancytree("getActiveNode");
+        console.log("待更新的原始数据： " + node.data.id + node.title);
+        $.ajax({
+            url: "/doccenter/catalog/create",    //请求的url地址
+            async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+            data: {id: node.data.id, title: $("#echoNewName").val()},    //参数值
+            type: "POST",   //请求方式
 
-		For common instances, such as Jarviswidgets, Google maps, and Datatables, are automatically destroyed through the app.js loadURL mechanic
+            success: function (data) {
+                console.log("realCreateCatalog success");
+                $("#tree2").fancytree("getTree").reload();
+                console.log("realCreateCatalog success2222");
+            }
+        });
+        console.log("End");
+    }
 
-		*/
-	}
+    function realCreateSubCatalog() {
+        console.log("realCreateSubCatalog");
+        var node = $("#tree2").fancytree("getActiveNode");
+        console.log("待更新的原始数据： " + node.data.id + node.title);
+        $.ajax({
+            url: "/doccenter/catalog/createSub",    //请求的url地址
+            async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+            data: {id: node.data.id, title: $("#echoNewName2").val()},    //参数值
+            type: "POST",   //请求方式
 
-	// end destroy
-	
-	// run pagefunction
-	//pagefunction();
+            success: function (data) {
+                console.log("realCreateSubCatalog success");
+                $("#tree2").fancytree("getTree").reload();
+                console.log("realCreateSubCatalog success2222");
+            }
+        });
+        console.log("End");
+    }
 
-	// loadscript and run pagefunction
-	loadScript("realaicy/js/fancytree/jquery.fancytree-all.js", pagefunction);
+
+    var pagefunction = function () {
+        // clears the variable if left blank
+
+
+        $("#realtree1").fancytree({
+            checkbox: true,
+            titlesTabbable: true,     // Add all node titles to TAB chain
+            quicksearch: true,        // Jump to nodes when pressing first character
+            source: {
+                url: "/doccenter/catalog/list",
+                cache: false
+            },
+            // extensions: ["edit", "table", "gridnav"],
+            extensions: ["edit", "dnd", "table", "gridnav"],
+
+            dnd: {
+                preventVoidMoves: true,
+                preventRecursiveMoves: true,
+                autoExpandMS: 400,
+                dragStart: function (node, data) {
+                    return true;
+                },
+                dragEnter: function (node, data) {
+                    // return ["before", "after"];
+                    return true;
+                },
+                dragDrop: function (node, data) {
+                    data.otherNode.moveTo(node, data.hitMode);
+                }
+            },
+            edit: {
+                triggerStart: ["f2", "shift+click", "mac+enter"],
+                close: function (event, data) {
+                    if (data.save && data.isNew) {
+                        // Quick-enter: add new nodes until we hit [enter] on an empty title
+                        $("#tree").trigger("nodeCommand", {cmd: "addSibling"});
+                    }
+                }
+            },
+            table: {
+                indentation: 20,
+                nodeColumnIdx: 2,
+                checkboxColumnIdx: 0
+            },
+            gridnav: {
+                autofocusInput: false,
+                handleCursorKeys: true
+            },
+
+            lazyLoad: function (event, data) {
+                data.result = {url: "../demo/ajax-sub2.json"};
+            },
+            renderColumns: function (event, data) {
+                var node = data.node,
+                        $select = $("<select />"),
+                        $tdList = $(node.tr).find(">td");
+
+                // (Index #0 is rendered by fancytree by adding the checkbox)
+                $tdList.eq(1).text(node.getIndexHier()).addClass("alignRight");
+                // Index #2 is rendered by fancytree, but we make the title cell
+                // span the remaining columns if it is a folder:
+                if (node.isFolder()) {
+                    $tdList.eq(3).html("<a href='javascript:void(0);' class='btn btn-default'>上传文件到此文件夹</a>");
+
+                } else {
+                    $tdList.eq(4).html("<a href='javascript:void(0);' class='btn btn-default'>下载文件</a>");
+                    $tdList.eq(5).html("<a href='javascript:void(0);' class='btn btn-default'>删除文件</a>");
+                }
+
+
+            }
+        }).on("nodeCommand", function (event, data) {
+            // Custom event handler that is triggered by keydown-handler and
+            // context menu:
+            var refNode, moveMode,
+                    tree = $(this).fancytree("getTree"),
+                    node = tree.getActiveNode();
+
+            switch (data.cmd) {
+                case "moveUp":
+                    refNode = node.getPrevSibling();
+                    if (refNode) {
+                        node.moveTo(refNode, "before");
+                        node.setActive();
+                    }
+                    break;
+                case "moveDown":
+                    refNode = node.getNextSibling();
+                    if (refNode) {
+                        node.moveTo(refNode, "after");
+                        node.setActive();
+                    }
+                    break;
+                case "indent":
+                    refNode = node.getPrevSibling();
+                    if (refNode) {
+                        node.moveTo(refNode, "child");
+                        refNode.setExpanded();
+                        node.setActive();
+                    }
+                    break;
+                case "outdent":
+                    if (!node.isTopLevel()) {
+                        node.moveTo(node.getParent(), "after");
+                        node.setActive();
+                    }
+                    break;
+                case "rename":
+                    node.editStart();
+                    break;
+                case "remove":
+                    refNode = node.getNextSibling() || node.getPrevSibling() || node.getParent();
+                    node.remove();
+                    if (refNode) {
+                        refNode.setActive();
+                    }
+                    break;
+                case "addChild":
+                    node.editCreateNode("child", "");
+                    break;
+                case "addSibling":
+                    node.editCreateNode("after", "");
+                    break;
+                case "cut":
+                    CLIPBOARD = {mode: data.cmd, data: node};
+                    break;
+                case "copy":
+                    CLIPBOARD = {
+                        mode: data.cmd,
+                        data: node.toDict(function (n) {
+                            delete n.key;
+                        })
+                    };
+                    break;
+                case "clear":
+                    CLIPBOARD = null;
+                    break;
+                case "paste":
+                    if (CLIPBOARD.mode === "cut") {
+                        // refNode = node.getPrevSibling();
+                        CLIPBOARD.data.moveTo(node, "child");
+                        CLIPBOARD.data.setActive();
+                    } else if (CLIPBOARD.mode === "copy") {
+                        node.addChildren(CLIPBOARD.data).setActive();
+                    }
+                    break;
+                default:
+                    alert("Unhandled command: " + data.cmd);
+                    return;
+            }
+
+            // }).on("click dblclick", function(e){
+            //   console.log( e, $.ui.fancytree.eventToString(e) );
+
+        }).on("keydown", function (e) {
+            var cmd = null;
+
+            // console.log(e.type, $.ui.fancytree.eventToString(e));
+            switch ($.ui.fancytree.eventToString(e)) {
+                case "ctrl+shift+n":
+                case "meta+shift+n": // mac: cmd+shift+n
+                    cmd = "addChild";
+                    break;
+                case "ctrl+c":
+                case "meta+c": // mac
+                    cmd = "copy";
+                    break;
+                case "ctrl+v":
+                case "meta+v": // mac
+                    cmd = "paste";
+                    break;
+                case "ctrl+x":
+                case "meta+x": // mac
+                    cmd = "cut";
+                    break;
+                case "ctrl+n":
+                case "meta+n": // mac
+                    cmd = "addSibling";
+                    break;
+                case "del":
+                case "meta+backspace": // mac
+                    cmd = "remove";
+                    break;
+                    // case "f2":  // already triggered by ext-edit pluging
+                    //   cmd = "rename";
+                    //   break;
+                case "ctrl+up":
+                    cmd = "moveUp";
+                    break;
+                case "ctrl+down":
+                    cmd = "moveDown";
+                    break;
+                case "ctrl+right":
+                case "ctrl+shift+right": // mac
+                    cmd = "indent";
+                    break;
+                case "ctrl+left":
+                case "ctrl+shift+left": // mac
+                    cmd = "outdent";
+            }
+            if (cmd) {
+                $(this).trigger("nodeCommand", {cmd: cmd});
+                // e.preventDefault();
+                // e.stopPropagation();
+                return false;
+            }
+        });
+
+
+        $("#tree2").fancytree({
+            source: {
+                url: "/doccenter/catalog/list",
+                cache: false
+            },
+            // --- Node events -------------------------------------------------
+            activate: function (event, data) {
+                var node = data.node;
+                // acces node attributes
+                $("#echoActive").text(node.title);
+                $("#echoActive2").val(node.title);
+
+                if (!$.isEmptyObject(node.data)) {
+//          alert("custom node data: " + JSON.stringify(node.data));
+                    console.log(node.data);
+                    console.log(node.title);
+                    console.log(node.data.id);
+
+                    console.log(node.key);
+
+
+                }
+            }
+            /*lazyLoad: function (event, data) {
+             // we can't return values from an event handler, so we
+             // pass the result as `data`attribute.
+             //              data.result = {url: "unit/ajax-sub2.json"};
+             data.result = $.ajax({
+             url: "ajax-sub2.json",
+             dataType: "json"
+             });
+             }*/
+        });
+
+
+        // using default options
+
+    };
+
+
+    var pagedestroy = function () {
+
+    };
+
+    // end destroy
+
+    // run pagefunction
+    //pagefunction();
+
+    // loadscript and run pagefunction
+    loadScript("realaicy/js/fancytree/jquery.fancytree-all.js", pagefunction);
 
 </script>

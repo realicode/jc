@@ -19,6 +19,15 @@
  */
 
 .realaicy_table_header {
-    font-family: "Arial","Microsoft YaHei","微软雅黑","宋体",sans-serif;
+    font-family: "Arial", "Microsoft YaHei", "微软雅黑", "宋体", sans-serif;
     font-size: 14px;
+}
+
+.realaicy_radio {
+    height: 12px;
+}
+
+.realaicy_backcolor {
+    background-color: #3276b1;
+    color: white;
 }

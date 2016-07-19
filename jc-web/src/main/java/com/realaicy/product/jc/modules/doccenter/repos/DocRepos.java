@@ -26,8 +26,10 @@ public interface DocRepos extends BaseRepository<DocRes, Long> {
     List<DocRes> findAllMenus();
 
 
-    @Query(value = "select * from jc_common_tree as a where a.id=:id", nativeQuery = true)
+    @Query(value = "select * from jc_m_doc_allinone as a where a.id=:id", nativeQuery = true)
     DocRes findAResWithNative(@Param("id") Long id);
+
+
 
 
 }
