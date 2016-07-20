@@ -21,4 +21,12 @@ public class DashBoardController {
 
         return "dashboard/dashboard";
     }
+
+    @RequestMapping("/flot")
+    public String f2(@RequestParam(value = "name", required = false, defaultValue = "World V2") String name, Model model) {
+        model.addAttribute("name", name + "V2");
+        model.addAttribute("realsign", new Date());
+
+        return "dashboard/flot";
+    }
 }

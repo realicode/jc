@@ -1,5 +1,6 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" lang="zh">
 <head>
     <meta charset="utf-8"/>
     <title>SmartJC 智慧稽查服务平台</title>
@@ -29,6 +30,7 @@
          specific styles this will also ensure you retrain your customization with each SmartAdmin update.
     <link rel="stylesheet" type="text/css" media="screen" href="css/your_style.css"> -->
 
+
     <!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
     <link rel="stylesheet" type="text/css" media="screen" th:href="@{/smartadmin/css/demo.min.css}"
           href="../static/smartadmin/css/demo.min.css"/>
@@ -45,7 +47,7 @@
 
 </head>
 
-<body class="smart-style-0 desktop-detected" >
+<body class="smart-style-0 desktop-detected">
 
 <!-- #HEADER -->
 <header id="header">
@@ -66,14 +68,14 @@
             <!-- the ID links are fetched via AJAX to the ajax container "ajax-notifications" -->
             <div class="btn-group btn-group-justified" data-toggle="buttons">
                 <label class="btn btn-default">
-                    <input type="radio" name="activity" id="ajax/notify/mail.html"/>
-                    Msgs (14) </label>
+                    <input type="radio" name="activity" id="notify/mail.html"/>
+                    未读消息 (6) </label>
                 <label class="btn btn-default">
-                    <input type="radio" name="activity" id="ajax/notify/notifications.html"/>
-                    notify (3) </label>
+                    <input type="radio" name="activity" id="notify/notifications"/>
+                    事项提醒 (3) </label>
                 <label class="btn btn-default">
-                    <input type="radio" name="activity" id="ajax/notify/tasks.html"/>
-                    Tasks (4) </label>
+                    <input type="radio" name="activity" id="notify/tasks.html"/>
+                    待办任务 (4) </label>
             </div>
 
             <!-- notification content -->
@@ -91,7 +93,7 @@
             <!-- end notification content -->
 
             <!-- footer: refresh area -->
-					<span> Last updated on: 12/12/2013 9:43AM
+					<span th:text="  ${lastNotificationTime}"> :
 						<button type="button" data-loading-text="<i class='fa fa-refresh fa-spin'></i> Loading..."
                                 class="btn btn-xs btn-default pull-right">
 							<i class="fa fa-refresh"></i>
@@ -105,8 +107,8 @@
     <!-- #PROJECTS: projects dropdown -->
     <div class="project-context hidden-xs">
 
-        <span class="label">Projects:</span>
-        <span class="project-selector dropdown-toggle" data-toggle="dropdown">Recent projects <i
+        <span class="label">项目信息:</span>
+        <span class="project-selector dropdown-toggle" data-toggle="dropdown">最近访问的项目 <i
                 class="fa fa-angle-down"></i></span>
 
         <!-- Suggestion: populate this list with fetch and push technique -->
@@ -144,7 +146,7 @@
 
         <!-- logout button -->
         <div id="logout" class="btn-header transparent pull-right">
-            <span> <a href="login.html" title="Sign Out" data-action="userLogout"
+            <span> <a href="login.html" title="注销:" data-action="userLogout"
                       data-logout-msg="You can improve your security further after logging out by closing this opened browser"><i
                     class="fa fa-sign-out"></i></a> </span>
         </div>
@@ -153,7 +155,7 @@
         <!-- #SEARCH -->
         <!-- input: search field -->
         <form action="#ajax/search.html" class="header-search pull-right">
-            <input id="search-fld" type="text" name="param" placeholder="Find reports and more">
+            <input id="search-fld" type="text" name="param" placeholder="快速模糊信息查询">
             <button type="submit">
                 <i class="fa fa-search"></i>
             </button>
@@ -208,11 +210,14 @@
     <div class="login-info">
 				<span> <!-- User image size is adjusted inside CSS, it should stay as is -->
 					<a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
-                         <img th:src="@{/smartadmin/img/avatars/sunny.png}"
-                              src="../static/smartadmin/img/avatars/sunny.png" alt="me" class="online"/>
-						<span>
-							刘德华
-						</span>
+                         <img th:src="@{/smartadmin/img/avatars/a1.jpg}"
+                              src="../static/smartadmin/img/avatars/a1.jpg" alt="me" class="online"/>
+                        <span th:text="${usernickname} "></span>
+
+                        <!--<span>-->
+                        <!--&lt;!&ndash;<span sec:authentication="name">Bob</span>&ndash;&gt;-->
+                        <!--<p th:text="${#httpServletRequest.remoteUser}"></p>-->
+                        <!--</span>-->
 						<i class="fa fa-angle-down"></i>
 					</a>
 				</span>
@@ -228,13 +233,16 @@
 
         <ul>
             <li class="">
-                <a href="#" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">综合看板</span></a>
+                <a href="#" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span
+                        class="menu-item-parent">综合看板</span></a>
                 <ul>
                     <li class="">
-                        <a href="dashboard/dashboard.html" title="Dashboard2"><span class="menu-item-parent">Analytics Dashboard</span></a>
+                        <a href="dashboard/dashboard.html" title="Dashboard2"><span
+                                class="menu-item-parent">业务仪表盘</span></a>
                     </li>
                     <li class="">
-                        <a href="dashboard/dashboard" title="Dashboard3"><span class="menu-item-parent">Social Wall</span></a>
+                        <a href="dashboard/flot" title="Dashboard3"><span
+                                class="menu-item-parent">统计分析仪表盘</span></a>
                     </li>
                 </ul>
             </li>
@@ -247,7 +255,8 @@
                         <a href="#">我的待办任务 <span class="badge bg-color-blue pull-right inbox-badge">9</span> </a>
                     </li>
                     <li>
-                        <a href="#">我的未读信息  <span class="badge bg-color-pink pull-right inbox-badge">9</span> </a>
+                        <a href="msg/unread.html">我的未读信息 <span
+                                class="badge bg-color-pink pull-right inbox-badge">9</span> </a>
                     </li>
                 </ul>
             </li>
@@ -257,7 +266,22 @@
                     <span class="menu-item-parent">项目管理</span></a>
                 <ul>
                     <li>
-                        <a href="project/project.html">项目概览</a>
+                        <a href="project/projects.html">项目概览</a>
+                    </li>
+                    <li>
+                        <a href="project/blog.html">关注项目</a>
+                    </li>
+                    <li>
+                        <a href="project/create.html">创建项目</a>
+                    </li>
+                    <li>
+                        <a href="project/process.html">项目进程管理</a>
+                    </li>
+                    <li>
+                        <a href="project/timeline.html">项目轨迹</a>
+                    </li>
+                    <li>
+                        <a href="project/calendar.html">项目日历</a>
                     </li>
                 </ul>
             </li>
@@ -331,7 +355,8 @@
 
 
             <li>
-                <a href="#"><i class="fa fa-lg fa-fw fa-puzzle-piece"></i> <span class="menu-item-parent">委托方资料管理中心</span></a>
+                <a href="#"><i class="fa fa-lg fa-fw fa-puzzle-piece"></i> <span
+                        class="menu-item-parent">委托方资料管理中心</span></a>
                 <ul>
                     <li>
                         <a href="#"><i class="fa fa-file-text-o"></i> Projects</a>
@@ -344,7 +369,8 @@
             </li>
 
             <li>
-                <a href="#"><i class="fa fa-lg fa-fw fa-database"></i> <span class="menu-item-parent">稽查标准数据库管理</span></a>
+                <a href="#"><i class="fa fa-lg fa-fw fa-database"></i> <span
+                        class="menu-item-parent">稽查标准数据库管理</span></a>
                 <ul>
                     <li>
                         <a href="#"><i class="fa fa-file-text-o"></i> Projects</a>
@@ -357,7 +383,8 @@
             </li>
 
             <li>
-                <a href="#"><i class="fa fa-lg fa-fw fa-long-arrow-right"></i> <span class="menu-item-parent">工作流管理</span></a>
+                <a href="#"><i class="fa fa-lg fa-fw fa-long-arrow-right"></i> <span
+                        class="menu-item-parent">工作流管理</span></a>
                 <ul>
                     <li>
                         <a href="#"><i class="fa fa-file-text-o"></i> Projects</a>
@@ -365,6 +392,20 @@
 
                     <li>
                         <a href="#"><i class="fa fa-clock-o"></i> Timeline</a>
+                    </li>
+                </ul>
+            </li>
+
+
+            <li>
+                <a href="#"><i class="fa fa-lg fa-fw fa-envelope-o"></i> <span class="menu-item-parent">消息中心</span></a>
+                <ul>
+                    <li>
+                        <a href="msg/inbox.html"><i class="fa fa-comment-o"></i> 收件箱</a>
+                    </li>
+
+                    <li>
+                        <a href="#"><i class="fa  fa-send"></i> 撰写新消息</a>
                     </li>
                 </ul>
             </li>
@@ -384,8 +425,7 @@
 
         </ul>
     </nav>
-    <a href="#ajax/difver.html" class="btn btn-primary nav-demo-btn"><i class="fa fa-info-circle"></i> SmartAdmin
-        Package (187 MB)</a>
+    <a href="#ajax/difver.html" class="btn btn-primary nav-demo-btn"><i class="fa fa-info-circle"></i> 智慧稽查</a>
 
 
     <span class="minifyme" data-action="minifyMenu"> <i class="fa fa-arrow-circle-left hit"></i> </span>
