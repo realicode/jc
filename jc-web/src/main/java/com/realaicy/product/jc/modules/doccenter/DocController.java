@@ -3,8 +3,11 @@ package com.realaicy.product.jc.modules.doccenter;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import com.realaicy.product.jc.modules.doccenter.model.DocFileRes;
 import com.realaicy.product.jc.modules.doccenter.model.DocRes;
+import com.realaicy.product.jc.modules.doccenter.repos.DocFileRepos;
 import com.realaicy.product.jc.modules.doccenter.repos.DocRepos;
+import com.realaicy.product.jc.modules.doccenter.service.DocFileService;
 import com.realaicy.product.jc.modules.doccenter.service.DocService;
 import com.realaicy.tna.modules.core.mapper.JsonMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +35,12 @@ public class DocController {
     @Autowired
     DocService docService;
 
+    @Autowired
+    DocFileRepos docFileRepos;
+
+    @Autowired
+    DocFileService docFileService;
+
     private static JsonMapper binder = JsonMapper.nonDefaultMapper();
 
 
@@ -51,6 +60,14 @@ public class DocController {
         return "doccenter/manager";
     }
 
+    @RequestMapping("/m2")
+    public String manager2(@RequestParam(value = "name", required = false, defaultValue = "World V2") String name, Model model) {
+        model.addAttribute("name", name + "V2");
+        model.addAttribute("realsign", new Date());
+
+        return "doccenter/m2";
+    }
+
     @RequestMapping("/catalog/list")
     @ResponseBody
     public String listDocCatalog() {
@@ -63,6 +80,21 @@ public class DocController {
         binder.getMapper().setFilterProvider(filters);
 
         String beanString = binder.toJson(docRes);
+
+        return beanString;
+    }
+
+    @RequestMapping("/catalog/listDocAll")
+    @ResponseBody
+    public String listDocAll() {
+
+        DocFileRes docFileRes = docFileRepos.findOne(1L);
+
+        FilterProvider filters = new SimpleFilterProvider().addFilter("realFilter2", SimpleBeanPropertyFilter.serializeAllExcept("updateTime"));
+
+        binder.getMapper().setFilterProvider(filters);
+
+        String beanString = binder.toJson(docFileRes);
 
         return beanString;
     }

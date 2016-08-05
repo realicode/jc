@@ -17,9 +17,9 @@
 
             <!-- PAGE HEADER -->
             <i class="fa-fw fa fa-home"></i>
-            文档管理中心
+            稽查标准数据库管理
             <span>>
-				文档上传
+				数据库浏览
 			</span>
         </h2>
     </div>
@@ -79,7 +79,7 @@
 
                 <header>
                     <span class="widget-icon"> <i class="fa fa-comments"></i> </span>
-                    <h2>分档目录 </h2>
+                    <h2>检查项列表 </h2>
 
                 </header>
 
@@ -238,7 +238,7 @@
             titlesTabbable: true,     // Add all node titles to TAB chain
             quicksearch: true,        // Jump to nodes when pressing first character
             source: {
-                url: "/doccenter/catalog/listDocAll",
+                url: "/checkitemdb/listCheckItem",
                 cache: false
             },
             // extensions: ["edit", "table", "gridnav"],
@@ -291,11 +291,11 @@
                 // Index #2 is rendered by fancytree, but we make the title cell
                 // span the remaining columns if it is a folder:
                 if (node.isFolder()) {
-                    $tdList.eq(3).html("<ul class='demo-btns'><li> <a href='javascript:void(0);' class='btn btn-sm btn-primary'>上传文件</a></li></ul>");
+                    $tdList.eq(3).html("<ul class='demo-btns'><li> <a href='javascript:void(0);' class='btn btn-sm btn-primary'>导出PDF</a></li></ul>");
 
                 } else {
-                    $tdList.eq(4).html("<a href='javascript:void(0);' class='btn btn-default'>下载文件</a>");
-                    $tdList.eq(5).html("<a href='javascript:void(0);' class='btn btn-default'>删除文件</a>");
+                    $tdList.eq(4).html("<a href='javascript:void(0);' class='btn btn-default'>查看详情</a>");
+                    $tdList.eq(5).html("<a href='javascript:void(0);' class='btn btn-default'>查看附件</a>");
                 }
 
 
