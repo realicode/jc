@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.realaicy.product.jc.Application;
 import com.realaicy.product.jc.PeopleFuncTest;
 import com.realaicy.product.jc.modules.doccenter.model.DocRes;
-import com.realaicy.tna.modules.core.mapper.JsonMapper;
+import com.realaicy.lib.core.mapper.JsonMapper;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;

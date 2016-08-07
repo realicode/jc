@@ -7,7 +7,7 @@ package com.realaicy.product.jc;
 import java.util.Arrays;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.realaicy.tna.modules.core.orm.jpa.RealRepositoryFactoryBean;
+import com.realaicy.lib.core.orm.jpa.RealRepositoryFactoryBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;

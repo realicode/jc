@@ -3,7 +3,7 @@ package com.realaicy.product.jc.modules.doccenter.service;
 import com.realaicy.product.jc.modules.doccenter.model.DocFileRes;
 import com.realaicy.product.jc.modules.doccenter.model.DocRes;
 import com.realaicy.product.jc.modules.doccenter.repos.DocFileRepos;
-import com.realaicy.tna.modules.core.service.BaseService;
+import com.realaicy.lib.core.service.BaseService;
 
 /**
  * Created by realaicy on 16/3/14.

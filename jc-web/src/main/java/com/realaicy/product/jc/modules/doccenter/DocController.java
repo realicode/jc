@@ -9,7 +9,7 @@ import com.realaicy.product.jc.modules.doccenter.repos.DocFileRepos;
 import com.realaicy.product.jc.modules.doccenter.repos.DocRepos;
 import com.realaicy.product.jc.modules.doccenter.service.DocFileService;
 import com.realaicy.product.jc.modules.doccenter.service.DocService;
-import com.realaicy.tna.modules.core.mapper.JsonMapper;
+import com.realaicy.lib.core.mapper.JsonMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;

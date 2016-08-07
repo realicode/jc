@@ -8,7 +8,7 @@ package com.realaicy.product.jc.modules.system.model;
 
 import com.alibaba.druid.sql.visitor.functions.Char;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.realaicy.tna.modules.core.orm.jpa.BaseEntity;
+import com.realaicy.lib.core.orm.jpa.BaseEntity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;

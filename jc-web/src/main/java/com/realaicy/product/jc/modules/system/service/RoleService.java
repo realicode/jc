@@ -2,7 +2,7 @@ package com.realaicy.product.jc.modules.system.service;
 
 import com.realaicy.product.jc.modules.system.model.Role;
 import com.realaicy.product.jc.modules.system.model.User;
-import com.realaicy.tna.modules.core.service.BaseService;
+import com.realaicy.lib.core.service.BaseService;
 
 import java.util.List;
 

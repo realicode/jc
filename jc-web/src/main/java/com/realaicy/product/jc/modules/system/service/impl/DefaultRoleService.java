@@ -6,7 +6,7 @@ import com.realaicy.product.jc.modules.system.repos.RoleRepos;
 import com.realaicy.product.jc.modules.system.repos.UserRepos;
 import com.realaicy.product.jc.modules.system.service.RoleService;
 import com.realaicy.product.jc.modules.system.service.UserService;
-import com.realaicy.tna.modules.core.service.DefaultServiceImpl;
+import com.realaicy.lib.core.service.DefaultServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

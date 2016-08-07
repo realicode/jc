@@ -6,7 +6,7 @@ import com.realaicy.product.jc.modules.doccenter.repos.DocRepos;
 import com.realaicy.product.jc.modules.doccenter.service.DocFileService;
 import com.realaicy.product.jc.modules.doccenter.service.DocService;
 import com.realaicy.product.jc.realglobal.config.StaticParams;
-import com.realaicy.tna.modules.core.service.DefaultServiceImpl;
+import com.realaicy.lib.core.service.DefaultServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

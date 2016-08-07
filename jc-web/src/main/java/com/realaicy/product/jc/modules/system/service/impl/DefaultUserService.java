@@ -3,7 +3,7 @@ package com.realaicy.product.jc.modules.system.service.impl;
 import com.realaicy.product.jc.modules.system.model.User;
 import com.realaicy.product.jc.modules.system.repos.UserRepos;
 import com.realaicy.product.jc.modules.system.service.UserService;
-import com.realaicy.tna.modules.core.service.DefaultServiceImpl;
+import com.realaicy.lib.core.service.DefaultServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

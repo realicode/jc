@@ -2,7 +2,7 @@ package com.realaicy.product.jc.modules.checkdb.service;
 
 import com.realaicy.product.jc.modules.checkdb.model.CheckItemDB;
 import com.realaicy.product.jc.modules.doccenter.model.DocRes;
-import com.realaicy.tna.modules.core.service.BaseService;
+import com.realaicy.lib.core.service.BaseService;
 
 /**
  * Created by realaicy on 16/3/14.

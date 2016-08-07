@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.realaicy.product.jc.modules.doccenter.model.DocRes;
 import com.realaicy.product.jc.modules.doccenter.repos.DocRepos;
 import com.realaicy.product.jc.modules.doccenter.service.DocService;
-import com.realaicy.tna.modules.core.mapper.JsonMapper;
+import com.realaicy.lib.core.mapper.JsonMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

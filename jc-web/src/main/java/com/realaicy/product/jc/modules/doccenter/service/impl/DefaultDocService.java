@@ -7,7 +7,7 @@ import com.realaicy.product.jc.modules.system.model.User;
 import com.realaicy.product.jc.modules.system.repos.UserRepos;
 import com.realaicy.product.jc.modules.system.service.UserService;
 import com.realaicy.product.jc.realglobal.config.StaticParams;
-import com.realaicy.tna.modules.core.service.DefaultServiceImpl;
+import com.realaicy.lib.core.service.DefaultServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
