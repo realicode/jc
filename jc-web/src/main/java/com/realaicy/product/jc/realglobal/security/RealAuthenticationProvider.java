@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -24,6 +25,9 @@ public class RealAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     private RealUserDetailsService userDetailsService;
 
+    @Autowired
+    PasswordEncoder bcryptEncoder;
+
     @Override
     public Authentication authenticate(Authentication authentication)
             throws AuthenticationException {
@@ -37,8 +41,13 @@ public class RealAuthenticationProvider implements AuthenticationProvider {
             throw new UsernameNotFoundException("UsernameNotFoundException");
         }
 
+
+       /* if (!password.equals(user.getPassword())) {
+            throw new BadCredentialsException("Wrong password.");
+        }*/
+
         //加密过程在这里体现
-        if (!password.equals(user.getPassword())) {
+        if (!bcryptEncoder.matches(password, user.getPassword())) {
             throw new BadCredentialsException("Wrong password.");
         }
 

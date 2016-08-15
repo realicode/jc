@@ -2,15 +2,18 @@ package com.realaicy.product.jc;
 
 import com.realaicy.product.jc.realglobal.config.StaticParams;
 import com.realaicy.product.jc.realglobal.security.RealAuthenticationProvider;
+import com.realaicy.product.jc.realglobal.security.SessionCounterListener;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import javax.servlet.http.HttpSessionListener;
 
 import static com.realaicy.product.jc.realglobal.config.StaticParams.PATHREGX.SB_ALL;
 
@@ -22,6 +25,16 @@ import static com.realaicy.product.jc.realglobal.config.StaticParams.PATHREGX.SB
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class RealWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(10);
+    }
+
+    @Bean
+    public HttpSessionListener httpSessionListener() {
+        return new SessionCounterListener();
+    }
 
     /**
      * 自定义的AuthenticationProvider
@@ -56,7 +69,7 @@ public class RealWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin().loginPage("/login").permitAll()
                 .and()
-                .logout().permitAll().and().sessionManagement().invalidSessionUrl("/g/realerror/session/invalid")
+                .logout().permitAll().and().sessionManagement().invalidSessionUrl("/g/realerror/session/realinvalid")
                 .maximumSessions(1).expiredUrl("/g/realerror/session/expire");
     }
 
