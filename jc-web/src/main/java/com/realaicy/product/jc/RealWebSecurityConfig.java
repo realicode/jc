@@ -67,7 +67,7 @@ public class RealWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated()
                 //.and().exceptionHandling().authenticationEntryPoint(new AjaxAwareAuthenticationEntryPoint("/login"))
                 .and()
-                .formLogin().loginPage("/login").permitAll()
+                .formLogin().loginPage("/login").permitAll().and().exceptionHandling().accessDeniedPage("/403")
                 .and()
                 .logout().permitAll().and().sessionManagement().invalidSessionUrl("/g/realerror/session/realinvalid")
                 .maximumSessions(1).expiredUrl("/g/realerror/session/expire");
