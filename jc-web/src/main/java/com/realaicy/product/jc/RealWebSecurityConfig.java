@@ -12,8 +12,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import static com.realaicy.product.jc.realglobal.config.StaticParams.PATHREGX.SB_ALL;
+
 /**
- * Created by Realaicy on 2015/5/11.
+ * Created by Realaicy on 2015/5/.
  * XX
  */
 @Configuration
@@ -44,20 +46,18 @@ public class RealWebSecurityConfig extends WebSecurityConfigurerAdapter {
          .failureUrl("/login?error").permitAll();*/
 
         http.authorizeRequests()
-                .antMatchers(StaticParams.PATHREGX.JS, StaticParams.PATHREGX.IMG,
-                        StaticParams.PATHREGX.CSS, StaticParams.PATHREGX.FONT, StaticParams.PATHREGX.STATIC).permitAll()//无需访问权限
-
+                .antMatchers(SB_ALL,
+                        StaticParams.PATHREGX.STATIC, StaticParams.PATHREGX.TEMP_TEST).permitAll()//无需访问权限
                 .antMatchers(StaticParams.PATHREGX.AUTHADMIN).hasAuthority(StaticParams.USERROLE.ROLE_ADMIN)//admin角色访问权限
-
                 .antMatchers(StaticParams.PATHREGX.AUTHUSER).hasAuthority(StaticParams.USERROLE.ROLE_USER)//user角色访问权限
-
                 .anyRequest()//all others request authentication
                 .authenticated()
+                //.and().exceptionHandling().authenticationEntryPoint(new AjaxAwareAuthenticationEntryPoint("/login"))
                 .and()
                 .formLogin().loginPage("/login").permitAll()
                 .and()
-                .logout().permitAll().and().csrf().disable();
-
+                .logout().permitAll().and().sessionManagement().invalidSessionUrl("/g/realerror/session/invalid")
+                .maximumSessions(1).expiredUrl("/g/realerror/session/expire");
     }
 
     @Autowired
@@ -65,6 +65,4 @@ public class RealWebSecurityConfig extends WebSecurityConfigurerAdapter {
         //将验证过程交给自定义验证工具
         auth.authenticationProvider(realAuthenticationProvider);
     }
-
-
 }

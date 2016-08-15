@@ -44,7 +44,8 @@
         <!-- NEW WIDGET START -->
         <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-            <div class="jarviswidget jarviswidget-color-darken" id="real_search" data-widget-editbutton="false" data-widget-collapsed="true"
+            <div class="jarviswidget jarviswidget-color-darken" id="real_search" data-widget-editbutton="false"
+                 data-widget-collapsed="true"
                  data-widget-deletebutton="false" data-widget-fullscreenbutton="false">
                 <!-- widget options:
                 usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
@@ -102,7 +103,8 @@
                                     </section>
                                     <section class="col col-6">
                                         <label class="input"> <i class="icon-prepend fa fa-phone"></i>
-                                            <input type="tel" name="phone" placeholder="Phone" data-mask="(999) 999-9999">
+                                            <input type="tel" name="phone" placeholder="Phone"
+                                                   data-mask="(999) 999-9999">
                                         </label>
                                     </section>
                                 </div>
@@ -147,17 +149,18 @@
                                     <section>
                                         <section class="col col-6">
                                             <label class="input"> <i class="icon-append fa fa-calendar"></i>
-                                                <input type="text" name="startdate" id="startdate" placeholder="Expected start date">
+                                                <input type="text" name="startdate" id="startdate"
+                                                       placeholder="Expected start date">
                                             </label>
                                         </section>
                                         <section class="col col-6">
                                             <label class="input"> <i class="icon-append fa fa-calendar"></i>
-                                                <input type="text" name="finishdate" id="finishdate" placeholder="Expected finish date">
+                                                <input type="text" name="finishdate" id="finishdate"
+                                                       placeholder="Expected finish date">
                                             </label>
                                         </section>
                                     </section>
                                 </div>
-
 
 
                             </fieldset>
@@ -223,7 +226,6 @@
                 <!-- end widget div -->
 
             </div>
-
 
 
             <!-- end widget -->
@@ -292,6 +294,20 @@
         //console.log("cleared");
 
         $(document).ready(function () {
+
+
+            $.ajaxSetup({
+                error: function (x, e) {
+                    console.log("realaicy3333: " + x.status + "\t ||" + x.statusText);
+
+                    if (x.status == 500 && x.statusText == "SessionTimeout") {
+                        alert("Your session has timed out.");
+                        location.href = 'login.cfm';
+                    }
+                }
+            });
+
+
             var realtable = $('#dt_basic_real').DataTable(
                     {
                         "pagingType": "full_numbers",
@@ -354,9 +370,24 @@
                         ajax: {
                             url: "/system/user/user/list",
                             type: "POST",
+                            'beforeSend': function (request) {
+                                var token = $("meta[name='_csrf']").attr("content");
+                                var header = $("meta[name='_csrf_header']").attr("content");
+                                request.setRequestHeader(header, token);
+                            },
+
                             "data": function (d) {
                                 // d.custom = $('#myInput').val();
                                 // etc
+                            },
+                            error: function (xhr, status, error) {
+                                //console.log("realaicy:");
+                                // console.log(status);
+                                //console.log(xhr.responseText);
+                                if (xhr.responseText.indexOf("invalid") == 0) {
+                                    location = "http://127.0.0.1:48080/";
+                                }
+                                //window.location = "http://127.0.0.1:48080/login";
                             }
                         },
                         //processing: true,
@@ -460,7 +491,6 @@
                                 loadScript("smartadmin/js/plugin/datatables/buttons.html5.min.js", function () {
                                     loadScript("smartadmin/js/plugin/datatables/buttons.print.min.js", function () {
                                         loadScript("smartadmin/js/plugin/datatables/buttons.colVis.min.js", function () {
-
                                             loadScript("smartadmin/js/plugin/datatables/datatables.colVis.min.js", function () {
                                                 loadScript("smartadmin/js/plugin/datatable-responsive/datatables.responsive.min.js", pagefunction);
                                             });
