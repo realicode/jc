@@ -41,31 +41,37 @@ public class User extends BaseEntity<Long> {
      */
     @Column(name = "NICKNAME")
     private String nickname;
+    /**
+     * 用户邮箱地址
+     */
+    @Column(name = "EMAIL")
 
+    private String email;
+    /**
+     * 用户年龄
+     */
+    @Column(name = "AGE")
+    private short age;
     /**
      * 用户性别
      */
     @Column(name = "SEX")
     private char sex;
-
     /**
      * 标识:是否已经被删除
      */
     @Column(name = "F_DELETE")
     private Boolean isDelete = Boolean.FALSE;
-
     /**
      * 用户状态
      */
     @Column(name = "STATUS")
     private short status = 1;
-
     /**
      * 用户类型
      */
     @Column(name = "USERTYPE")
     private short usertype = 1;
-
     /**
      * 资源创建时间戳
      */
@@ -73,13 +79,11 @@ public class User extends BaseEntity<Long> {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
-
     /**
      * 资源创建者
      */
     @Column(name = "CREATERID")
     private Long createrID;
-
     /**
      * 资源修改时间戳
      */
@@ -87,25 +91,38 @@ public class User extends BaseEntity<Long> {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
-
     /**
      * 资源修改者
      */
     @Column(name = "UPDATERID")
     private Long updaterID;
-
     /**
      * 用户所属组织语义ID
      */
 
     @Column(name = "ORGCASID")
     private String orgCascadeID = "";
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "jc_sys_user_role", joinColumns = @JoinColumn(name = "USERID"),
             inverseJoinColumns = @JoinColumn(name = "ROLEID"))
     @JsonIgnore
     private List<Role> roles;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public short getAge() {
+        return age;
+    }
+
+    public void setAge(short age) {
+        this.age = age;
+    }
 
     public String getUsername() {
         return username;

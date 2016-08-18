@@ -14,11 +14,8 @@ import java.util.List;
  * xxx
  */
 public interface UserService extends BaseService<User, Long> {
-    List<User> findAllMenus();
 
     User findByName(String username);
 
     List<User> findAllUsersWithPage(PageRequest pageRequest);
-
-    Page<User> findTemp(Pageable pageable);
 }
