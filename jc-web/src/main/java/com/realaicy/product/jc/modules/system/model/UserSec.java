@@ -18,8 +18,8 @@ import java.util.List;
  * 文档实体类
  */
 @Entity
-@Table(name = "jc_sys_user")
-public class User extends BaseEntity<Long> {
+@Table(name = "jc_sys_user_sec")
+public class UserSec extends BaseEntity<Long> {
 
 
     /**
@@ -39,37 +39,18 @@ public class User extends BaseEntity<Long> {
      */
     @Column(name = "NICKNAME")
     private String nickname;
-    /**
-     * 用户邮箱地址
-     */
-    @Column(name = "EMAIL")
 
-    private String email;
     /**
-     * 用户年龄
+     * 标识:各种标识
      */
-    @Column(name = "AGE")
-    private short age;
-    /**
-     * 用户性别
-     */
-    @Column(name = "SEX")
-    private char sex;
-    /**
-     * 标识:是否已经被删除
-     */
-    @Column(name = "F_DELETE")
-    private Boolean isDelete = Boolean.FALSE;
-    /**
-     * 用户状态
-     */
-    @Column(name = "STATUS")
-    private short status = 1;
-    /**
-     * 用户类型
-     */
-    @Column(name = "USERTYPE")
-    private short usertype = 1;
+    @Column(name = "ACCOUNTNONEXPIRED")
+    private boolean accountNonExpired;
+    @Column(name = "ACCOUNTNONLOCKED")
+    private boolean accountNonLocked;
+    @Column(name = "CREDENTIALSNONEXPIRED")
+    private boolean credentialsNonExpired;
+    @Column(name = "ENABLED")
+    private boolean enabled;
     /**
      * 资源创建时间戳
      */
@@ -94,32 +75,42 @@ public class User extends BaseEntity<Long> {
      */
     @Column(name = "UPDATERID")
     private Long updaterID;
-    /**
-     * 用户所属组织语义ID
-     */
-
-    @Column(name = "ORGCASID")
-    private String orgCascadeID = "";
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "jc_sys_user_role", joinColumns = @JoinColumn(name = "USERID"),
             inverseJoinColumns = @JoinColumn(name = "ROLEID"))
     @JsonIgnore
     private List<Role> roles;
 
-    public String getEmail() {
-        return email;
+    public boolean isAccountNonExpired() {
+        return accountNonExpired;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
     }
 
-    public short getAge() {
-        return age;
+    public boolean isAccountNonLocked() {
+        return accountNonLocked;
     }
 
-    public void setAge(short age) {
-        this.age = age;
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
+
+    public boolean isCredentialsNonExpired() {
+        return credentialsNonExpired;
+    }
+
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public String getUsername() {
@@ -146,37 +137,6 @@ public class User extends BaseEntity<Long> {
         this.nickname = nickname;
     }
 
-    public char getSex() {
-        return sex;
-    }
-
-    public void setSex(char sex) {
-        this.sex = sex;
-    }
-
-    public Boolean getDelete() {
-        return isDelete;
-    }
-
-    public void setDelete(Boolean delete) {
-        isDelete = delete;
-    }
-
-    public short getStatus() {
-        return status;
-    }
-
-    public void setStatus(short status) {
-        this.status = status;
-    }
-
-    public short getUsertype() {
-        return usertype;
-    }
-
-    public void setUsertype(short usertype) {
-        this.usertype = usertype;
-    }
 
     public Date getCreateTime() {
         return createTime;
@@ -208,14 +168,6 @@ public class User extends BaseEntity<Long> {
 
     public void setUpdaterID(Long updaterID) {
         this.updaterID = updaterID;
-    }
-
-    public String getOrgCascadeID() {
-        return orgCascadeID;
-    }
-
-    public void setOrgCascadeID(String orgCascadeID) {
-        this.orgCascadeID = orgCascadeID;
     }
 
     public List<Role> getRoles() {

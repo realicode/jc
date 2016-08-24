@@ -9,19 +9,19 @@
 
     <!-- #CSS Links -->
     <!-- Basic Styles -->
-    <link rel="stylesheet" type="text/css" media="screen" th:href="@{/smartadmin/css/bootstrap.min.css}"
-          href="../static/smartadmin/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" th:href="@{/smartadmin/css/bootstrap.css}"
+          href="../static/smartadmin/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" media="screen" th:href="@{/smartadmin/css/font-awesome.min.css}"
           href="../static/smartadmin/css/font-awesome.min.css">
 
     <!-- SmartAdmin Styles : Caution! DO NOT change the order -->
     <link rel="stylesheet" type="text/css" media="screen"
-          th:href="@{/smartadmin/css/smartadmin-production-plugins.min.css}"
-          href="../static/smartadmin/css/smartadmin-production-plugins.min.css">
-    <link rel="stylesheet" type="text/css" media="screen" th:href="@{/smartadmin/css/smartadmin-production.min.css}"
-          href="../static/smartadmin/css/smartadmin-production.min.css">
-    <link rel="stylesheet" type="text/css" media="screen" th:href="@{/smartadmin/css/smartadmin-skins.min.css}"
-          href="../static/smartadmin/css/smartadmin-skins.min.css">
+          th:href="@{/smartadmin/css/smartadmin-production-plugins.css}"
+          href="../static/smartadmin/css/smartadmin-production-plugins.css">
+    <link rel="stylesheet" type="text/css" media="screen" th:href="@{/smartadmin/css/smartadmin-production.css}"
+          href="../static/smartadmin/css/smartadmin-production.css">
+    <link rel="stylesheet" type="text/css" media="screen" th:href="@{/smartadmin/css/smartadmin-skins.css}"
+          href="../static/smartadmin/css/smartadmin-skins.css">
 
     <!-- SmartAdmin RTL Support -->
     <link rel="stylesheet" type="text/css" media="screen" th:href="@{/smartadmin/css/smartadmin-rtl.min.css}"
@@ -34,6 +34,9 @@
     <!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
     <link rel="stylesheet" type="text/css" media="screen" th:href="@{/smartadmin/css/demo.min.css}"
           href="../static/smartadmin/css/demo.min.css">
+
+    <link rel="stylesheet" type="text/css" media="screen" th:href="@{/smartadmin/css/realaicy.css}"
+          href="../static/smartadmin/css/realaicy.css">
 
     <!-- #FAVICONS -->
     <link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon">
@@ -128,13 +131,13 @@
                     <form th:action="@{/login}" id="login-form" class="smart-form client-form"
                           method="post">
                         <header>
-                            登录
+                            <label class="realaicy_label_header">登录面板</label>
                         </header>
 
                         <fieldset>
 
                             <section>
-                                <label class="label">用户名</label>
+                                <label class="realaicy_label">用户名</label>
                                 <label class="input"> <i class="icon-append fa fa-user"></i>
                                     <input type="text" name="username">
                                     <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i>
@@ -142,7 +145,7 @@
                             </section>
 
                             <section>
-                                <label class="label">密 码</label>
+                                <label class="realaicy_label">密 码</label>
                                 <label class="input"> <i class="icon-append fa fa-lock"></i>
                                     <input type="password" name="password">
                                     <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> 请输入密码</b>

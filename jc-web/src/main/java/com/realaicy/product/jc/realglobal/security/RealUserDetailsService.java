@@ -2,15 +2,21 @@ package com.realaicy.product.jc.realglobal.security;
 
 import com.realaicy.product.jc.modules.system.model.Role;
 import com.realaicy.product.jc.modules.system.model.User;
+import com.realaicy.product.jc.modules.system.model.UserSec;
+import com.realaicy.product.jc.modules.system.repos.UserSecRepos;
 import com.realaicy.product.jc.modules.system.service.RoleService;
 import com.realaicy.product.jc.modules.system.service.UserService;
 import org.apache.commons.beanutils.BeanUtils;
+import org.hibernate.engine.jdbc.connections.internal.UserSuppliedConnectionProviderImpl;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -21,28 +27,39 @@ import java.util.List;
 public class RealUserDetailsService implements UserDetailsService {
 
     @Resource
-    private UserService userService;
+    private UserSecRepos userSecRepos;
 
     @Resource
     private RoleService roleService;
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        User user;
+        UserSec userSec;
+        Collection<GrantedAuthority> grantedAuthorities;
         try {
-            user = userService.findByName(userName);
+            userSec = userSecRepos.findByUsername(userName);
         } catch (Exception e) {
             throw new UsernameNotFoundException("user select fail");
         }
-        if (user == null) {
+        if (userSec == null) {
             throw new UsernameNotFoundException("no user found");
         } else {
             try {
-//                List<Role> roles = roleService.getRoleByUser(user);
-//                return new RealUserDetails(user, roles);
-                RealUserDetails realUserDetails = new RealUserDetails();
-                BeanUtils.copyProperties(realUserDetails, user);
-                return realUserDetails;
+
+                if (userSec.getRoles() == null || userSec.getRoles().size() < 1) {
+                    grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList("");
+                } else {
+                    StringBuilder commaBuilder = new StringBuilder();
+                    for (Role role : userSec.getRoles()) {
+                        commaBuilder.append(role.getRoleName()).append(",");
+                    }
+                    String authorities = commaBuilder.substring(0, commaBuilder.length() - 1);
+                    grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
+                }
+
+                return new RealUserDetails(userSec.getUsername(), userSec.getPassword(), userSec.getNickname()
+                        , userSec.isEnabled(), userSec.isAccountNonExpired(), userSec.isCredentialsNonExpired(), userSec.isAccountNonLocked()
+                        , grantedAuthorities);
             } catch (Exception e) {
                 throw new UsernameNotFoundException("user role select fail");
             }

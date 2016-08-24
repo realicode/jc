@@ -29,7 +29,7 @@ public class indexController {
         String landing = LocalDateTime.now().format(format);
 
         model.addAttribute("lastNotificationTime", "最后更新时间: " + landing);
-        model.addAttribute("usernickname", ((RealUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getNickname());
+        model.addAttribute("usernickname", ((RealUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 
         return "index";
     }

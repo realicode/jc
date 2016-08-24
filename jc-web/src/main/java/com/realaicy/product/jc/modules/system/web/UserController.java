@@ -1,6 +1,7 @@
 package com.realaicy.product.jc.modules.system.web;
 
 import com.realaicy.lib.core.service.BaseService;
+import com.realaicy.product.jc.common.aop.annotations.Perfable;
 import com.realaicy.product.jc.modules.system.model.User;
 import com.realaicy.product.jc.modules.system.service.UserService;
 import com.realaicy.product.jc.realglobal.web.CRUDController;
@@ -39,22 +40,23 @@ public class UserController extends CRUDController<User, Long> {
     }
 
 
-   /* @ResponseBody
-    @RequestMapping(value = "/user/list", method = RequestMethod.GET)
-    public Map<String, Object> listUsers() {
+    /* @ResponseBody
+     @RequestMapping(value = "/user/list", method = RequestMethod.GET)
+     public Map<String, Object> listUsers() {
 
-        PageRequest pageRequest = new PageRequest(
-                0, 20, Sort.Direction.ASC, "username"
-        );
+         PageRequest pageRequest = new PageRequest(
+                 0, 20, Sort.Direction.ASC, "username"
+         );
 
-        Map<String, Object> info = new HashMap<>();
+         Map<String, Object> info = new HashMap<>();
 
-        info.put("data", userService.findAllUsersWithPage(pageRequest));
-        info.put("recordsTotal", userService.count());
+         info.put("data", userService.findAllUsersWithPage(pageRequest));
+         info.put("recordsTotal", userService.count());
 
-        return info;
-    }*/
+         return info;
+     }*/
 
+    @Perfable
     @ResponseBody
     @RequestMapping(value = "/user/list", method = RequestMethod.POST)
     public Map<String, Object> listUsersPost(

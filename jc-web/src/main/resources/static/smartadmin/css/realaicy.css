@@ -18,9 +18,95 @@
  * - CUSTOM STYLES
  */
 
-.realaicy_table_header {
-    font-family: "Arial", "Microsoft YaHei", "微软雅黑", "宋体", sans-serif;
+body {
+    /*realaicy*/
+    font-family: "Microsoft YaHei", "微软雅黑", "Microsoft JhengHei", SimSun, "宋体", "Open Sans", Arial, Helvetica, Sans-Serif, sans-serif;
+    font-size: 13px;
+    line-height: 1.42857143;
+    color: #333333;
+    background-color: #ffffff;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    margin: 0;
+    font-family: "Microsoft YaHei", "微软雅黑", "Microsoft JhengHei", SimSun, "宋体", "Open Sans", Arial, Helvetica, Sans-Serif, sans-serif;
+    font-weight: 300;
+}
+
+.btn {
+    font-family: "Microsoft YaHei", "微软雅黑", "Microsoft JhengHei", SimSun, "宋体", "Open Sans", Arial, Helvetica, Sans-Serif, sans-serif;
+}
+
+.smart-form footer .btn {
+    float: right;
+    height: 31px;
+    margin: 10px 0 0 5px;
+    padding: 0 22px;
+    font: 300 15px/29px "Microsoft YaHei", "微软雅黑", "Microsoft JhengHei", SimSun, "宋体", "Open Sans", Arial, Helvetica, Sans-Serif, sans-serif;
+    cursor: pointer;
+}
+
+table.dataTable tbody th, table.dataTable tbody td {
+    padding: 8px 10px 1px 10px; /* e.g. change 8x to 4px here */
     font-size: 14px;
+
+}
+
+.widget-realaicy {
+    margin: 0px 0px 0px 0px;
+
+}
+
+.btn-realaicy {
+    font-family: "Microsoft YaHei", "微软雅黑", "宋体", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+    padding: 4px 12px;
+    font-size: 13px;
+    line-height: 1.5;
+
+    webkit-text-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    -moz-text-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    text-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+
+.btn-intable-realaicy {
+    font-family: "Microsoft YaHei", "微软雅黑", "宋体", sans-serif;
+    font-weight: 400;
+    padding: 2px 12px;
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 0 1px 6px 1px;
+
+    webkit-text-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    -moz-text-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    text-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+
+.realaicy_header {
+    font-family: "Microsoft YaHei", "微软雅黑", "Microsoft JhengHei", SimSun, "宋体", "Open Sans", Arial, Helvetica, Sans-Serif, sans-serif;
+    font-size: 28px;
+    text-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+
+.realaicy_label_header {
+    display: block;
+    margin-bottom: 6px;
+    line-height: 19px;
+    font-weight: bold;
+    font-size: 15px;
+    color: #333333;
+    text-align: left;
+    white-space: normal;
+}
+
+.realaicy_table_header {
+    font-family: "Microsoft YaHei", "微软雅黑", "Microsoft JhengHei", SimSun, "宋体", "Open Sans", Arial, Helvetica, Sans-Serif, sans-serif;
+    font-size: 14px;
+    text-shadow: 0 0 0 rgba(0, 0, 0, 0);
 }
 
 .realaicy_radio {
@@ -43,3 +129,45 @@
 .real_btn {
     height: 10px;
 }
+
+.real_datatables_button_class_left {
+    margin-right: 5px;
+    margin-left: 0;
+    margin-bottom: 8px;
+}
+
+.real_datatables_button_class_right {
+    margin-right: 50px;
+    margin-left: 5px;
+    margin-bottom: 8px;
+}
+
+.real_datatables_button_class_ingroup {
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-bottom: 8px;
+}
+
+i.glyphicon-pencil i.glyphicon-trash {
+    font-size: 0.5em;
+}
+
+table.dataTable.checkboxes-select tbody tr,
+table.dataTable thead .checkboxes-select-all {
+    cursor: pointer;
+}
+
+div.dataTables_wrapper span.select-info,
+div.dataTables_wrapper span.select-item {
+    margin-left: 0.5em;
+}
+
+@media screen and (max-width: 640px) {
+    div.dataTables_wrapper span.select-info,
+    div.dataTables_wrapper span.select-item {
+        margin-left: 0;
+        display: block;
+    }
+}
+
+
