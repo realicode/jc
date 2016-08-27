@@ -55,9 +55,12 @@ table.dataTable tbody th, table.dataTable tbody td {
 
 }
 
-.widget-realaicy {
-    margin: 0px 0px 0px 0px;
+table.dataTable tbody {
+    padding: 0; /* e.g. change 8x to 4px here */
+}
 
+.widget-realaicy {
+    margin: 0px 0px 10px 0px;
 }
 
 .btn-realaicy {
@@ -78,7 +81,6 @@ table.dataTable tbody th, table.dataTable tbody td {
     font-weight: 400;
     padding: 2px 12px;
     font-size: 12px;
-    line-height: 1.5;
     margin: 0 1px 6px 1px;
 
     webkit-text-shadow: 0 0 0 rgba(0, 0, 0, 0);

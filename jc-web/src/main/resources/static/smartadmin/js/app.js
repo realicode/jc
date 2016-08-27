@@ -1402,6 +1402,7 @@ function setup_widgets_desktop() {
             toggleClass: 'fa fa-minus | fa fa-plus',
             toggleSpeed: 200,
             onToggle: function () {
+                console.log("onToggle")
             },
             // delete btn
             deleteButton: true,

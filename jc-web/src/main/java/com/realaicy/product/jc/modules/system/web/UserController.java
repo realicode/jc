@@ -6,15 +6,20 @@ import com.realaicy.product.jc.modules.system.model.User;
 import com.realaicy.product.jc.modules.system.service.UserService;
 import com.realaicy.product.jc.realglobal.web.CRUDController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,28 +45,36 @@ public class UserController extends CRUDController<User, Long> {
     }
 
 
-    /* @ResponseBody
-     @RequestMapping(value = "/user/list", method = RequestMethod.GET)
-     public Map<String, Object> listUsers() {
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
+    public String newModel(Model model) {
+        model.addAttribute("realmodel", new User());
+        return "system/user/add";
+    }
 
-         PageRequest pageRequest = new PageRequest(
-                 0, 20, Sort.Direction.ASC, "username"
-         );
+    @ResponseBody
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public String saveModel(
+            @ModelAttribute("realmodel") final User realmodel, final BindingResult result, final ModelMap model) {
 
-         Map<String, Object> info = new HashMap<>();
+        userService.save(realmodel);
 
-         info.put("data", userService.findAllUsersWithPage(pageRequest));
-         info.put("recordsTotal", userService.count());
+        return "ok";
+    }
 
-         return info;
-     }*/
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public String addUser() {
+        return "system/user/add";
+    }
 
     @Perfable
     @ResponseBody
     @RequestMapping(value = "/user/list", method = RequestMethod.POST)
     public Map<String, Object> listUsersPost(
             @RequestParam(value = "start", defaultValue = "0") int start,
-            @RequestParam(value = "length", defaultValue = "30") int length) {
+            @RequestParam(value = "length", defaultValue = "30") int length,
+            @RequestParam(required = false) String searchString /*@RequestParam MultiValueMap parameters */)
+
+    {
 
         PageRequest pageRequest = new PageRequest(
                 start / length, length, Sort.Direction.ASC, "username"
@@ -70,7 +83,9 @@ public class UserController extends CRUDController<User, Long> {
         Map<String, Object> info = new HashMap<>();
 
         info.put("data", userService.findAllUsersWithPage(pageRequest));
+
         info.put("recordsTotal", userService.count());
+
         info.put("recordsFiltered", userService.count());
         //info.put("a", userService.count());
 
