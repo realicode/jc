@@ -57,7 +57,7 @@ public class RealUserDetailsService implements UserDetailsService {
                     grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
                 }
 
-                return new RealUserDetails(userSec.getUsername(), userSec.getPassword(), userSec.getNickname()
+                return new RealUserDetails(userSec.getId(), userSec.getUsername(), userSec.getPassword(), userSec.getNickname()
                         , userSec.isEnabled(), userSec.isAccountNonExpired(), userSec.isCredentialsNonExpired(), userSec.isAccountNonLocked()
                         , grantedAuthorities);
             } catch (Exception e) {

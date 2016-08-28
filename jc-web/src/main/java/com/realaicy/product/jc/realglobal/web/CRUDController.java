@@ -33,10 +33,18 @@ public abstract class CRUDController<M extends AbstractEntity, ID extends Serial
 
     private final BaseService<M, ID> service;
     private final String initFormParam;
+    private final String[] nameDic;
 
     public CRUDController(BaseService<M, ID> service, String initFormParam) {
         this.service = service;
         this.initFormParam = initFormParam;
+        this.nameDic = null;
+    }
+
+    public CRUDController(BaseService<M, ID> service, String initFormParam, String[] nameDic) {
+        this.service = service;
+        this.initFormParam = initFormParam;
+        this.nameDic = nameDic;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/spec")
@@ -58,12 +66,23 @@ public abstract class CRUDController<M extends AbstractEntity, ID extends Serial
     public Map<String, Object> findAllBySpecificationToDT(
             @RequestParam(value = "start", defaultValue = "0") int start,
             @RequestParam(value = "length", defaultValue = "30") int length,
+            @RequestParam(value = "order[0][column]", defaultValue = "1") int orderIndex,
+            @RequestParam(value = "order[0][dir]", defaultValue = "asc") String orderType,
             @RequestParam(value = "search", required = false) final String search) {
 
         Map<String, Object> info = new HashMap<>();
+
+        Sort sort;
+        if (orderIndex > nameDic.length) orderIndex = 1;
+        if (orderType.equals("asc"))
+            sort = new Sort(Sort.Direction.ASC, nameDic[orderIndex-1]);
+        else
+            sort = new Sort(Sort.Direction.DESC, nameDic[orderIndex-1]);
+
         PageRequest pageRequest = new PageRequest(
-                start / length, length
+                start / length, length, sort
         );
+        //pageRequest.getSort().and(new Sort(Sort.Direction.ASC));
 
         if (search != null && !search.equals("")) {
             final BaseSpecificationsBuilder<M> builder = new BaseSpecificationsBuilder<>();
@@ -78,6 +97,7 @@ public abstract class CRUDController<M extends AbstractEntity, ID extends Serial
             info.put("recordsFiltered", service.count(spec));
 
         } else {
+
             info.put("data", service.findAll(pageRequest));
             info.put("recordsFiltered", service.count());
 

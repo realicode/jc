@@ -8,9 +8,11 @@ package com.realaicy.product.jc.modules.system.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.realaicy.lib.core.orm.jpa.BaseEntity;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -27,30 +29,37 @@ public class User extends BaseEntity<Long> {
      * 用户名称
      */
     @Column(name = "USERNAME")
+    @NotEmpty
     private String username;
 
     /**
      * 用户密码(加密后的密文)
      */
+    @NotEmpty
     @Column(name = "PASSWORD")
     private String password;
 
     /**
      * 用户昵称
      */
+    @NotEmpty
     @Column(name = "NICKNAME")
     private String nickname;
     /**
      * 用户邮箱地址
      */
     @Column(name = "EMAIL")
-
     private String email;
     /**
      * 用户年龄
      */
     @Column(name = "AGE")
     private short age;
+    /**
+     * 用户年龄
+     */
+    @Column(name = "R_TOUXIANG")
+    private String portraitUrl;
     /**
      * 用户性别
      */
@@ -60,17 +69,17 @@ public class User extends BaseEntity<Long> {
      * 标识:是否已经被删除
      */
     @Column(name = "F_DELETE")
-    private Boolean isDelete = Boolean.FALSE;
+    private Boolean isDelete;
     /**
      * 用户状态
      */
     @Column(name = "STATUS")
-    private short status = 1;
+    private short status;
     /**
      * 用户类型
      */
     @Column(name = "USERTYPE")
-    private short usertype = 1;
+    private short usertype;
     /**
      * 资源创建时间戳
      */
@@ -100,12 +109,20 @@ public class User extends BaseEntity<Long> {
      */
 
     @Column(name = "ORGCASID")
-    private String orgCascadeID = "";
+    private String orgCascadeID;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "jc_sys_user_role", joinColumns = @JoinColumn(name = "USERID"),
             inverseJoinColumns = @JoinColumn(name = "ROLEID"))
     @JsonIgnore
     private List<Role> roles;
+
+    public String getPortraitUrl() {
+        return portraitUrl;
+    }
+
+    public void setPortraitUrl(String portraitUrl) {
+        this.portraitUrl = portraitUrl;
+    }
 
     public String getEmail() {
         return email;

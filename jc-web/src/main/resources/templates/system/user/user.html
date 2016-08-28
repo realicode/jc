@@ -44,10 +44,12 @@
         <!-- NEW WIDGET START -->
         <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-            <div class="jarviswidget jarviswidget-color-darken widget-realaicy" id="real_entity"
-                 data-widget-editbutton="false"
-                 data-widget-collapsed="true"
-                 data-widget-deletebutton="false" data-widget-fullscreenbutton="false">
+            <div
+                    class="jarviswidget jarviswidget-color-darken widget-realaicy" id="real_entity"
+                    data-widget-editbutton="false"
+                    data-widget-collapsed="true"
+                    data-widget-deletebutton="false"
+                    data-widget-fullscreenbutton="false">
 
                 <header>
                     <span class="widget-icon"> <i class="fa fa-table"></i> </span>
@@ -64,7 +66,8 @@
 
 
             <!-- Widget ID (each widget will need unique ID)-->
-            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-real0" data-widget-editbutton="false">
+            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-real0"
+                 data-widget-editbutton="false">
 
                 <header>
                     <span class="widget-icon"> <i class="fa fa-table"></i> </span>
@@ -210,23 +213,15 @@
             console.log("dddddddddddddddddddddd");
         });
 
-        $('#dt_basic_real').on('click', '.btn-intable-realaicy', function () {
-            console.log("click");
-            console.log("cccccccccccccccccccccc");
-            realtable.search("哈哈哈哈哈哈").draw();
-            realtable.columns(1).search("哈哈哈哈哈哈").draw();
-            realtable.column(1).search("哈哈哈哈哈哈").draw();
-            console.log("dddddddddddddddddddddd");
-        });
 
         var realtable = $('#dt_basic_real').DataTable(
                 {
                     scrollX: true,
                     scrollCollapse: true,
-                    fixedColumns: {
-                        leftColumns: 1,
-                        rightColumns: 1
-                    },
+//                    fixedColumns: {
+//                        leftColumns: 1,
+//                        rightColumns: 1
+//                    },
                     "pagingType": "full_numbers",
                     "searching": true,
                     "language": {
@@ -263,7 +258,7 @@
                         "thousands": "."
                     },
                     // "dom": 'rt<"bottom"iflp<"clear">>',
-                    "dom": "<'dt-toolbar'<'col-xs-12 col-sm-6'B><'col-sm-6 col-xs-6 hidden-xs'C>r>" +
+                    "dom": "<'dt-toolbar'<'col-xs-12 col-sm-10'B><'col-sm-2 col-xs-2 hidden-xs'C>r>" +
                     "t" +
                     "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
                     "autoWidth": true,
@@ -275,6 +270,7 @@
                             className: 'btn btn-info real_datatables_button_class_left btn-realaicy',
                             action: function (e, dt, node, config) {
                                 console.log("新增!");
+                                console.log("新增!");
 
                                 // $("#real_entity").jarviswidget.onToggle();
                                 // $('#real_entity').jarviswidget.("onToggle");
@@ -282,9 +278,7 @@
 
                                 //$('#widget-grid').jarviswidget().trigger("onToggle");
 
-
                                 $("#realeditdiv").load("/system/user/new", function () {
-
 
                                 });
 
@@ -301,7 +295,34 @@
                         },
                         {
                             text: '<i style="font-size:0.5em;" class="glyphicon glyphicon-pencil"></i> 修改',
-                            className: 'btn btn-info real_datatables_button_class_ingroup btn-realaicy'
+                            className: 'btn btn-info real_datatables_button_class_ingroup btn-realaicy',
+                            action: function (e, dt, node, config) {
+                                console.log("修改按钮!");
+
+                                var rows_selected = realtable.column(0).checkboxes.selected();
+                                if (rows_selected.length <= 0 || rows_selected.length > 1) {
+                                    $.SmartMessageBox({
+                                        title: "请注意!",
+                                        content: "请先从列表中选择一条数据",
+                                        buttons: '[确定]'
+                                    })
+                                }
+                                $.each(rows_selected, function (index, rowId) {
+                                    console.log("id: " + rowId);
+                                    $("#realeditdiv").load("/system/user/show/" + rowId, function () {
+                                    });
+                                });
+
+                                if ($("#real_entity").hasClass("jarviswidget-collapsed"))
+                                    $("#real_entity a.jarviswidget-toggle-btn").trigger("click");
+
+                                //$("#real_entity").focus();
+                                //$("html,body").animate({scrollTop: $("#real_entity").offsetTop}, 1000);
+                                $('html, body').animate({scrollTop: 0}, 'normal');
+
+                                console.log("修改按钮结束!");
+
+                            }
                         },
                         {
                             text: '<i  class="fa fa-trash-o"></i> 删除',
@@ -333,12 +354,32 @@
                         },
                         {
                             text: '快速查询',
-                            className: 'btn btn-info real_datatables_button_class_ingroup',
+                            className: 'btn btn-info real_datatables_button_class_left btn-realaicy',
                             action: function (e, dt, node, config) {
                                 realtable.draw();
                             }
                         },
-                        'csv', 'excel', 'pdf'
+                        {
+                            text: '自助复杂查询',
+                            className: 'btn btn-info real_datatables_button_class_ingroup btn-realaicy',
+                            action: function (e, dt, node, config) {
+                                $("#realeditdiv").load("/system/user/search", function () {
+
+                                });
+                                if ($("#real_entity").hasClass("jarviswidget-collapsed"))
+                                    $("#real_entity a.jarviswidget-toggle-btn").trigger("click");
+                                $('html, body').animate({scrollTop: 0}, 'normal');
+                            }
+                        },
+                        {
+                            text: '刷新数据',
+                            className: 'btn btn-info real_datatables_button_class_ingroup btn-realaicy',
+                            action: function (e, dt, node, config) {
+                                realtable.draw();
+                            }
+                        },
+                        'excel'
+
                     ],
 
                     ajax: {
@@ -391,7 +432,7 @@
                         {"data": "username"},
                         {"data": "password"},
                         {"data": "nickname"},
-                        {"data": "updateTime"},
+                        {"data": "createTime"},
                         {
                             "data": null,
                             "defaultContent": "<a  class='btn btn-danger btn-intable-realaicy real-test'>禁用</a>"
@@ -413,15 +454,19 @@
                             render: function (data, type, row) {
                                 return (moment(data).format("YYYY-MM-DD HH:mm:ss"));
                             }
+
                         }],
                     select: {
-                        style: 'multi',
+                        style: 'multi'
 //                            selector: ':not(:last-child)'
                     },
                     "order": [[1, 'asc']]
                 });
 
-
+        $('#dt_basic_real').on('click', '.btn-intable-realaicy', function () {
+            var data = realtable.row($(this).parents('tr')).data();
+            //console.log(data.id);
+        });
         /* // DOM Position key index //
 
          l - Length changing (dropdown)
@@ -437,10 +482,11 @@
         /* COLUMN FILTER  */
 
         // custom toolbar
-        $("div.toolbar").html('<div class="text-right"><img src="img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
+//        $("div.toolbar").html('<div class="text-right"><img src="img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
 
 
         /* END TABLETOOLS */
+
 
     };
 

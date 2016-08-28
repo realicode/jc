@@ -1,6 +1,7 @@
 package com.realaicy.product.jc.uitl;
 
 import com.google.common.collect.ImmutableSet;
+import com.realaicy.product.jc.realglobal.security.RealUserDetails;
 import com.realaicy.product.jc.realglobal.security.SpringSecurityPrincipal;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -65,7 +66,20 @@ public final class SpringSecurityUtil {
         return securityContext.getAuthentication();
     }
 
-    public static SpringSecurityPrincipal getCurrentPrincipal() {
+    public static RealUserDetails getCurrentPrincipal() {
+        final Authentication currentAuthentication = getCurrentAuthentication();
+        if (currentAuthentication == null) {
+            return null;
+        }
+        final Object principal = currentAuthentication.getPrincipal();
+        if (principal == null) {
+            return null;
+        }
+
+        return (RealUserDetails) principal;
+    }
+
+    public static SpringSecurityPrincipal getCurrentPrincipalV2() {
         final Authentication currentAuthentication = getCurrentAuthentication();
         if (currentAuthentication == null) {
             return null;
@@ -88,7 +102,7 @@ public final class SpringSecurityUtil {
     }
 
     public static String getUuidOfCurrentPrincipal() {
-        final SpringSecurityPrincipal currentPrincipal = getCurrentPrincipal();
+        final SpringSecurityPrincipal currentPrincipal = getCurrentPrincipalV2();
         if (currentPrincipal == null) {
             return null;
         }

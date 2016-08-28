@@ -40,6 +40,23 @@ h4 {
     font-family: "Microsoft YaHei", "微软雅黑", "Microsoft JhengHei", SimSun, "宋体", "Open Sans", Arial, Helvetica, Sans-Serif, sans-serif;
 }
 
+th, td {
+    white-space: nowrap;
+}
+
+div.dataTables_wrapper {
+    margin: 0 auto;
+}
+
+div.container {
+    width: 80%;
+}
+
+.smart-form .input input:disabled {
+    background-color: #cccccc;
+
+}
+
 .smart-form footer .btn {
     float: right;
     height: 31px;
@@ -74,6 +91,14 @@ table.dataTable tbody {
     webkit-text-shadow: 0 0 0 rgba(0, 0, 0, 0);
     -moz-text-shadow: 0 0 0 rgba(0, 0, 0, 0);
     text-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+
+.btn-search-realaicy {
+    font-family: "Microsoft YaHei", "微软雅黑", "宋体", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+    padding: 0px 12px;
+    font-size: 13px;
 }
 
 .btn-intable-realaicy {
@@ -148,6 +173,12 @@ table.dataTable tbody {
     margin-right: 5px;
     margin-left: 5px;
     margin-bottom: 8px;
+}
+
+input:disabled {
+    border: 1px solid #DDD;
+    background-color: #000000;
+    color: #ACA899;
 }
 
 i.glyphicon-pencil i.glyphicon-trash {

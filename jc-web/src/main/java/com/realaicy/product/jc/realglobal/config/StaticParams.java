@@ -31,4 +31,10 @@ public class StaticParams {
 
     }
 
+    public static final class FILEPATH {
+        public static final String TEMP_USER_PORTRAIT_PATH = "";
+
+
+    }
+
 }
