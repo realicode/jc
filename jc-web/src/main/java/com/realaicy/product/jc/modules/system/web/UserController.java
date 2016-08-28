@@ -1,6 +1,5 @@
 package com.realaicy.product.jc.modules.system.web;
 
-import com.realaicy.product.jc.common.aop.annotations.Perfable;
 import com.realaicy.product.jc.modules.system.model.User;
 import com.realaicy.product.jc.modules.system.model.UserSec;
 import com.realaicy.product.jc.modules.system.repos.UserSecRepos;
@@ -9,11 +8,8 @@ import com.realaicy.product.jc.realglobal.web.CRUDController;
 import com.realaicy.product.jc.uitl.SpringSecurityUtil;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -21,7 +17,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by realaicy on 16/7/15.
@@ -33,12 +31,19 @@ import java.util.*;
 public class UserController extends CRUDController<User, Long> {
 
     private UserService userService;
-    static final String[] nameDic = {"username", "password", "nickname", "createTime"};
-    static final List<String> bindingWhiteList = Arrays.asList("password");
+    static final private String[] nameDic = {"username", "password", "nickname", "createTime"};
+    static final private List<String> bindingWhiteList = Arrays.asList("password");
+    static final private String pageUrl = "system/user/page";
+    static final private String newEntityUrl = "system/user/add";
+    static final private String editEntityUrl = "system/user/add";
+    static final private String listEntityUrl = "system/user/page";
+    static final private String searchEntityUrl = "system/user/search";
+
 
     @Autowired
     public UserController(UserService userService) {
-        super(userService, "user", nameDic);
+        super(userService, "user", nameDic, pageUrl, newEntityUrl, editEntityUrl,
+                listEntityUrl, searchEntityUrl, User.class);
         this.userService = userService;
     }
 
@@ -48,33 +53,6 @@ public class UserController extends CRUDController<User, Long> {
     @Autowired
     UserSecRepos userSecRepos;
 
-
-    @RequestMapping(value = "/user", method = RequestMethod.GET)
-
-    public String listUserPage() {
-        return "system/user/user";
-    }
-
-
-    @RequestMapping(value = "/new", method = RequestMethod.GET)
-    public String newModel(Model model) {
-        model.addAttribute("realmodel", new User());
-        model.addAttribute("realneworupdate", "new");
-
-        return "system/user/add";
-    }
-
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public String search(Model model) {
-        return "system/user/search";
-    }
-
-    @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
-    public String showModel(@PathVariable("id") final Long id, Model model) {
-        model.addAttribute("realmodel", userService.findOne(id));
-        model.addAttribute("realUpdateID", id);
-        return "system/user/add";
-    }
 
     @ResponseBody
     @RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -135,35 +113,4 @@ public class UserController extends CRUDController<User, Long> {
 
     }
 
-
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String addUser() {
-        return "system/user/add";
-    }
-
-    @Perfable
-    @ResponseBody
-    @RequestMapping(value = "/user/list", method = RequestMethod.POST)
-    public Map<String, Object> listUsersPost(
-            @RequestParam(value = "start", defaultValue = "0") int start,
-            @RequestParam(value = "length", defaultValue = "30") int length,
-            @RequestParam(required = false) String searchString /*@RequestParam MultiValueMap parameters */)
-
-    {
-
-        PageRequest pageRequest = new PageRequest(
-                start / length, length, Sort.Direction.ASC, "username"
-        );
-
-        Map<String, Object> info = new HashMap<>();
-
-        info.put("data", userService.findAllUsersWithPage(pageRequest));
-
-        info.put("recordsTotal", userService.count());
-
-        info.put("recordsFiltered", userService.count());
-        //info.put("a", userService.count());
-
-        return info;
-    }
 }

@@ -5,22 +5,23 @@ import com.realaicy.lib.core.orm.AbstractEntity;
 import com.realaicy.lib.core.orm.jpa.search.BaseSpecificationsBuilder;
 import com.realaicy.lib.core.orm.jpa.search.SearchOperation;
 import com.realaicy.lib.core.service.BaseService;
+import com.realaicy.product.jc.common.aop.annotations.Perfable;
+import com.realaicy.product.jc.modules.system.model.User;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.Serializable;
+import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,17 +35,70 @@ public abstract class CRUDController<M extends AbstractEntity, ID extends Serial
     private final BaseService<M, ID> service;
     private final String initFormParam;
     private final String[] nameDic;
+    private final String pageUrl;
+    private final String newEntityUrl;
+    private final String editEntityUrl;
+    private final String listUrl;
+    private final String searchEntityUrl;
+
+    private final Class<M> aClass;
+
 
     public CRUDController(BaseService<M, ID> service, String initFormParam) {
         this.service = service;
         this.initFormParam = initFormParam;
         this.nameDic = null;
+        this.newEntityUrl = null;
+        this.editEntityUrl = null;
+        this.listUrl = null;
+        this.searchEntityUrl = null;
+        this.pageUrl = null;
+        this.aClass = null;
     }
 
-    public CRUDController(BaseService<M, ID> service, String initFormParam, String[] nameDic) {
+    public CRUDController(BaseService<M, ID> service, String initFormParam, String[] nameDic, String pageUrl,
+                          String newEntityUrl, String editEntityUrl, String listUrl, String searchEntityUrl,
+                          Class<M> aClass) {
         this.service = service;
         this.initFormParam = initFormParam;
         this.nameDic = nameDic;
+        this.newEntityUrl = newEntityUrl;
+        this.editEntityUrl = editEntityUrl;
+        this.listUrl = listUrl;
+        this.searchEntityUrl = searchEntityUrl;
+        this.pageUrl = pageUrl;
+        this.aClass = aClass;
+    }
+
+
+    @RequestMapping(value = "/page", method = RequestMethod.GET)
+    public String listEntityPage() {
+        return this.pageUrl;
+    }
+
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
+    public String newModel(Model model) {
+        try {
+            model.addAttribute("realmodel", aClass.newInstance());
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("realneworupdate", "new");
+        return newEntityUrl;
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public String search(Model model) {
+        return searchEntityUrl;
+    }
+
+    @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
+    public String showModel(@PathVariable("id") final ID id, Model model) {
+        model.addAttribute("realmodel", service.findOne(id));
+        model.addAttribute("realUpdateID", id);
+        return editEntityUrl;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/spec")
@@ -61,6 +115,7 @@ public abstract class CRUDController<M extends AbstractEntity, ID extends Serial
         return service.findAll(spec);
     }
 
+    @Perfable
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/list4dt")
     public Map<String, Object> findAllBySpecificationToDT(
@@ -75,9 +130,9 @@ public abstract class CRUDController<M extends AbstractEntity, ID extends Serial
         Sort sort;
         if (orderIndex > nameDic.length) orderIndex = 1;
         if (orderType.equals("asc"))
-            sort = new Sort(Sort.Direction.ASC, nameDic[orderIndex-1]);
+            sort = new Sort(Sort.Direction.ASC, nameDic[orderIndex - 1]);
         else
-            sort = new Sort(Sort.Direction.DESC, nameDic[orderIndex-1]);
+            sort = new Sort(Sort.Direction.DESC, nameDic[orderIndex - 1]);
 
         PageRequest pageRequest = new PageRequest(
                 start / length, length, sort
