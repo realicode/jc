@@ -2,12 +2,20 @@ package com.realaicy.product.jc;
 
 /**
  * Created by realaicy on 16/6/1.
- *
+ * <p>
+ * xxxx
  */
+
 import java.util.Arrays;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.realaicy.lib.core.orm.jpa.RealRepositoryFactoryBean;
+import org.activiti.engine.IdentityService;
+import org.activiti.engine.identity.Group;
+import org.activiti.engine.identity.User;
+import org.activiti.spring.SpringProcessEngineConfiguration;
+import org.activiti.spring.boot.ProcessEngineConfigurationConfigurer;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -31,6 +39,36 @@ public class Application {
     @ConfigurationProperties(prefix = "datasource.druid")
     public DataSource dataSource() {
         return new DruidDataSource();
+    }
+
+    /*@Bean
+    InitializingBean usersAndGroupsInitializer(final IdentityService identityService) {
+
+        return new InitializingBean() {
+            public void afterPropertiesSet() throws Exception {
+
+                Group group = identityService.newGroup("user");
+                group.setName("users");
+                group.setType("security-role");
+                identityService.saveGroup(group);
+
+                User admin = identityService.newUser("admin");
+                admin.setPassword("admin");
+                identityService.saveUser(admin);
+
+            }
+        };
+    }*/
+
+    @Bean
+    ProcessEngineConfigurationConfigurer processEngineConfigurationConfigurer() {
+        return new ProcessEngineConfigurationConfigurer() {
+            @Override
+            public void configure(SpringProcessEngineConfiguration springProcessEngineConfiguration) {
+                springProcessEngineConfiguration.getProcessEngineConfiguration().setDbIdentityUsed(false);
+            }
+        };
+
     }
 
     public static void main(String[] args) {
