@@ -28,15 +28,7 @@ import static com.realaicy.product.jc.realglobal.config.StaticParams.PATHREGX.SB
 public class RealWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(10);
-    }
 
-    @Bean
-    public HttpSessionListener httpSessionListener() {
-        return new SessionCounterListener();
-    }
 
     /**
      * 自定义的AuthenticationProvider

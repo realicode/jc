@@ -10,6 +10,7 @@ import java.util.Arrays;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.realaicy.lib.core.orm.jpa.RealRepositoryFactoryBean;
+import com.realaicy.product.jc.realglobal.security.SessionCounterListener;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
@@ -23,7 +24,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.servlet.http.HttpSessionListener;
 import javax.sql.DataSource;
 
 @SpringBootApplication
@@ -39,6 +43,16 @@ public class Application {
     @ConfigurationProperties(prefix = "datasource.druid")
     public DataSource dataSource() {
         return new DruidDataSource();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(10);
+    }
+
+    @Bean
+    public HttpSessionListener httpSessionListener() {
+        return new SessionCounterListener();
     }
 
     /*@Bean
