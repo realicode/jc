@@ -26,6 +26,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 
 import javax.servlet.http.HttpSessionListener;
 import javax.sql.DataSource;
@@ -82,8 +83,8 @@ public class Application {
                 springProcessEngineConfiguration.getProcessEngineConfiguration().setDbIdentityUsed(false);
             }
         };
-
     }
+
 
     public static void main(String[] args) {
 

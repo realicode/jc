@@ -175,6 +175,18 @@ table.dataTable tbody {
     margin-bottom: 8px;
 }
 
+.realtreetable {
+    background-color: #0c7cd5;
+    border-width: thick;
+    border-color: #1B1E24;
+
+}
+
+.realtreetable tbody tr, .realtreetable tbody td {
+    background-color: #00a300;
+    border: 10px #b1081b;
+}
+
 input:disabled {
     border: 1px solid #DDD;
     background-color: #000000;
