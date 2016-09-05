@@ -107,6 +107,7 @@ table.dataTable tbody {
     padding: 2px 12px;
     font-size: 12px;
     margin: 0 1px 6px 1px;
+    color: white;
 
     webkit-text-shadow: 0 0 0 rgba(0, 0, 0, 0);
     -moz-text-shadow: 0 0 0 rgba(0, 0, 0, 0);
@@ -185,6 +186,14 @@ table.dataTable tbody {
 .realtreetable tbody tr, .realtreetable tbody td {
     background-color: #00a300;
     border: 10px #b1081b;
+}
+
+.real_select {
+    height: 30px;
+    margin-top: 3px;
+    margin-bottom: -1px;
+
+    font-size: 13px;
 }
 
 input:disabled {

@@ -2,9 +2,9 @@
     <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
         <h1 class="page-title txt-color-blueDark">
             <i class="fa fa-gears fa-fw "></i>
-            系统管理
+            工作流管理
             <span>>
-				用户管理
+				我的工作
 			</span>
         </h1>
     </div>
@@ -53,7 +53,7 @@
 
                 <header>
                     <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                    <h2>新增 || 修改 || 查询用户 —— 控制面板</h2>
+                    <h2>我的工作 —— 控制面板</h2>
                 </header>
 
                 <!-- widget div-->
@@ -71,7 +71,7 @@
 
                 <header>
                     <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                    <h2>用户列表</h2>
+                    <h2>工作列表</h2>
                 </header>
 
                 <!-- widget div-->
@@ -92,14 +92,19 @@
                                 </th>
                                 <th>
                                     <input type="text" id='real_filter_username' class="form-control"
-                                           placeholder="过滤用户名"/>
+                                           placeholder="
+"/>
                                 </th>
                                 <th>
                                     <input type="text" id='real_filter_password' class="form-control"
-                                           placeholder="过滤密码"/>
+                                           placeholder="
+"/>
                                 </th>
                                 <th>
-                                    <input type="text" class="form-control" placeholder="过滤昵称"/>
+                                    <input type="text" class="form-control" placeholder="
+"/>
+                                </th>
+                                <th>
                                 </th>
                                 <th>
                                 </th>
@@ -111,12 +116,15 @@
                                 <th>
                                 </th>
                                 <th data-class="expand" class="realaicy_table_header"><i
-                                        class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> 用户名称
+                                        class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> 任务名称
+                                </th>
+                                <th data-class="expand" class="realaicy_table_header"><i
+                                        class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> 项目名称
                                 </th>
                                 <th data-hide="phone" class="realaicy_table_header"><i
-                                        class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> 密码
+                                        class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> 所有人
                                 </th>
-                                <th class="realaicy_table_header">昵称</th>
+                                <th class="realaicy_table_header">分配人</th>
                                 <th class="realaicy_table_header">创建时间</th>
                                 <th class="realaicy_table_header">操作按钮</th>
                             </tr>
@@ -151,59 +159,9 @@
 <script type="text/javascript">
 
 
-    /* DO NOT REMOVE : GLOBAL FUNCTIONS!
-     *
-     * pageSetUp(); WILL CALL THE FOLLOWING FUNCTIONS
-     *
-     * // activate tooltips
-     * $("[rel=tooltip]").tooltip();
-     *
-     * // activate popovers
-     * $("[rel=popover]").popover();
-     *
-     * // activate popovers with hover states
-     * $("[rel=popover-hover]").popover({ trigger: "hover" });
-     *
-     * // activate inline charts
-     * runAllCharts();
-     *
-     * // setup widgets
-     * setup_widgets_desktop();
-     *
-     * // run form elements
-     * runAllForms();
-     *
-     ********************************
-     *
-     * pageSetUp() is needed whenever you load a page.
-     * It initializes and checks for all basic elements of the page
-     * and makes rendering easier.
-     *
-     */
-
-    pageSetUp();
-
-    /*
-     * ALL PAGE RELATED SCRIPTS CAN GO BELOW HERE
-     * eg alert("my home function");
-     *
-     * var pagefunction = function() {
-     *   ...
-     * }
-     * loadScript("js/plugin/_PLUGIN_NAME_.js", pagefunction);
-     *
-     */
-
-    // PAGE RELATED SCRIPTS
-
     // pagefunction
     var pagefunction = function () {
         //console.log("cleared");
-
-
-        function a() {
-            console.log("aaaaa")
-        }
 
         $("#realbtn-search").on("click", function () {
             //do something here
@@ -264,94 +222,6 @@
                     "autoWidth": true,
 
                     buttons: [
-
-                        {
-                            text: '<i class="glyphicon glyphicon-plus"></i> 新增',
-                            className: 'btn btn-info real_datatables_button_class_left btn-realaicy',
-                            action: function (e, dt, node, config) {
-                                console.log("新增!");
-                                console.log("新增!");
-
-                                // $("#real_entity").jarviswidget.onToggle();
-                                // $('#real_entity').jarviswidget.("onToggle");
-                                //$('#real_entity').trigger("onToggle");
-
-                                //$('#widget-grid').jarviswidget().trigger("onToggle");
-
-                                $("#realeditdiv").load("/system/user/new", function () {
-
-                                });
-
-                                //$("#real_entity").removeClass("jarviswidget-collapsed");
-                                //$("#real_entity").removeClass("jarviswidget-collapsed");
-
-                                if ($("#real_entity").hasClass("jarviswidget-collapsed"))
-                                    $("#real_entity a.jarviswidget-toggle-btn").trigger("click");
-
-
-                                console.log("新增按钮结束!");
-
-                            }
-                        },
-                        {
-                            text: '<i style="font-size:0.5em;" class="glyphicon glyphicon-pencil"></i> 修改',
-                            className: 'btn btn-info real_datatables_button_class_ingroup btn-realaicy',
-                            action: function (e, dt, node, config) {
-                                console.log("修改按钮!");
-
-                                var rows_selected = realtable.column(0).checkboxes.selected();
-                                if (rows_selected.length <= 0 || rows_selected.length > 1) {
-                                    $.SmartMessageBox({
-                                        title: "请注意!",
-                                        content: "请先从列表中选择一条数据",
-                                        buttons: '[确定]'
-                                    })
-                                }
-                                $.each(rows_selected, function (index, rowId) {
-                                    console.log("id: " + rowId);
-                                    $("#realeditdiv").load("/system/user/show/" + rowId, function () {
-                                    });
-                                });
-
-                                if ($("#real_entity").hasClass("jarviswidget-collapsed"))
-                                    $("#real_entity a.jarviswidget-toggle-btn").trigger("click");
-
-                                //$("#real_entity").focus();
-                                //$("html,body").animate({scrollTop: $("#real_entity").offsetTop}, 1000);
-                                $('html, body').animate({scrollTop: 0}, 'normal');
-
-                                console.log("修改按钮结束!");
-
-                            }
-                        },
-                        {
-                            text: '<i  class="fa fa-trash-o"></i> 删除',
-                            className: 'btn btn-info real_datatables_button_class_ingroup btn-realaicy',
-                            action: function (e, dt, node, config) {
-                                console.log("删除按钮!");
-                                realtable.search("哈哈哈哈哈哈").draw();
-                                realtable.columns(1).search("哈哈哈哈哈哈").draw();
-                                realtable.column(1).search("哈哈哈哈哈哈").draw();
-
-                                console.log("删除按钮结束!");
-
-                            }
-                        },
-                        {
-                            text: '<i  class="fa fa-trash-o"></i> 批量删除',
-                            className: 'btn btn-danger real_datatables_button_class_right btn-realaicy',
-                            action: function (e, dt, node, config) {
-                                //alert('Button activated');
-                                var rows_selected = realtable.column(0).checkboxes.selected();
-                                $.each(rows_selected, function (index, rowId) {
-                                    console.log("id: " + rowId);
-                                });
-                                if (rows_selected.length > 0) {
-                                    console.log("youyouyou: ");
-
-                                }
-                            }
-                        },
                         {
                             text: '快速查询',
                             className: 'btn btn-info real_datatables_button_class_left btn-realaicy',
@@ -384,8 +254,8 @@
 
                     ajax: {
                         //url: "/system/user/user/list",
-                        url: "/system/user/list4dt",
-                        type: "POST",
+                        url: "runtime/tasks/?candidateGroup=org1_secretary",
+                        type: "GET",
                         'beforeSend': function (request) {
                             var token = $("meta[name='_csrf']").attr("content");
                             var header = $("meta[name='_csrf_header']").attr("content");
@@ -393,26 +263,6 @@
                         },
 
                         "data": function (d) {
-                            // d.custom = $('#myInput').val();
-                            // etc
-                            delete d.columns;
-                            var searchString = "";
-                            var search_username = $("#real_filter_username").val();
-                            var search_password = $("#real_filter_password").val();
-
-                            if (search_username != undefined && search_username != "") {
-                                searchString += "username:*";
-                                searchString += search_username;
-                                searchString += "*";
-
-                            }
-                            if (search_password != undefined && search_password != "") {
-                                searchString += ",password:*";
-                                searchString += search_password;
-                                searchString += "*";
-
-                            }
-                            d.search = searchString;
 
                         },
                         error: function (xhr, status, error) {
@@ -429,13 +279,18 @@
                     serverSide: true,
                     columns: [
                         {"data": "id"},
-                        {"data": "username"},
-                        {"data": "password"},
-                        {"data": "nickname"},
+                        {"data": "name"},
+                        {
+                            "data": null,
+                            "defaultContent": "xxx项目名称"
+                        },
+
+                        {"data": "owner"},
+                        {"data": "assignee"},
                         {"data": "createTime"},
                         {
                             "data": null,
-                            "defaultContent": "<a  class='btn btn-danger btn-intable-realaicy real-test'>分配角色</a>"
+                            "defaultContent": "<a  class='btn btn-danger btn-intable-realaicy real-test'>签收任务</a>"
                         }
                     ],
                     columnDefs: [
@@ -466,8 +321,7 @@
         $('#dt_basic_real').on('click', '.btn-intable-realaicy', function () {
             var data = realtable.row($(this).parents('tr')).data();
             console.log("data: " + data.id);
-            $("#realeditdiv").load("/system/user/user2role/" + data.id, function () {
-            });
+
 
             if ($("#real_entity").hasClass("jarviswidget-collapsed"))
                 $("#real_entity a.jarviswidget-toggle-btn").trigger("click");
@@ -476,26 +330,6 @@
             //$("html,body").animate({scrollTop: $("#real_entity").offsetTop}, 1000);
             $('html, body').animate({scrollTop: 0}, 'normal');
         });
-        /* // DOM Position key index //
-
-         l - Length changing (dropdown)
-         f - Filtering input (search)
-         t - The Table! (datatable)
-         i - Information (records)
-         p - Pagination (paging)
-         r - pRocessing
-
-
-         /* END BASIC */
-
-        /* COLUMN FILTER  */
-
-        // custom toolbar
-//        $("div.toolbar").html('<div class="text-right"><img src="img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
-
-
-        /* END TABLETOOLS */
-
 
     };
 

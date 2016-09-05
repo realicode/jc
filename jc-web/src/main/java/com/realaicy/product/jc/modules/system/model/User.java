@@ -8,12 +8,11 @@ package com.realaicy.product.jc.modules.system.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.realaicy.lib.core.orm.jpa.BaseEntity;
+import com.realaicy.product.jc.modules.project.model.ProjectInfo;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -110,11 +109,16 @@ public class User extends BaseEntity<Long> {
 
     @Column(name = "ORGCASID")
     private String orgCascadeID;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "jc_sys_user_role", joinColumns = @JoinColumn(name = "USERID"),
             inverseJoinColumns = @JoinColumn(name = "ROLEID"))
     @JsonIgnore
     private List<Role> roles;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "manager")
+    @JsonIgnore
+    private List<ProjectInfo> projects;
 
     public String getPortraitUrl() {
         return portraitUrl;

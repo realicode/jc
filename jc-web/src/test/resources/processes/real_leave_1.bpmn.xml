@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath"
+             targetNamespace="http://www.kafeitu.me/activiti-in-action">
+    <process id="simplejc" name="simple audit process">
+        <startEvent id="startevent1" name="Start"></startEvent>
+        <userTask id="comfirmDate" name="确定人员、时间、行程" activiti:candidateGroups="org1_secretary"></userTask>
+        <userTask id="preAudit" name="预稽查" activiti:candidateGroups="org1_preaudit"></userTask>
+        <userTask id="audit" name="稽查" activiti:candidateGroups="org1_audit"></userTask>
+        <userTask id="professional" name="专家评审" activiti:candidateGroups="org1_professional"></userTask>
+        <userTask id="report" name="提交报告" activiti:candidateGroups="org1_secretary"></userTask>
+        <userTask id="improvePlan" name="改进计划" activiti:candidateGroups="com_secretary"></userTask>
+        <userTask id="auditImproveResult" name="检查整改结果" activiti:candidateGroups="org1_secretary"></userTask>
+
+        <endEvent id="endevent1" name="End"></endEvent>
+
+        <sequenceFlow id="flow1" name="" sourceRef="startevent1" targetRef="comfirmDate"></sequenceFlow>
+        <sequenceFlow id="flow2" name="" sourceRef="comfirmDate" targetRef="preAudit"></sequenceFlow>
+        <sequenceFlow id="flow3" name="" sourceRef="preAudit" targetRef="audit"></sequenceFlow>
+        <sequenceFlow id="flow4" name="" sourceRef="audit" targetRef="professional"></sequenceFlow>
+        <sequenceFlow id="flow5" name="" sourceRef="professional" targetRef="report"></sequenceFlow>
+        <sequenceFlow id="flow6" name="" sourceRef="report" targetRef="improvePlan"></sequenceFlow>
+        <sequenceFlow id="flow7" name="" sourceRef="improvePlan" targetRef="auditImproveResult"></sequenceFlow>
+        <sequenceFlow id="flow8" name="" sourceRef="auditImproveResult" targetRef="endevent1"></sequenceFlow>
+
+    </process>
+</definitions>

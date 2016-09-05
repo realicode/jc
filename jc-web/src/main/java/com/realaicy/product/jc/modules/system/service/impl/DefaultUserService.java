@@ -29,5 +29,10 @@ public class DefaultUserService extends DefaultServiceImpl<User, Long>
         return baseRepository.findAll(pageRequest).getContent();
     }
 
+    @Override
+    public List<User> findByUsernameContaining(String username) {
+        return ((UserRepos) baseRepository).findTop10ByUsernameContaining(username);
+    }
+
 
 }

@@ -1,10 +1,10 @@
 <link rel="stylesheet" xmlns:th="http://www.thymeleaf.org"
       th:href="@{/realaicy/css/fancytree/ui.fancytree.css}"
-      href="../../static/realaicy/css/fancytree/ui.fancytree.css"/>
+      href="../../../static/realaicy/css/fancytree/ui.fancytree.css"/>
 
 <link rel="stylesheet" xmlns:th="http://www.thymeleaf.org"
       th:href="@{/smartadmin/css/realaicy.css}"
-      href="../../static/smartadmin/css/realaicy.css"/>
+      href="../../../static/smartadmin/css/realaicy.css"/>
 <div class="row" xmlns:th="http://www.thymeleaf.org">
     <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
         <h1 class="page-title txt-color-blueDark"><i class="fa fa-pencil-square-o fa-fw "></i> 项目管理 <span>>
@@ -82,8 +82,9 @@
                     <div class="widget-body">
 
                         <div class="row">
-                            <form  novalidate="novalidate" th:object="${realmodel}" method="POST" th:action="@{/system/org/save}"
-                                  id="realentity">
+                            <form novalidate="novalidate" th:object="${realmodel}" method="POST"
+                                  th:action="@{/project/info/save}"
+                                  id="wizard-1">
                                 <div id="bootstrap-wizard-1" class="col-sm-12">
                                     <div class="form-bootstrapWizard">
                                         <ul class="bootstrapWizard form-wizard">
@@ -125,8 +126,13 @@
                                                             <label class="col-md-2 control-label"
                                                                    style="padding-top: 6px">项目名称：</label>
                                                             <div class="col-md-10">
-                                                                <input class="form-control"
+                                                                <input class="form-control" id="pjName" name="pjName"
+                                                                       th:value="${pjName}"
                                                                        placeholder="项目名称" type="text">
+                                                                <input id="updateflag" name="updateflag" type="hidden"
+                                                                       th:value="${realneworupdate}">
+                                                                <input id="updateID" name="updateID" type="hidden"
+                                                                       th:value="${realUpdateID}">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -135,7 +141,8 @@
                                                             <label class="col-md-2 control-label"
                                                                    style="padding-top: 6px">项目预算：</label>
                                                             <div class="col-md-10">
-                                                                <input class="form-control"
+                                                                <input class="form-control" id="budget" name="budget"
+                                                                       th:value="${budget}"
                                                                        placeholder="项目预算" type="text">
                                                             </div>
                                                         </div>
@@ -150,6 +157,9 @@
                                                                         id="slmanager">
 
                                                                 </select>
+                                                                <input class="form-control" id="managerid"
+                                                                       name="managerid"
+                                                                       placeholder="项目预算" type="hidden">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -198,13 +208,15 @@
                                                 <div class="row">
                                                     <div class="col-sm-12" style="margin-bottom: 10px">
                                                         <img th:src="@{/realimages/process/temp/a1.png}"
-                                                             src="../../static/realimages/process/temp/a1.png" alt="me"
+                                                             src="../../../static/realimages/process/temp/a1.png"
+                                                             alt="me"
                                                              class="online"/>
 
                                                     </div>
                                                     <div class="col-sm-12" style="margin-bottom: 10px">
                                                         <img th:src="@{/realimages/process/temp/a2.png}"
-                                                             src="../../static/realimages/process/temp/a2.png" alt="me"
+                                                             src="../../../static/realimages/process/temp/a2.png"
+                                                             alt="me"
                                                              class="online"/>
 
                                                     </div>
@@ -441,6 +453,9 @@
                                                             class="btn-label"><i
                                                             class="glyphicon glyphicon-ok"></i></span>创建项目
                                                     </a>
+                                                    <button type="submit" class="btn btn-primary">
+                                                        提交数据
+                                                    </button>
                                                 </div>
                                             </div>
                                             <br>
@@ -500,6 +515,8 @@
     // pagefunction
 
     var pagefunction = function () {
+
+        console.log("updateflag: " + $("#updateflag").val());
 
         $("#treetable").fancytree({
             extensions: ["table"],
@@ -610,116 +627,157 @@
             }
         });
 
-        // load bootstrap wizard
 
-        loadScript("smartadmin/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js", runBootstrapWizard);
+        var $validator = $("#wizard-1").validate({
 
-        //Bootstrap Wizard Validations
-
-        function runBootstrapWizard() {
-
-            var $validator = $("#realentity").validate({
-
-                rules: {
-                    email: {
-                        required: true,
-                        email: "Your email address must be in the format of name@domain.com"
-                    },
-                    fname: {
-                        required: true
-                    },
-                    lname: {
-                        required: true
-                    },
-                    country: {
-                        required: true
-                    },
-                    city: {
-                        required: true
-                    },
-                    postal: {
-                        required: true,
-                        minlength: 4
-                    },
-                    wphone: {
-                        required: true,
-                        minlength: 10
-                    },
-                    hphone: {
-                        required: true,
-                        minlength: 10
-                    }
+            rules: {
+                email: {
+                    required: true,
+                    email: "Your email address must be in the format of name@domain.com"
                 },
-
-                messages: {
-                    fname: "Please specify your First name",
-                    lname: "Please specify your Last name",
-                    email: {
-                        required: "We need your email address to contact you",
-                        email: "Your email address must be in the format of name@domain.com"
-                    }
+                fname: {
+                    required: true
                 },
-
-                highlight: function (element) {
-                    $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+                lname: {
+                    required: true
                 },
-                unhighlight: function (element) {
-                    $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+                country: {
+                    required: true
                 },
-                errorElement: 'span',
-                errorClass: 'help-block',
-                errorPlacement: function (error, element) {
-                    if (element.parent('.input-group').length) {
-                        error.insertAfter(element.parent());
-                    } else {
-                        error.insertAfter(element);
-                    }
+                city: {
+                    required: true
+                },
+                postal: {
+                    required: true,
+                    minlength: 4
+                },
+                wphone: {
+                    required: true,
+                    minlength: 10
+                },
+                hphone: {
+                    required: true,
+                    minlength: 10
                 }
-            });
+            },
 
-            $('#bootstrap-wizard-1').bootstrapWizard({
-
-                'tabClass': 'form-wizard',
-                'onNext': function (tab, navigation, index) {
-                    var $valid = $("#wizard-1").valid();
-                    if (!$valid) {
-                        $validator.focusInvalid();
-                        return false;
-                    } else {
-                        $('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).addClass('complete');
-                        $('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).find('.step').html('<i class="fa fa-check"></i>');
-                    }
+            messages: {
+                fname: "Please specify your First name",
+                lname: "Please specify your Last name",
+                email: {
+                    required: "We need your email address to contact you",
+                    email: "Your email address must be in the format of name@domain.com"
                 }
-            });
+            },
 
-        };
+            highlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+            },
+            errorElement: 'span',
+            errorClass: 'help-block',
+            errorPlacement: function (error, element) {
+                if (element.parent('.input-group').length) {
+                    error.insertAfter(element.parent());
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            submitHandler: function (form) {
+                if ($("#updateflag").val() == "new") {
+                    console.log("newnew");
+                    console.log(jQuery("#slmanager  option:selected").text());
+                    console.log("aa" + jQuery("#slmanager").val());
+                    $("#managerid").attr("value", jQuery("#slmanager").val());
+                    $.ajax({
+                        url: form.action,
+                        type: form.method,
+                        data: $(form).serialize(),
+                        success: function (response) {
+                            console.log("OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
+                            console.log(response);
 
-        // load fuelux wizard
+                            if (response.substring(0, 2) == "ok") {
+                                console.log("11111111111" + response);
+                                $.smallBox({
+                                    title: "创建项目成功",
+                                    content: "<i class='fa fa-clock-o'></i> <i>2 seconds ago...</i>",
+                                    color: "#296191",
+                                    iconSmall: "fa fa-thumbs-up bounce animated",
+                                    timeout: 4000
+                                });
+                            }
 
-        loadScript("smartadmin/js/plugin/fuelux/wizard/wizard.min.js", fueluxWizard);
+                            else {
+                                console.log("2222222" + response);
 
-        function fueluxWizard() {
+                                $.SmartMessageBox({
+                                    title: "出错了!",
+                                    content: response,
+                                    buttons: '[确定]'
+                                })
+                            }
+                            $("#treetable").fancytree("getTree").reload();
 
-            var wizard = $('.wizard').wizard();
 
-            wizard.on('finished', function (e, data) {
-                //$("#fuelux-wizard").submit();
-                //console.log("submitted!");
-                $.smallBox({
-                    title: "Congratulations! Your form was submitted",
-                    content: "<i class='fa fa-clock-o'></i><i>1 seconds ago...</i>",
-                    color: "#5F895F",
-                    iconSmall: "fa fa-check bounce animated",
-                    timeout: 4000
-                });
+                        }
+                    });
+                } else {
+                    console.log("editedit");
+                    $("#updateflag").attr("value", 'editedit');
 
-            });
+                    $.ajax({
+                        url: form.action,
+                        type: form.method,
+                        data: $(form).serialize(),
+                        success: function (response) {
 
-        };
+                            if (response.substring(0, 2) == "ok")
+                                $.smallBox({
+                                    title: "修改用户成功",
+                                    content: "<i class='fa fa-clock-o'></i> <i>2 seconds ago...</i>",
+                                    color: "#296191",
+                                    iconSmall: "fa fa-thumbs-up bounce animated",
+                                    timeout: 4000
+                                });
+                            else {
+                                $.SmartMessageBox({
+                                    title: "出错了!",
+                                    content: response,
+                                    buttons: '[确定]'
+                                })
+                            }
+                            $("#treetable").fancytree("getTree").reload();
+                        }
+                    });
+
+                }
+            }
+
+        });
+
+        $('#bootstrap-wizard-1').bootstrapWizard({
+
+            'tabClass': 'form-wizard',
+            'onNext': function (tab, navigation, index) {
+                var $valid = $("#wizard-1").valid();
+                if (!$valid) {
+                    $validator.focusInvalid();
+                    return false;
+                } else {
+                    $('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).addClass('complete');
+                    $('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).find('.step').html('<i class="fa fa-check"></i>');
+                }
+            }
+        });
+
 
     };
 
-    loadScript("realaicy/js/fancytree/jquery.fancytree-all.js", pagefunction);
+    loadScript("smartadmin/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js",
+            loadScript("realaicy/js/fancytree/jquery.fancytree-all.js", pagefunction));
     // end pagefunction
 
     // Load bootstrap wizard dependency then run pagefunction

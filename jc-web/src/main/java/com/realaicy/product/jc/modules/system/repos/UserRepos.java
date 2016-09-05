@@ -17,4 +17,6 @@ public interface UserRepos extends BaseRepository<User, Long> {
 
     User findByUsername(String username);
 
+    List<User> findTop10ByUsernameContaining(String username);
+
 }

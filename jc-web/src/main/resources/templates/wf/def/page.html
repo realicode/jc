@@ -1,0 +1,182 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+        <h1 class="page-title txt-color-blueDark">
+            <i class="fa fa-gears fa-fw "></i>
+            工作流管理
+            <span>>
+				流程概览
+			</span>
+        </h1>
+    </div>
+    <div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
+        <ul id="sparks" class="">
+            <li class="sparks-info">
+                <h5> My Income <span class="txt-color-blue">$47,171</span></h5>
+                <div class="sparkline txt-color-blue hidden-mobile hidden-md hidden-sm">
+                    1300, 1877, 2500, 2577, 2000, 2100, 3000, 2700, 3631, 2471, 2700, 3631, 2471
+                </div>
+            </li>
+            <li class="sparks-info">
+                <h5> Site Traffic <span class="txt-color-purple"><i class="fa fa-arrow-circle-up"
+                                                                    data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;45%</span>
+                </h5>
+                <div class="sparkline txt-color-purple hidden-mobile hidden-md hidden-sm">
+                    110,150,300,130,400,240,220,310,220,300, 270, 210
+                </div>
+            </li>
+            <li class="sparks-info">
+                <h5> Site Orders <span class="txt-color-greenDark"><i class="fa fa-shopping-cart"></i>&nbsp;2447</span>
+                </h5>
+                <div class="sparkline txt-color-greenDark hidden-mobile hidden-md hidden-sm">
+                    110,150,300,130,400,240,220,310,220,300, 270, 210
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- widget grid -->
+<section id="widget-grid" class="">
+
+    <!-- row -->
+    <div class="row">
+
+        <!-- NEW WIDGET START -->
+        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+            <div
+                    class="jarviswidget jarviswidget-color-darken widget-realaicy" id="real_entity"
+                    data-widget-editbutton="false"
+                    data-widget-collapsed="true"
+                    data-widget-deletebutton="false"
+                    data-widget-fullscreenbutton="false">
+
+                <header>
+                    <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                    <h2>新增 || 修改 || 查询用户 —— 控制面板</h2>
+                </header>
+
+                <!-- widget div-->
+                <div id="realeditdiv">
+
+                </div>
+                <!-- end widget div -->
+
+            </div>
+
+
+            <!-- Widget ID (each widget will need unique ID)-->
+            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-real0"
+                 data-widget-editbutton="false">
+
+                <header>
+                    <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                    <h2>已部署流程列表</h2>
+                </header>
+
+                <!-- widget div-->
+                <div>
+                    <!-- widget edit box -->
+                    <div class="jarviswidget-editbox">
+                        <!-- This area used as dropdown edit box -->
+                    </div>
+                    <!-- end widget edit box -->
+
+                    <!-- widget content -->
+                    <div class="widget-body no-padding">
+
+                        <table width="100%" class="table table-bordered table-hover table-condensed">
+                            <thead>
+                            <tr>
+                                <th>流程定义ID</th>
+                                <th>部署ID</th>
+                                <th>流程定义名称</th>
+                                <th>流程定义KEY</th>
+                                <th>版本号</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each
+                                        ="pd:${processDefinitionList }">
+                                <td th:text="${pd.id }"></td>
+                                <td th:text="${pd.deploymentId }"></td>
+
+                                <td th:text="${pd.name }"></td>
+
+                                <td th:text="${pd.key }"></td>
+                                <td th:text="${pd.version }"></td>
+                            </tr>
+                            </th:each>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <!-- end widget content -->
+
+                </div>
+                <!-- end widget div -->
+
+            </div>
+
+
+            <!-- end widget -->
+
+        </article>
+        <!-- WIDGET END -->
+
+    </div>
+
+    <!-- end row -->
+
+    <!-- end row -->
+
+</section>
+<!-- end widget grid -->
+
+<script type="text/javascript">
+
+
+    pageSetUp();
+
+    // pagefunction
+    var pagefunction = function () {
+
+
+    };
+
+    // load related plugins
+
+    loadScript("smartadmin/js/plugin/datatables/jquery.dataTables_10.12.min.js", function () {
+        loadScript("smartadmin/js/plugin/datatables/dataTables.bootstrap.min.js", function () {
+            loadScript("smartadmin/js/plugin/datatables/dataTables.buttons.min.js", function () {
+                loadScript("smartadmin/js/plugin/datatables/buttons.bootstrap.min.js", function () {
+//                    loadScript("smartadmin/js/plugin/datatables/dataTables.select.min.js", function () {
+                    loadScript("smartadmin/js/plugin/datatables/dataTables.checkboxes.min.js", function () {
+                        loadScript("smartadmin/js/plugin/moment/moment.min.js", function () {
+                            loadScript("smartadmin/js/plugin/datatables/datetime.js", function () {
+                                loadScript("smartadmin/js/libs/jszip.min.js", function () {
+                                    loadScript("smartadmin/js/plugin/datatables/pdfmake.min.js", function () {
+                                        loadScript("smartadmin/js/plugin/datatables/vfs_fonts.js", function () {
+                                            loadScript("smartadmin/js/plugin/datatables/buttons.html5.min.js", function () {
+                                                loadScript("smartadmin/js/plugin/datatables/buttons.print.min.js", function () {
+                                                    loadScript("smartadmin/js/plugin/datatables/buttons.colVis.min.js", function () {
+                                                        loadScript("smartadmin/js/plugin/datatables/datatables.colVis.min.js", function () {
+                                                            loadScript("smartadmin/js/plugin/datatable-responsive/datatables.responsive.min.js", pagefunction);
+                                                        });
+                                                    });
+                                                });
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+//                    });
+                });
+            });
+        });
+    });
+
+
+</script>

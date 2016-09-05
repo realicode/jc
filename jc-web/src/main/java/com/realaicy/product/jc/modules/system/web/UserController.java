@@ -1,5 +1,8 @@
 package com.realaicy.product.jc.modules.system.web;
 
+import com.google.common.base.Joiner;
+import com.realaicy.lib.core.orm.jpa.search.BaseSpecificationsBuilder;
+import com.realaicy.lib.core.orm.jpa.search.SearchOperation;
 import com.realaicy.product.jc.modules.system.model.User;
 import com.realaicy.product.jc.modules.system.model.UserSec;
 import com.realaicy.product.jc.modules.system.repos.UserSecRepos;
@@ -8,6 +11,9 @@ import com.realaicy.product.jc.realglobal.web.CRUDController;
 import com.realaicy.product.jc.uitl.SpringSecurityUtil;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -17,9 +23,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by realaicy on 16/7/15.
@@ -38,6 +44,7 @@ public class UserController extends CRUDController<User, Long> {
     static final private String editEntityUrl = "system/user/add";
     static final private String listEntityUrl = "system/user/page";
     static final private String searchEntityUrl = "system/user/search";
+    static final private String userToRoleUrl = "system/user/user2role";
 
 
     @Autowired
@@ -113,4 +120,21 @@ public class UserController extends CRUDController<User, Long> {
 
     }
 
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.GET, value = "/list4select", produces = "application/json")
+    public Map<String, Object> findAllBySpecificationToSelect(
+            @RequestParam(value = "q", required = true) String search) {
+
+        Map<String, Object> info = new HashMap<>();
+
+        List<User> users = userService.findByUsernameContaining(search);
+        info.put("items", users);
+        return info;
+    }
+
+    @RequestMapping(value = "/user2role/{id}", method = RequestMethod.GET)
+    public String userToRole(@PathVariable("id") final Long id) {
+        return userToRoleUrl;
+    }
 }

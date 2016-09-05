@@ -1,0 +1,64 @@
+<!-- widget edit box -->
+<div class="jarviswidget-editbox">
+    <!-- This area used as dropdown edit box -->
+</div>
+<!-- end widget edit box -->
+
+<!-- widget content -->
+<div class="widget-body no-padding">
+    <form>
+
+        <fieldset>
+
+            <div class="row">
+                <div class="col-sm-12" style="margin-bottom: 10px">
+                    <div class="form-group">
+                        <select multiple="multiple" size="10" name="duallistbox_demo2" id="initializeDuallistbox">
+                            <option value="option1">中国肿瘤临床试验稽查——协作组</option>
+                            <option value="option2">中国肿瘤临床试验稽查——专家组</option>
+                            <option value="option3" selected="selected">中国肿瘤临床试验稽查——秘书处</option>
+                            <option value="option4">中国肿瘤临床试验稽查——稽查组</option>
+                            <option value="option5">中国肿瘤临床试验稽查——预稽查组</option>
+                            <option value="option7">申请方——项目经理组</option>
+                            <option value="option8">申请方——秘书组</option>
+
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+        </fieldset>
+
+        <footer>
+
+            <button type="submit" class="btn btn-primary">
+                提交数据
+            </button>
+        </footer>
+    </form>
+
+
+</div>
+
+<script>
+
+    var pagefunction = function () {
+
+        loadScript("smartadmin/js/plugin/bootstrap-duallistbox/jquery.bootstrap-duallistbox.min.js", initializeDuallistbox);
+
+        function initializeDuallistbox() {
+            var initializeDuallistbox = $('#initializeDuallistbox').bootstrapDualListbox({
+                nonSelectedListLabel: '可选角色',
+                selectedListLabel: '已选角色',
+                preserveSelectionOnMove: 'moved',
+                moveOnSelect: false,
+            });
+        }
+    };
+
+    pagefunction();
+
+
+</script>
+<!-- end widget content -->

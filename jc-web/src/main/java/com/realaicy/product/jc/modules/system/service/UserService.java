@@ -18,4 +18,7 @@ public interface UserService extends BaseService<User, Long> {
     User findByName(String username);
 
     List<User> findAllUsersWithPage(PageRequest pageRequest);
+
+    List<User> findByUsernameContaining(String username);
+
 }

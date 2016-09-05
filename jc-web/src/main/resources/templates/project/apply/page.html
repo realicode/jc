@@ -2,9 +2,9 @@
     <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
         <h1 class="page-title txt-color-blueDark">
             <i class="fa fa-gears fa-fw "></i>
-            系统管理
+            项目管理
             <span>>
-				用户管理
+				稽查申请管理
 			</span>
         </h1>
     </div>
@@ -53,7 +53,7 @@
 
                 <header>
                     <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                    <h2>新增 || 修改 || 查询用户 —— 控制面板</h2>
+                    <h2>新增 || 修改 || 查询申请 —— 控制面板</h2>
                 </header>
 
                 <!-- widget div-->
@@ -71,7 +71,7 @@
 
                 <header>
                     <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                    <h2>用户列表</h2>
+                    <h2>稽查申请列表</h2>
                 </header>
 
                 <!-- widget div-->
@@ -91,17 +91,27 @@
                                 <th>
                                 </th>
                                 <th>
-                                    <input type="text" id='real_filter_username' class="form-control"
-                                           placeholder="过滤用户名"/>
+                                    <input type="text" id='real_filter_subject' class="form-control"
+                                           placeholder="过滤主题"/>
                                 </th>
                                 <th>
-                                    <input type="text" id='real_filter_password' class="form-control"
-                                           placeholder="过滤密码"/>
+                                    <input type="text" id='real_filter_compname' class="form-control"
+                                           placeholder="过滤申请人"/>
                                 </th>
                                 <th>
-                                    <input type="text" class="form-control" placeholder="过滤昵称"/>
+                                    <input type="text" class="form-control" placeholder="过滤联系人"/>
                                 </th>
                                 <th>
+                                </th>
+                                <th>
+                                </th>
+                                <th><label class="select ">
+                                    <select name="status" id='real_filter_status' class="real_select">
+                                        <option value="-1" selected="" disabled="">过滤用户状态</option>
+                                        <option value="0">未处理</option>
+                                        <option value="1">处理中</option>
+
+                                    </select> <i></i> </label>
                                 </th>
                                 <th>
                                 </th>
@@ -111,13 +121,15 @@
                                 <th>
                                 </th>
                                 <th data-class="expand" class="realaicy_table_header"><i
-                                        class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> 用户名称
+                                        class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> 申请主题
                                 </th>
                                 <th data-hide="phone" class="realaicy_table_header"><i
-                                        class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> 密码
+                                        class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> 申请人名称
                                 </th>
-                                <th class="realaicy_table_header">昵称</th>
+                                <th class="realaicy_table_header">联系人</th>
                                 <th class="realaicy_table_header">创建时间</th>
+                                <th class="realaicy_table_header">联系人电话</th>
+                                <th class="realaicy_table_header">申请状态</th>
                                 <th class="realaicy_table_header">操作按钮</th>
                             </tr>
 
@@ -264,26 +276,13 @@
                     "autoWidth": true,
 
                     buttons: [
-
                         {
                             text: '<i class="glyphicon glyphicon-plus"></i> 新增',
                             className: 'btn btn-info real_datatables_button_class_left btn-realaicy',
                             action: function (e, dt, node, config) {
                                 console.log("新增!");
-                                console.log("新增!");
-
-                                // $("#real_entity").jarviswidget.onToggle();
-                                // $('#real_entity').jarviswidget.("onToggle");
-                                //$('#real_entity').trigger("onToggle");
-
-                                //$('#widget-grid').jarviswidget().trigger("onToggle");
-
-                                $("#realeditdiv").load("/system/user/new", function () {
-
+                                $("#realeditdiv").load("/project/apply/new", function () {
                                 });
-
-                                //$("#real_entity").removeClass("jarviswidget-collapsed");
-                                //$("#real_entity").removeClass("jarviswidget-collapsed");
 
                                 if ($("#real_entity").hasClass("jarviswidget-collapsed"))
                                     $("#real_entity a.jarviswidget-toggle-btn").trigger("click");
@@ -384,7 +383,7 @@
 
                     ajax: {
                         //url: "/system/user/user/list",
-                        url: "/system/user/list4dt",
+                        url: "/project/apply/list4dt",
                         type: "POST",
                         'beforeSend': function (request) {
                             var token = $("meta[name='_csrf']").attr("content");
@@ -397,20 +396,25 @@
                             // etc
                             delete d.columns;
                             var searchString = "";
-                            var search_username = $("#real_filter_username").val();
-                            var search_password = $("#real_filter_password").val();
+                            var search_subject = $("#real_filter_subject").val();
+                            var search_compname = $("#real_filter_compname").val();
+                            var search_status = $("#real_filter_status").val();
 
-                            if (search_username != undefined && search_username != "") {
-                                searchString += "username:*";
-                                searchString += search_username;
+                            if (search_subject != undefined && search_subject != "") {
+                                searchString += "subject:*";
+                                searchString += search_subject;
                                 searchString += "*";
 
                             }
-                            if (search_password != undefined && search_password != "") {
-                                searchString += ",password:*";
-                                searchString += search_password;
+                            if (search_compname != undefined && search_compname != "") {
+                                searchString += ",compName:*";
+                                searchString += search_compname;
                                 searchString += "*";
 
+                            }
+                            if (search_status != undefined && search_status != "") {
+                                searchString += ",status:";
+                                searchString += search_status;
                             }
                             d.search = searchString;
 
@@ -429,13 +433,16 @@
                     serverSide: true,
                     columns: [
                         {"data": "id"},
-                        {"data": "username"},
-                        {"data": "password"},
-                        {"data": "nickname"},
+                        {"data": "subject"},
+                        {"data": "compName"},
+                        {"data": "contacts"},
                         {"data": "createTime"},
+                        {"data": "contactTel"},
+                        {"data": "status"},
+
                         {
                             "data": null,
-                            "defaultContent": "<a  class='btn btn-danger btn-intable-realaicy real-test'>分配角色</a>"
+                            "defaultContent": "<a  class='btn btn-danger btn-intable-realaicy real-test'>处理</a>"
                         }
                     ],
                     columnDefs: [
@@ -455,6 +462,21 @@
                                 return (moment(data).format("YYYY-MM-DD HH:mm:ss"));
                             }
 
+                        },
+                        {
+                            targets: 6,
+                            //render: $.fn.dataTable.render.moment('MMMM Do YYYY, h:mm:ss a')
+                            render: function (data, type, row) {
+                                if (data == "0") {
+                                    return "<label  class='label bg-color-blueLight '>未处理</label>";
+                                } else if (data == "1") {
+                                    return "<label  class='label bg-color-blue '>处理中</label>";
+                                }else if (data == "30") {
+                                    return "<label  class='label bg-color-green '>已办结</label>";
+                                }
+
+                            }
+
                         }],
                     select: {
                         style: 'multi'
@@ -465,8 +487,8 @@
 
         $('#dt_basic_real').on('click', '.btn-intable-realaicy', function () {
             var data = realtable.row($(this).parents('tr')).data();
-            console.log("data: " + data.id);
-            $("#realeditdiv").load("/system/user/user2role/" + data.id, function () {
+            console.log(data.id);
+            $("#realeditdiv").load("/project/apply/process/" + data.id, function () {
             });
 
             if ($("#real_entity").hasClass("jarviswidget-collapsed"))
@@ -476,26 +498,6 @@
             //$("html,body").animate({scrollTop: $("#real_entity").offsetTop}, 1000);
             $('html, body').animate({scrollTop: 0}, 'normal');
         });
-        /* // DOM Position key index //
-
-         l - Length changing (dropdown)
-         f - Filtering input (search)
-         t - The Table! (datatable)
-         i - Information (records)
-         p - Pagination (paging)
-         r - pRocessing
-
-
-         /* END BASIC */
-
-        /* COLUMN FILTER  */
-
-        // custom toolbar
-//        $("div.toolbar").html('<div class="text-right"><img src="img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
-
-
-        /* END TABLETOOLS */
-
 
     };
 

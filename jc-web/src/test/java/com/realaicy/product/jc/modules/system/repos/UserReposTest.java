@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.*;
@@ -34,6 +35,12 @@ public class UserReposTest {
     public void testFindUser() throws Exception {
         User user = userRepos.findOne(6L);
     }
+
+    @Test
+    public void testFindContaining() throws Exception {
+        List<User> users = userRepos.findTop10ByUsernameContaining("1");
+    }
+
 
     @Test
     public void testCreateUser() throws Exception {
