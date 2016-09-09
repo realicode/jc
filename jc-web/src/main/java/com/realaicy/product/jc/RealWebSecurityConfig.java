@@ -54,7 +54,7 @@ public class RealWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers(SB_ALL,
-                        StaticParams.PATHREGX.STATIC, StaticParams.PATHREGX.TEMP_TEST).permitAll()//无需访问权限
+                        StaticParams.PATHREGX.STATIC, StaticParams.PATHREGX.TEMP_TEST,"/runtime/tasks/**").permitAll()//无需访问权限
                 .antMatchers(StaticParams.PATHREGX.AUTHADMIN).hasAuthority(StaticParams.USERROLE.ROLE_ADMIN)//admin角色访问权限
                 .antMatchers(StaticParams.PATHREGX.AUTHUSER).hasAuthority(StaticParams.USERROLE.ROLE_USER)//user角色访问权限
                 .anyRequest()//all others request authentication
