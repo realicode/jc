@@ -2,6 +2,7 @@ package com.realaicy.product.jc.modules.system.service;
 
 import com.realaicy.product.jc.Application;
 import com.realaicy.product.jc.modules.system.model.User;
+import com.realaicy.product.jc.uitl.SpringSecurityUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +10,14 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.*;
 
@@ -22,9 +27,13 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
+@Transactional
 public class UserServiceTest {
     @Autowired
     UserService userService;
+
+    @Autowired
+    UserSecService userSecService;
 
     @Test
     public void findByName() throws Exception {
@@ -41,5 +50,22 @@ public class UserServiceTest {
         //Page<User> userPage = userService.findTemp(pageRequest);
         //System.out.println(userPage.getSize());
     }
+
+    @Test
+    public void findUserRoles() throws Exception {
+        userService.findByName("realaicy").getRoles();
+        //assertThat(userService.findByName("realaicy").getNickname(), equalTo("刘旭东"));
+        assertThat(userService.findByName("realaicy").getRoles().get(0).getRoleName(), equalTo("超级管理员"));
+    }
+
+    @Test
+    @WithUserDetails("wym")
+    public void findUserRoles2() throws Exception {
+        UserDetails userDetails = SpringSecurityUtil.getCurrentUserDetails();
+        //assertThat(SpringSecurityUtil.getCurrentUserDetails().getAuthorities().size(), equalTo("2"));
+
+
+    }
+
 
 }

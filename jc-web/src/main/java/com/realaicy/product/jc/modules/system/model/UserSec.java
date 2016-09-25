@@ -75,7 +75,7 @@ public class UserSec extends BaseEntity<Long> {
      */
     @Column(name = "UPDATERID")
     private Long updaterID;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "jc_sys_user_role", joinColumns = @JoinColumn(name = "USERID"),
             inverseJoinColumns = @JoinColumn(name = "ROLEID"))
     @JsonIgnore

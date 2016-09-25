@@ -7,6 +7,7 @@ package com.realaicy.product.jc.modules.system.model;
  */
 
 import com.alibaba.druid.sql.visitor.functions.Char;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.realaicy.lib.core.orm.jpa.BaseEntity;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -70,6 +71,20 @@ public class Role extends BaseEntity<Long> {
 
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
+    /**
+     * 角色所拥有的菜单
+     */
+
+    @Column(name = "menus")
+    private String menus;
+
+    public String getMenus() {
+        return menus;
+    }
+
+    public void setMenus(String menus) {
+        this.menus = menus;
+    }
 
     public String getRoleName() {
         return roleName;

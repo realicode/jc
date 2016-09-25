@@ -14,4 +14,7 @@ public interface RoleService extends BaseService<Role, Long> {
     List<Role> findAllMenus();
 
     List<Role> getRoleByUser(User user);
+
+    Role findByRoleName(String roleName);
+
 }

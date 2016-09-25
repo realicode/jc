@@ -10,6 +10,8 @@ import java.util.Arrays;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.realaicy.lib.core.orm.jpa.RealRepositoryFactoryBean;
+import com.realaicy.product.jc.realglobal.security.RealAuthenticationProvider;
+import com.realaicy.product.jc.realglobal.security.RealUserDetailsService;
 import com.realaicy.product.jc.realglobal.security.SessionCounterListener;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
@@ -46,10 +48,7 @@ public class Application {
         return new DruidDataSource();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(10);
-    }
+
 
     @Bean
     public HttpSessionListener httpSessionListener() {
@@ -84,6 +83,9 @@ public class Application {
             }
         };
     }
+
+
+
 
 
     public static void main(String[] args) {

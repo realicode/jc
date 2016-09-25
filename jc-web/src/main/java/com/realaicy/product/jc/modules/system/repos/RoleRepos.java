@@ -10,4 +10,6 @@ import com.realaicy.lib.core.orm.jpa.BaseRepository;
  */
 public interface RoleRepos extends BaseRepository<Role, Long> {
 
+    Role findByRoleName(String roleName);
+
 }

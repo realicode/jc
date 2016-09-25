@@ -3,17 +3,21 @@ package com.realaicy.product.jc.realglobal.security;
 import com.realaicy.product.jc.modules.system.model.Role;
 import com.realaicy.product.jc.modules.system.model.User;
 import com.realaicy.product.jc.modules.system.model.UserSec;
+import com.realaicy.product.jc.modules.system.repos.UserRepos;
 import com.realaicy.product.jc.modules.system.repos.UserSecRepos;
 import com.realaicy.product.jc.modules.system.service.RoleService;
+import com.realaicy.product.jc.modules.system.service.UserSecService;
 import com.realaicy.product.jc.modules.system.service.UserService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.hibernate.engine.jdbc.connections.internal.UserSuppliedConnectionProviderImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Collection;
@@ -23,21 +27,18 @@ import java.util.List;
  * Created by realaicy on 16/7/14.
  * XXX
  */
-@Service
+@Service("R2")
 public class RealUserDetailsService implements UserDetailsService {
 
-    @Resource
-    private UserSecRepos userSecRepos;
-
-    @Resource
-    private RoleService roleService;
-
+    @Autowired
+    private UserSecService userSecService;
+    @Transactional(readOnly=true)
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         UserSec userSec;
         Collection<GrantedAuthority> grantedAuthorities;
         try {
-            userSec = userSecRepos.findByUsername(userName);
+            userSec = userSecService.findByUsername(userName);
         } catch (Exception e) {
             throw new UsernameNotFoundException("user select fail");
         }

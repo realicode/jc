@@ -110,7 +110,7 @@ public class User extends BaseEntity<Long> {
     @Column(name = "ORGCASID")
     private String orgCascadeID;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "jc_sys_user_role", joinColumns = @JoinColumn(name = "USERID"),
             inverseJoinColumns = @JoinColumn(name = "ROLEID"))
     @JsonIgnore

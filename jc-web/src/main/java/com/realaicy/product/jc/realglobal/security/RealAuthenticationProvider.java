@@ -7,6 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -19,14 +20,14 @@ import java.util.List;
  * Created by Realaicy on 2015/5/11.
  * XXX
  */
-@Component
 public class RealAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
-    private RealUserDetailsService userDetailsService;
+    private RealUserDetailsService realUserDetailsService;
 
     @Autowired
     PasswordEncoder bcryptEncoder;
+
 
     @Override
     public Authentication authenticate(Authentication authentication)
@@ -35,7 +36,7 @@ public class RealAuthenticationProvider implements AuthenticationProvider {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
 
-        RealUserDetails user = (RealUserDetails) userDetailsService.loadUserByUsername(username);
+        RealUserDetails user = (RealUserDetails) realUserDetailsService.loadUserByUsername(username);
 
         if (user == null) {
             throw new UsernameNotFoundException("UsernameNotFoundException");

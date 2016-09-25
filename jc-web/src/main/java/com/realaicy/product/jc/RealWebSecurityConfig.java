@@ -2,8 +2,11 @@ package com.realaicy.product.jc;
 
 import com.realaicy.product.jc.realglobal.config.StaticParams;
 import com.realaicy.product.jc.realglobal.security.RealAuthenticationProvider;
+import com.realaicy.product.jc.realglobal.security.RealUserDetails;
+import com.realaicy.product.jc.realglobal.security.RealUserDetailsService;
 import com.realaicy.product.jc.realglobal.security.SessionCounterListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -11,6 +14,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -27,14 +31,21 @@ import static com.realaicy.product.jc.realglobal.config.StaticParams.PATHREGX.SB
 @Order(10)
 public class RealWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(10);
+    }
 
-
-
-    /**
-     * 自定义的AuthenticationProvider
-     */
     @Autowired
-    private RealAuthenticationProvider realAuthenticationProvider;
+    @Qualifier("R2")
+    UserDetailsService userDetailsService;
+
+
+//    /**
+//     * 自定义的AuthenticationProvider
+//     */
+//    @Autowired
+//    private RealAuthenticationProvider realAuthenticationProvider;
 
 
     /**
@@ -54,7 +65,7 @@ public class RealWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers(SB_ALL,
-                        StaticParams.PATHREGX.STATIC, StaticParams.PATHREGX.TEMP_TEST,"/runtime/tasks/**").permitAll()//无需访问权限
+                        StaticParams.PATHREGX.STATIC, StaticParams.PATHREGX.TEMP_TEST, "/runtime/tasks/**").permitAll()//无需访问权限
                 .antMatchers(StaticParams.PATHREGX.AUTHADMIN).hasAuthority(StaticParams.USERROLE.ROLE_ADMIN)//admin角色访问权限
                 .antMatchers(StaticParams.PATHREGX.AUTHUSER).hasAuthority(StaticParams.USERROLE.ROLE_USER)//user角色访问权限
                 .anyRequest()//all others request authentication
@@ -70,6 +81,7 @@ public class RealWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         //将验证过程交给自定义验证工具
-        auth.authenticationProvider(realAuthenticationProvider);
+        //auth.authenticationProvider(realAuthenticationProvider);
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 }

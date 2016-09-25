@@ -27,4 +27,9 @@ public class DefaultRoleService extends DefaultServiceImpl<Role, Long>
     public List<Role> getRoleByUser(User user) {
         return null;
     }
+
+    @Override
+    public Role findByRoleName(String roleName) {
+        return ((RoleRepos) baseRepository).findByRoleName(roleName);
+    }
 }
