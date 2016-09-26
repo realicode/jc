@@ -6,29 +6,19 @@ package com.realaicy.product.jc;
  * xxxx
  */
 
-import java.util.Arrays;
-
 import com.alibaba.druid.pool.DruidDataSource;
 import com.realaicy.lib.core.orm.jpa.RealRepositoryFactoryBean;
-import com.realaicy.product.jc.realglobal.security.RealAuthenticationProvider;
-import com.realaicy.product.jc.realglobal.security.RealUserDetailsService;
 import com.realaicy.product.jc.realglobal.security.SessionCounterListener;
-import org.activiti.engine.IdentityService;
-import org.activiti.engine.identity.Group;
-import org.activiti.engine.identity.User;
 import org.activiti.spring.SpringProcessEngineConfiguration;
 import org.activiti.spring.boot.ProcessEngineConfigurationConfigurer;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 
 import javax.servlet.http.HttpSessionListener;
 import javax.sql.DataSource;
@@ -36,6 +26,7 @@ import javax.sql.DataSource;
 @SpringBootApplication
 @EnableJpaRepositories(repositoryFactoryBeanClass = RealRepositoryFactoryBean.class)
 @EnableAspectJAutoProxy
+@EnableCaching
 public class Application {
     /**
      * Data source.
@@ -49,30 +40,11 @@ public class Application {
     }
 
 
-
     @Bean
     public HttpSessionListener httpSessionListener() {
         return new SessionCounterListener();
     }
 
-    /*@Bean
-    InitializingBean usersAndGroupsInitializer(final IdentityService identityService) {
-
-        return new InitializingBean() {
-            public void afterPropertiesSet() throws Exception {
-
-                Group group = identityService.newGroup("user");
-                group.setName("users");
-                group.setType("security-role");
-                identityService.saveGroup(group);
-
-                User admin = identityService.newUser("admin");
-                admin.setPassword("admin");
-                identityService.saveUser(admin);
-
-            }
-        };
-    }*/
 
     @Bean
     ProcessEngineConfigurationConfigurer processEngineConfigurationConfigurer() {
@@ -85,14 +57,11 @@ public class Application {
     }
 
 
-
-
-
     public static void main(String[] args) {
 
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
 
-       /* System.out.println("Let's inspect the beans provided by Spring Boot:");
+       /* System.out.println("Let's inspect the beans provided by Spring Boot:");O
 
         String[] beanNames = ctx.getBeanDefinitionNames();
         Arrays.sort(beanNames);

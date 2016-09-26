@@ -6,7 +6,11 @@ import com.realaicy.product.jc.modules.system.repos.MenuRepos;
 import com.realaicy.product.jc.modules.system.service.MenuService;
 import com.realaicy.product.jc.modules.system.service.RoleService;
 import com.realaicy.product.jc.uitl.SpringSecurityUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
@@ -17,19 +21,28 @@ import java.util.*;
  * xxx
  */
 @Service
+@CacheConfig(cacheNames = "menus")
 public class DefaultMenuService extends DefaultServiceImpl<Menu, Long>
         implements MenuService {
+
+    private Logger log = LoggerFactory.getLogger(getClass());
+
 
     @Autowired
     private RoleService roleService;
 
     @Override
+    @Cacheable(value = "usermenu", key = "T(com.realaicy.product.jc.uitl.SpringSecurityUtil).getNameOfCurrentPrincipal()")
     public List<Menu> findUserMenu() {
+
+        log.info("findUserMenu------------start");
 
         List<Menu> allMenus = ((MenuRepos) baseRepository).findAllMenus();
         List<Menu> filteredMenus = new LinkedList<>();
 
         if (SpringSecurityUtil.getNameOfCurrentPrincipal().equals("realaicy")) {
+            log.info("findUserMenu------------end");
+
             return allMenus;
         } else {
             Set<String> hashSet = new HashSet<>();
@@ -66,10 +79,8 @@ public class DefaultMenuService extends DefaultServiceImpl<Menu, Long>
 //                        }
 //                    }
 //                }
-
             }
-
-
+            log.info("findUserMenu------------end");
             return filteredMenus;
         }
 

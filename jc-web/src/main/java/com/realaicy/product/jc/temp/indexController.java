@@ -38,6 +38,8 @@ public class indexController {
     @Autowired
     MenuService menuService;
 
+
+
     @RequestMapping("/")
     public String index(@RequestParam(value = "name", required = false, defaultValue = "World V2") String name, Model model) {
         model.addAttribute("name", name + "V2");
