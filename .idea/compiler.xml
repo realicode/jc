@@ -29,7 +29,7 @@
     <bytecodeTargetLevel>
       <module name="JC" target="1.5" />
       <module name="jc-libs" target="1.8" />
-      <module name="jc-parent" target="1.5" />
+      <module name="jc-parent" target="1.8" />
       <module name="jc-web" target="1.8" />
     </bytecodeTargetLevel>
   </component>

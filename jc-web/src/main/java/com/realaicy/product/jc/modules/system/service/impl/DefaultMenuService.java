@@ -21,7 +21,7 @@ import java.util.*;
  * xxx
  */
 @Service
-@CacheConfig(cacheNames = "menus")
+@CacheConfig(cacheNames = "demo")
 public class DefaultMenuService extends DefaultServiceImpl<Menu, Long>
         implements MenuService {
 
@@ -32,7 +32,7 @@ public class DefaultMenuService extends DefaultServiceImpl<Menu, Long>
     private RoleService roleService;
 
     @Override
-    @Cacheable(value = "usermenu", key = "T(com.realaicy.product.jc.uitl.SpringSecurityUtil).getNameOfCurrentPrincipal()")
+    @Cacheable(value = "demo", key = "T(com.realaicy.product.jc.uitl.SpringSecurityUtil).getNameOfCurrentPrincipal()")
     public List<Menu> findUserMenu() {
 
         log.info("findUserMenu------------start");

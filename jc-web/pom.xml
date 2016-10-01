@@ -3,12 +3,12 @@
     <parent>
         <artifactId>jc-parent</artifactId>
         <groupId>com.realaicy.tna.product.jc</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.1-SNAPSHOT</version>
         <relativePath>../jc-parent/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>jc-web</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>jc-web</name>
     <url>http://maven.apache.org</url>
     <dependencies>
@@ -16,7 +16,7 @@
         <dependency>
             <groupId>com.realaicy.lib</groupId>
             <artifactId>lib-core</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.1-20161001-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <groupId>xml-apis</groupId>
@@ -100,6 +100,11 @@
             <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+        </dependency>
+
 
         <dependency>
             <groupId>org.activiti</groupId>
@@ -173,6 +178,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <executable>true</executable>
+                </configuration>
             </plugin>
         </plugins>
     </build>
