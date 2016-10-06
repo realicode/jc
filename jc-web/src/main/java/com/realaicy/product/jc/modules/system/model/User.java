@@ -25,19 +25,29 @@ public class User extends BaseEntity<Long> {
 
 
     /**
+     * 所属租户
+     */
+    @Column(name = "TENANTID")
+    private Long tenantID;
+
+    /**
+     * 所属组织
+     */
+    @Column(name = "ORGID")
+    private Long orgID;
+
+    /**
      * 用户名称
      */
     @Column(name = "USERNAME")
     @NotEmpty
     private String username;
-
     /**
      * 用户密码(加密后的密文)
      */
     @NotEmpty
     @Column(name = "PASSWORD")
     private String password;
-
     /**
      * 用户昵称
      */
@@ -109,16 +119,22 @@ public class User extends BaseEntity<Long> {
 
     @Column(name = "ORGCASID")
     private String orgCascadeID;
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "jc_sys_user_role", joinColumns = @JoinColumn(name = "USERID"),
             inverseJoinColumns = @JoinColumn(name = "ROLEID"))
     @JsonIgnore
     private List<Role> roles;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "manager")
     @JsonIgnore
     private List<ProjectInfo> projects;
+
+    public Long getTenantID() {
+        return tenantID;
+    }
+
+    public void setTenantID(Long tenantID) {
+        this.tenantID = tenantID;
+    }
 
     public String getPortraitUrl() {
         return portraitUrl;

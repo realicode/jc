@@ -58,6 +58,25 @@ public final class SpringSecurityUtil {
         return null;
     }
 
+    public static RealUserDetails getCurrentRealUserDetails() {
+
+        final Authentication authentication = getCurrentAuthentication();
+        if (authentication == null) {
+            return null;
+        }
+
+        final Object principal = authentication.getPrincipal();
+        if (principal == null) {
+            return null;
+        }
+        if (principal instanceof RealUserDetails) {
+            return (RealUserDetails) principal;
+        }
+
+        return null;
+    }
+
+
     public static Authentication getCurrentAuthentication() {
         final SecurityContext securityContext = SecurityContextHolder.getContext();
         if (securityContext == null) {
@@ -139,6 +158,20 @@ public final class SpringSecurityUtil {
      * @return true if user has specified role, otherwise false.
      */
     public static boolean hasPrivilege(final String privilege) {
+
+        final RealUserDetails realUserDetails = SpringSecurityUtil.getCurrentRealUserDetails();
+        return realUserDetails != null && realUserDetails.getRealAuthorities().contains(privilege);
+
+    }
+
+
+    /**
+     * Check if current user has specified role.
+     *
+     * @param privilege the role to check if user has.
+     * @return true if user has specified role, otherwise false.
+     */
+    public static boolean hasRole(final String privilege) {
         final UserDetails userDetails = SpringSecurityUtil.getCurrentUserDetails();
         if (userDetails != null) {
             for (final GrantedAuthority each : userDetails.getAuthorities()) {

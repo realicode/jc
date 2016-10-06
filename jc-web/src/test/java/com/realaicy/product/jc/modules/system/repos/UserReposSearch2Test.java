@@ -5,21 +5,17 @@ import com.realaicy.lib.core.orm.jpa.search.SearchOperation;
 import com.realaicy.lib.core.orm.jpa.search.SpecSearchCriteria;
 import com.realaicy.product.jc.Application;
 import com.realaicy.product.jc.modules.system.model.User;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.data.jpa.domain.Specifications;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.collection.IsIn.isIn;
-import static org.hamcrest.core.IsNot.not;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by realaicy on 16/7/6.
@@ -33,9 +29,6 @@ public class UserReposSearch2Test {
     @Autowired
     UserRepos userRepos;
 
-    private User chinese;
-
-
     @Test
     public void givenUsernameAndNickname_whenGettingListOfUsers_thenCorrect() {
         final BaseSpecification<User> spec = new BaseSpecification<>(
@@ -47,7 +40,8 @@ public class UserReposSearch2Test {
 
         final List<User> results1 = userRepos.findAll(Specifications.where(spec1));
 
-        System.out.println("ha");
+        assertNotNull(results);
+        assertNotNull(results1);
     }
 
 

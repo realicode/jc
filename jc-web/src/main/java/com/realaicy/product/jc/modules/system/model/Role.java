@@ -1,13 +1,6 @@
 package com.realaicy.product.jc.modules.system.model;
 
-/**
- * Created by realaicy on 16/7/16.
- *
- * @author Realaicy
- */
 
-import com.alibaba.druid.sql.visitor.functions.Char;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.realaicy.lib.core.orm.jpa.BaseEntity;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -75,8 +68,18 @@ public class Role extends BaseEntity<Long> {
      * 角色所拥有的菜单
      */
 
-    @Column(name = "menus")
+    @Column(name = "MENUS")
     private String menus;
+    @Column(name = "REALAUTHORITIES")
+    private String realauthorities;
+
+    public String getRealauthorities() {
+        return realauthorities;
+    }
+
+    public void setRealauthorities(String realauthorities) {
+        this.realauthorities = realauthorities;
+    }
 
     public String getMenus() {
         return menus;

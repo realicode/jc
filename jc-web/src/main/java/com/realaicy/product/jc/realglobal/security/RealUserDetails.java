@@ -1,11 +1,10 @@
 package com.realaicy.product.jc.realglobal.security;
 
-import com.realaicy.product.jc.modules.system.model.Role;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * Created by realaicy on 16/7/14.
@@ -14,20 +13,27 @@ import java.util.*;
 
 public class RealUserDetails extends User {
 
-    private final String nickName;
     private final Long id;
+    private HashSet<String> realAuthorities;
 
-    public RealUserDetails(final Long id, final String username, final String password, final String nickName, boolean enabled,
-                           boolean accountNonExpired, boolean credentialsNonExpired,
-                           boolean accountNonLocked,
-                           final Collection<? extends GrantedAuthority> authorities) {
+    public Long getOrgID() {
+        return orgID;
+    }
+
+    private final Long orgID;
+
+    RealUserDetails(final Long id, final String username, final String password, final String nickName, boolean enabled,
+                    boolean accountNonExpired, boolean credentialsNonExpired,
+                    boolean accountNonLocked,
+                    final Collection<? extends GrantedAuthority> authorities, HashSet<String> realAuthorities, Long orgID) {
         super(username, password, enabled, true, true, true, authorities);
-        this.nickName = nickName;
+        this.realAuthorities = realAuthorities;
+        this.orgID = orgID;
         this.id = id;
     }
 
-    public String getNickName() {
-        return nickName;
+    public HashSet<String> getRealAuthorities() {
+        return realAuthorities;
     }
 
     public Long getId() {

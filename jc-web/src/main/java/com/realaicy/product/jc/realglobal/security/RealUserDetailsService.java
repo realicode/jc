@@ -1,15 +1,8 @@
 package com.realaicy.product.jc.realglobal.security;
 
 import com.realaicy.product.jc.modules.system.model.Role;
-import com.realaicy.product.jc.modules.system.model.User;
 import com.realaicy.product.jc.modules.system.model.UserSec;
-import com.realaicy.product.jc.modules.system.repos.UserRepos;
-import com.realaicy.product.jc.modules.system.repos.UserSecRepos;
-import com.realaicy.product.jc.modules.system.service.RoleService;
 import com.realaicy.product.jc.modules.system.service.UserSecService;
-import com.realaicy.product.jc.modules.system.service.UserService;
-import org.apache.commons.beanutils.BeanUtils;
-import org.hibernate.engine.jdbc.connections.internal.UserSuppliedConnectionProviderImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -19,9 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by realaicy on 16/7/14.
@@ -30,13 +21,18 @@ import java.util.List;
 @Service("R2")
 public class RealUserDetailsService implements UserDetailsService {
 
+    @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
     @Autowired
     private UserSecService userSecService;
-    @Transactional(readOnly=true)
+
+    @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         UserSec userSec;
         Collection<GrantedAuthority> grantedAuthorities;
+
+        HashSet<String> realAuthorities = new HashSet<>();
+
         try {
             userSec = userSecService.findByUsername(userName);
         } catch (Exception e) {
@@ -53,6 +49,7 @@ public class RealUserDetailsService implements UserDetailsService {
                     StringBuilder commaBuilder = new StringBuilder();
                     for (Role role : userSec.getRoles()) {
                         commaBuilder.append(role.getRoleName()).append(",");
+                        Collections.addAll(realAuthorities, role.getRealauthorities().split(","));
                     }
                     String authorities = commaBuilder.substring(0, commaBuilder.length() - 1);
                     grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
@@ -60,8 +57,9 @@ public class RealUserDetailsService implements UserDetailsService {
 
                 return new RealUserDetails(userSec.getId(), userSec.getUsername(), userSec.getPassword(), userSec.getNickname()
                         , userSec.isEnabled(), userSec.isAccountNonExpired(), userSec.isCredentialsNonExpired(), userSec.isAccountNonLocked()
-                        , grantedAuthorities);
+                        , grantedAuthorities, realAuthorities, userSec.getOrgID());
             } catch (Exception e) {
+                e.printStackTrace();
                 throw new UsernameNotFoundException("user role select fail");
             }
         }

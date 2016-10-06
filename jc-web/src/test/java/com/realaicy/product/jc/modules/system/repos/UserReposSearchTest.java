@@ -38,7 +38,6 @@ public class UserReposSearchTest {
 
     private User userTom;
 
-    private User chinese;
 
     @Before
     public void init() {
@@ -55,8 +54,6 @@ public class UserReposSearchTest {
         userTom.setEmail("tom@doe.com");
         userTom.setAge(Short.parseShort("26"));
         userRepos.save(userTom);
-
-        chinese = userRepos.findOne(6L);
     }
 
     @Test

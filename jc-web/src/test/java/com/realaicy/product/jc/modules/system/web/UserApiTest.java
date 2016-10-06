@@ -17,8 +17,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -28,8 +26,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class UserApiTest {
 
     private MockMvc mvc;
-
-    private final String URL_PREFIX = "/api/system/users/spec?search=";
 
     @Autowired
     UserService userService;
@@ -41,6 +37,7 @@ public class UserApiTest {
 
     @Test
     public void givenAgeAndUsername_whenGettingListOfUsers_thenCorrect() throws Exception {
+        String URL_PREFIX = "/api/system/users/spec?search=";
         mvc.perform(MockMvcRequestBuilders.get(URL_PREFIX + "nickname:刘旭东,age:100").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("test_2")));

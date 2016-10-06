@@ -1,10 +1,6 @@
 package com.realaicy.product.jc;
 
 import com.realaicy.product.jc.realglobal.config.StaticParams;
-import com.realaicy.product.jc.realglobal.security.RealAuthenticationProvider;
-import com.realaicy.product.jc.realglobal.security.RealUserDetails;
-import com.realaicy.product.jc.realglobal.security.RealUserDetailsService;
-import com.realaicy.product.jc.realglobal.security.SessionCounterListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -17,8 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import javax.servlet.http.HttpSessionListener;
 
 import static com.realaicy.product.jc.realglobal.config.StaticParams.PATHREGX.SB_ALL;
 
@@ -56,12 +50,6 @@ public class RealWebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-//        http.addFilter(realFilter());
-        //http.addFilterBefore(realFilter(), UsernamePasswordAuthenticationFilter.class);
-        /*http.authorizeRequests().antMatchers("/imageServlet/", "/imagecode*//**").permitAll().anyRequest()
-         .fullyAuthenticated().and().formLogin().loginPage("/login")
-         .failureUrl("/login?error").permitAll();*/
 
         http.authorizeRequests()
                 .antMatchers(SB_ALL,

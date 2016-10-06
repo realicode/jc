@@ -1,10 +1,5 @@
 package com.realaicy.product.jc.modules.system.model;
 
-/**
- * Created by realaicy on 16/7/16.
- *
- * @author Realaicy
- */
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.realaicy.lib.core.orm.jpa.BaseEntity;
@@ -15,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 文档实体类
+ * 用户安全类
  */
 @Entity
 @Table(name = "jc_sys_user_sec")
@@ -23,23 +18,31 @@ public class UserSec extends BaseEntity<Long> {
 
 
     /**
+     * 所属租户
+     */
+    @Column(name = "TENANTID")
+    private Long tenantID;
+
+    /**
+     * 所属组织
+     */
+    @Column(name = "ORGID")
+    private Long orgID;
+    /**
      * 用户名称
      */
     @Column(name = "USERNAME")
     private String username;
-
     /**
      * 用户密码(加密后的密文)
      */
     @Column(name = "PASSWORD")
     private String password;
-
     /**
      * 用户昵称
      */
     @Column(name = "NICKNAME")
     private String nickname;
-
     /**
      * 标识:各种标识
      */
@@ -80,6 +83,22 @@ public class UserSec extends BaseEntity<Long> {
             inverseJoinColumns = @JoinColumn(name = "ROLEID"))
     @JsonIgnore
     private List<Role> roles;
+
+    public Long getOrgID() {
+        return orgID;
+    }
+
+    public void setOrgID(Long orgID) {
+        this.orgID = orgID;
+    }
+
+    public Long getTenantID() {
+        return tenantID;
+    }
+
+    public void setTenantID(Long tenantID) {
+        this.tenantID = tenantID;
+    }
 
     public boolean isAccountNonExpired() {
         return accountNonExpired;

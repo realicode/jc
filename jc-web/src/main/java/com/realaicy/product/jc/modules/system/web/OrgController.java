@@ -8,13 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -30,7 +32,7 @@ public class OrgController extends TreeController<Org, Long> {
 
     private OrgService orgService;
     static final private String[] nameDic = {"username", "password", "nickname", "createTime"};
-    static final private List<String> bindingWhiteList = Arrays.asList("password");
+    static final private List<String> bindingWhiteList = Collections.singletonList("password");
     static final private String pageUrl = "system/org/page";
     static final private String newEntityUrl = "system/org/add";
     static final private String editEntityUrl = "system/org/add";
@@ -51,7 +53,7 @@ public class OrgController extends TreeController<Org, Long> {
                           @RequestParam(value = "updateflag", required = false) String updateflag,
                           @RequestParam(value = "updateID", required = false) Long updateID,
                           @RequestParam(value = "portraitUrl", required = false) String portraitUrl,
-                          @RequestParam(value = "pid", required = true) String pid,
+                          @RequestParam(value = "pid") String pid,
                           HttpServletResponse httpServletResponse) {
 
         if (updateflag.equals("new")) {
@@ -63,7 +65,6 @@ public class OrgController extends TreeController<Org, Long> {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                ;
             }
 
             if (orgService.findByNameWithInAParent(realmodel.getName(), Long.parseLong(pid)) != null) {
@@ -81,6 +82,7 @@ public class OrgController extends TreeController<Org, Long> {
             realmodel.setName(realmodel.getName());
             realmodel.setFolder(true);
             realmodel.setCreateTime(new Date());
+            //noinspection ConstantConditions
             realmodel.setCreaterID(SpringSecurityUtil.getCurrentPrincipal().getId());
             realmodel.setUpdateTime(realmodel.getCreateTime());
             realmodel.setUpdaterID(realmodel.getCreaterID());
@@ -88,22 +90,21 @@ public class OrgController extends TreeController<Org, Long> {
 
         } else {//edit
             if (result.hasErrors()) {
-                for (FieldError fieldError : result.getFieldErrors()) {
-                    if (!bindingWhiteList.contains(fieldError.getField())) {
-                        try {
-                            httpServletResponse.getWriter().println("errrrrrrr");
-                            httpServletResponse.getWriter().close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                result.getFieldErrors().stream().filter(fieldError -> !bindingWhiteList.contains(fieldError.getField())).forEach(fieldError -> {
+                    try {
+                        httpServletResponse.getWriter().println("errrrrrrr");
+                        httpServletResponse.getWriter().close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                }
+                });
             }
             Org org = orgService.findOne(updateID);
             org.setName(realmodel.getName());
             org.setContactName(realmodel.getContactName());
             org.setContactTel(realmodel.getContactTel());
             org.setUpdateTime(new Date());
+            //noinspection ConstantConditions
             org.setUpdaterID(SpringSecurityUtil.getCurrentPrincipal().getId());
             orgService.save(org);
         }
@@ -117,4 +118,8 @@ public class OrgController extends TreeController<Org, Long> {
         }
     }
 
+    @Override
+    public Long getRealID() {
+        return SpringSecurityUtil.getCurrentRealUserDetails().getOrgID();
+    }
 }

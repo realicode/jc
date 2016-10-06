@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,9 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 /**
  * Created by realaicy on 16/7/14.
@@ -47,6 +46,8 @@ public class UserServiceTest {
 
         PageRequest pageRequest = new PageRequest(1, 20, Sort.Direction.ASC, "username");
         List<User> users = userService.findAllUsersWithPage(pageRequest);
+        assertNotNull(users);
+        assertThat(users.size(), equalTo(20));
         //Page<User> userPage = userService.findTemp(pageRequest);
         //System.out.println(userPage.getSize());
     }
@@ -62,6 +63,7 @@ public class UserServiceTest {
     @WithUserDetails("wym")
     public void findUserRoles2() throws Exception {
         UserDetails userDetails = SpringSecurityUtil.getCurrentUserDetails();
+        assertNotNull(userDetails);
         //assertThat(SpringSecurityUtil.getCurrentUserDetails().getAuthorities().size(), equalTo("2"));
 
 

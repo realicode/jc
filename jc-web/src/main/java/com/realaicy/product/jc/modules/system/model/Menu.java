@@ -1,10 +1,5 @@
 package com.realaicy.product.jc.modules.system.model;
 
-/**
- * Created by realaicy on 16/7/16.
- *
- * @author Realaicy
- */
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -20,19 +15,11 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 文档实体类
+ * 菜单实体类
  */
 @Entity
 @Table(name = "jc_sys_menu")
 @JsonFilter("rfMenu")
-@NamedNativeQueries({
-        //@NamedNativeQuery(name = "realTestNativeQuery", query = "SELECT a.firstname, a.lastname FROM Author a"),
-        //@NamedNativeQuery(name = "realTestNativeQuery", query = "SELECT a.id, a.name FROM jc_common_tree a",
-        //resultClass = DocRes.class)
-        //@NamedNativeQuery(name = "selectAuthorValue", query = "SELECT a.id, a.firstname, a.lastname, count(b.id)
-        // as numBooks FROM Author a JOIN BookAuthor ba on a.id = ba.authorid JOIN Book b ON b.id = ba.bookid GROUP BY a.id",
-        // resultSetMapping = "AuthorValueMapping")
-})
 public class Menu extends BaseEntity<Long> implements Cloneable {
 
     @Override
@@ -154,12 +141,6 @@ public class Menu extends BaseEntity<Long> implements Cloneable {
     private List<Menu> children = new ArrayList<>();
 
 
-    /**
-     * 父亲菜单对象ID
-     *//*
-    //@Column(name = "PID", unique = false, nullable = true, insertable = false, updatable = false)
-    @Column(name = "PID", nullable = false, insertable = false, updatable = false)
-    private Long parentID;*/
     public String getResIconExt() {
         return resIconExt;
     }
@@ -167,31 +148,6 @@ public class Menu extends BaseEntity<Long> implements Cloneable {
     public void setResIconExt(String resIconExt) {
         this.resIconExt = resIconExt;
     }
-
-    /*public DocRes() {
-    }
-
-    public DocRes(short resType, String name, String uri, Short resIcon, Short resWeight, Boolean isShow, Boolean isFolder,
-                  Boolean isAutoExpand, short status, String resIdentity, Date createTime, Long createrID,
-                  Date updateTime, Long updaterID, String customCode, Long parentID, String cascadeID) {
-        this.resType = resType;
-        this.name = name;
-        this.uri = uri;
-        this.resIcon = resIcon;
-        this.resWeight = resWeight;
-        this.isShow = isShow;
-        this.isFolder = isFolder;
-        this.isAutoExpand = isAutoExpand;
-        this.status = status;
-        this.resIdentity = resIdentity;
-        this.createTime = createTime;
-        this.createrID = createrID;
-        this.updateTime = updateTime;
-        this.updaterID = updaterID;
-        this.customCode = customCode;
-        this.parentID = parentID;
-        this.cascadeID = cascadeID;
-    }*/
 
     public String getCascadeID() {
         return cascadeID;
@@ -337,31 +293,4 @@ public class Menu extends BaseEntity<Long> implements Cloneable {
         this.children = children;
     }
 
-
-
-
-    /*public Resource getParent() {
-        return parent;
-    }
-
-    public void setParent(Resource parent) {
-        this.parent = parent;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "parent_id")
-    private Resource parent;*/
-
-
-
-
-/*
-    // 父级模块
-    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.REMOVE}, optional = true)
-    @JoinColumn(name = "parent_id")
-    // optional关联字段是否可以为空
-    private Resource parent;
-    // 子级模块
-    @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.REMOVE}, fetch = FetchType.LAZY, mappedBy = "parent")
-    private List<Resource> children;*/
 }
