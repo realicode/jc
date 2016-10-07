@@ -1,11 +1,10 @@
 package com.realaicy.product.jc.realglobal.realerror;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,6 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/g/realerror")
 public class RealErrorController {
+
+    @Value("${loginurl}")
+    private String loginUrl;
 
 
     @RequestMapping("/session/expire")
@@ -44,7 +46,9 @@ public class RealErrorController {
         } else {
             System.out.println("Realaicy userAgent V2: " + "normal");
             HttpHeaders headers = new HttpHeaders();
-            headers.add("Location", "http://127.0.0.1:48080/");
+            //headers.add("Location", "http://127.0.0.1:48080/");
+            headers.add("Location", loginUrl);
+
             return new ResponseEntity<>(null, headers, HttpStatus.FOUND);
         }
     }

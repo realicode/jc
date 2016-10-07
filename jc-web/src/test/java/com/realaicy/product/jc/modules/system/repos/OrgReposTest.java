@@ -10,10 +10,13 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by realaicy on 2016/9/3.
@@ -40,7 +43,7 @@ public class OrgReposTest {
         assertThat(org.getResIdentity(), equalTo("1"));
         assertThat(org.getCustomCode(), equalTo("1"));
 
-       // assertThat(org.getTenant().getName(), equalTo("中国肿瘤临床试验稽查协作组"));
+        // assertThat(org.getTenant().getName(), equalTo("中国肿瘤临床试验稽查协作组"));
 
     }
 
@@ -66,6 +69,14 @@ public class OrgReposTest {
         org.setResIdentity("111");
         //org.setTenant(orgParent.getTenant());
         orgRepos.save(org);
+    }
+
+    @Test
+    public void testGetAllChildIDs() throws Exception {
+        List<BigInteger> ids = orgRepos.findAllChildIDs("%1%");
+        assertNotNull(ids);
+        List<BigInteger> ids2 = orgRepos.findAllChildIDs("%1.004%");
+        assertNotNull(ids2);
     }
 
 }

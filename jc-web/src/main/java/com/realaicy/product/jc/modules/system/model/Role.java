@@ -5,6 +5,7 @@ import com.realaicy.lib.core.orm.jpa.BaseEntity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -21,19 +22,21 @@ public class Role extends BaseEntity<Long> {
      */
     @Column(name = "ROLENAME")
     private String roleName;
-
+    /**
+     * 角色所属组织
+     */
+    @Column(name = "ORGID")
+    private BigInteger orgID;
     /**
      * 角色名称
      */
     @Column(name = "ROLESTATUS")
     private String roleStatus;
-
     /**
      * 角色名称
      */
     @Column(name = "ROLETYPE")
     private String roleType;
-
     /**
      * 角色创建时间戳
      */
@@ -41,13 +44,11 @@ public class Role extends BaseEntity<Long> {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
-
     /**
      * 角色创建者
      */
     @Column(name = "CREATERID")
     private Long createrID;
-
     /**
      * 角色修改时间戳
      */
@@ -55,13 +56,11 @@ public class Role extends BaseEntity<Long> {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
-
     /**
      * 角色修改者
      */
     @Column(name = "UPDATERID")
     private Long updaterID;
-
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
     /**
@@ -72,6 +71,14 @@ public class Role extends BaseEntity<Long> {
     private String menus;
     @Column(name = "REALAUTHORITIES")
     private String realauthorities;
+
+    public BigInteger getOrgID() {
+        return orgID;
+    }
+
+    public void setOrgID(BigInteger orgID) {
+        this.orgID = orgID;
+    }
 
     public String getRealauthorities() {
         return realauthorities;

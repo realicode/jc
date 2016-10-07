@@ -4,7 +4,11 @@ import com.realaicy.lib.core.service.DefaultServiceImpl;
 import com.realaicy.product.jc.modules.system.model.Org;
 import com.realaicy.product.jc.modules.system.repos.OrgRepos;
 import com.realaicy.product.jc.modules.system.service.OrgService;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
+
+import java.math.BigInteger;
+import java.util.List;
 
 /**
  * Created by realaicy on 16/3/14.
@@ -17,5 +21,15 @@ public class DefaultOrgService extends DefaultServiceImpl<Org, Long>
     @Override
     public Org findByNameWithInAParent(String name, Long pid) {
         return ((OrgRepos) baseRepository).findByNameWithInAParent(name, pid);
+    }
+
+    @Override
+    public List<Org> findByCascadeIDStartingWith(String cascadeID) {
+        return ((OrgRepos) baseRepository).findByCascadeIDStartingWith(cascadeID);
+    }
+
+    @Override
+    public List<BigInteger> findAllChildIDs(@Param("cascadeid") String cascadeid) {
+        return ((OrgRepos) baseRepository).findAllChildIDs("%"+cascadeid+"%");
     }
 }

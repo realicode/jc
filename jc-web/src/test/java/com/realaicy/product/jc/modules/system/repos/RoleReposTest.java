@@ -1,6 +1,7 @@
 package com.realaicy.product.jc.modules.system.repos;
 
 import com.realaicy.product.jc.Application;
+import com.realaicy.product.jc.modules.system.model.Org;
 import com.realaicy.product.jc.modules.system.model.Role;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -11,7 +12,11 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertNotNull;
@@ -28,6 +33,9 @@ import static org.junit.Assert.assertNotNull;
 public class RoleReposTest {
     @Autowired
     RoleRepos repos;
+
+    @Autowired
+    OrgRepos orgRepos;
 
     @Test
     public void testCreateRole() throws Exception {
@@ -59,5 +67,16 @@ public class RoleReposTest {
         role.setRoleStatus("1");
         role.setRoleType("1");
         repos.save(role);
+    }
+
+    @Test
+    public void findInOrg() throws Exception {
+        List<BigInteger> orgs = orgRepos.findAllChildIDs("%1%");
+        List<Role> roles1 = repos.findByOrgIDIn(orgs);
+        assertNotNull(roles1);
+
+      orgs = orgRepos.findAllChildIDs("%1.004%");
+        List<Role> roles2 = repos.findByOrgIDIn(orgs);
+        assertNotNull(roles2);
     }
 }

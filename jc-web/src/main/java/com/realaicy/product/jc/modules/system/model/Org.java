@@ -75,6 +75,11 @@ public class Org extends BaseEntity<Long> {
     @Column(name = "CONTACT_NAME")
     private String contactName;
     /**
+     * 联系人姓名
+     */
+    @Column(name = "CONTACT_EMAIL")
+    private String contactEmail;
+    /**
      * 联系人电话
      */
     @Column(name = "CONTACT_TEL")
@@ -105,6 +110,11 @@ public class Org extends BaseEntity<Long> {
     @Column(name = "UPDATERID")
     private Long updaterID;
     /**
+     * 资源修改者
+     */
+    @Column(name = "F_DELETED")
+    private Boolean deleteFlag;
+    /**
      * 自定义扩展
      */
     @Column(name = "CUSTOM_CODE")
@@ -129,8 +139,24 @@ public class Org extends BaseEntity<Long> {
      */
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent")
     @OrderBy("resWeight")
-    @Where(clause = "IS_FOLDER='1'")
+    @Where(clause = "F_DELETED='0'")
     private List<Org> children = new ArrayList<>();
+
+    public Boolean getDeleteFlag() {
+        return deleteFlag;
+    }
+
+    public void setDeleteFlag(Boolean deleteFlag) {
+        this.deleteFlag = deleteFlag;
+    }
+
+    public String getContactEmail() {
+        return contactEmail;
+    }
+
+    public void setContactEmail(String contactEmail) {
+        this.contactEmail = contactEmail;
+    }
 
     public short getResType() {
         return resType;

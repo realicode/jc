@@ -22,7 +22,7 @@ import static com.realaicy.product.jc.realglobal.config.StaticParams.PATHREGX.SB
  */
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@Order(10)
+@Order(20)
 public class RealWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean

@@ -5,6 +5,7 @@ import com.realaicy.product.jc.modules.system.service.OrgService;
 import com.realaicy.product.jc.realglobal.web.TreeController;
 import com.realaicy.product.jc.uitl.SpringSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -48,6 +49,7 @@ public class OrgController extends TreeController<Org, Long> {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @CacheEvict(cacheResolver = "runtimeCacheResolver", allEntries = true)
     public void saveModel(@Valid @ModelAttribute("realmodel") final Org realmodel,
                           final BindingResult result, final ModelMap model,
                           @RequestParam(value = "updateflag", required = false) String updateflag,
@@ -79,13 +81,22 @@ public class OrgController extends TreeController<Org, Long> {
 
             Org parent = orgService.findOne(Long.parseLong(pid));
             realmodel.setParent(parent);
-            realmodel.setName(realmodel.getName());
+            realmodel.setDeleteFlag(false);
+
+            List<Org> orgTempList = orgService.findByCascadeIDStartingWith(parent.getCascadeID());
+            if (orgTempList.size() == 1) {
+                realmodel.setCascadeID(parent.getCascadeID() + ".001");
+            } else {
+                realmodel.setCascadeID(parent.getCascadeID() + "." + String.format("%03d", orgTempList.size()));
+
+            }
+
             realmodel.setFolder(true);
             realmodel.setCreateTime(new Date());
             //noinspection ConstantConditions
             realmodel.setCreaterID(SpringSecurityUtil.getCurrentPrincipal().getId());
             realmodel.setUpdateTime(realmodel.getCreateTime());
-            realmodel.setUpdaterID(realmodel.getCreaterID());
+            realmodel.setUpdaterID(SpringSecurityUtil.getCurrentPrincipal().getId());
             orgService.save(realmodel);
 
         } else {//edit
@@ -103,6 +114,8 @@ public class OrgController extends TreeController<Org, Long> {
             org.setName(realmodel.getName());
             org.setContactName(realmodel.getContactName());
             org.setContactTel(realmodel.getContactTel());
+            realmodel.setContactEmail(realmodel.getContactEmail());
+
             org.setUpdateTime(new Date());
             //noinspection ConstantConditions
             org.setUpdaterID(SpringSecurityUtil.getCurrentPrincipal().getId());
@@ -120,6 +133,7 @@ public class OrgController extends TreeController<Org, Long> {
 
     @Override
     public Long getRealID() {
+        //noinspection ConstantConditions
         return SpringSecurityUtil.getCurrentRealUserDetails().getOrgID();
     }
 }

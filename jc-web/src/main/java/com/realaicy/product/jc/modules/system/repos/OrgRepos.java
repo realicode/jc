@@ -5,6 +5,7 @@ import com.realaicy.product.jc.modules.system.model.Org;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -17,5 +18,13 @@ public interface OrgRepos extends BaseRepository<Org, Long> {
             " WHERE org.pid=:pid and org.name =:name", nativeQuery = true)
     Org findByNameWithInAParent(@Param("name") String name, @Param("pid") Long pid);
 
+    @Query(value = "SELECT id FROM jc_sys_org as org" +
+            " WHERE org.CASCADE_ID like :cascadeid and org.F_DELETED = 0", nativeQuery = true)
+    List<BigInteger> findAllChildIDs(@Param("cascadeid") String cascadeid);
 
+    /*@Override
+    @Query("select e FROM  Org e where e.id=?1 and e.deleteFlag=false ")
+    Org findOne(Long id);*/
+
+    List<Org> findByCascadeIDStartingWith(String cascadeID);
 }

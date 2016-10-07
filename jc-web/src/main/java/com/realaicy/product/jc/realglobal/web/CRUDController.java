@@ -6,7 +6,11 @@ import com.realaicy.lib.core.orm.jpa.search.BaseSpecificationsBuilder;
 import com.realaicy.lib.core.orm.jpa.search.SearchOperation;
 import com.realaicy.lib.core.service.BaseService;
 import com.realaicy.product.jc.common.aop.annotations.Perfable;
+import com.realaicy.product.jc.modules.system.model.Org;
 import com.realaicy.product.jc.modules.system.model.User;
+import com.realaicy.product.jc.modules.system.service.OrgService;
+import com.realaicy.product.jc.uitl.SpringSecurityUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +36,9 @@ import java.util.regex.Pattern;
  */
 @Controller
 public abstract class CRUDController<M extends AbstractEntity, ID extends Serializable> {
+
+    @Autowired
+    private OrgService orgService;
 
     private final BaseService<M, ID> service;
     private final String initFormParam;
@@ -162,6 +170,59 @@ public abstract class CRUDController<M extends AbstractEntity, ID extends Serial
 
         return info;
     }
+
+
+    @Perfable
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/list4dtwithorg")
+    public Map<String, Object> findAllBySpecificationToDTWithOrg(
+            @RequestParam(value = "start", defaultValue = "0") int start,
+            @RequestParam(value = "length", defaultValue = "30") int length,
+            @RequestParam(value = "order[0][column]", defaultValue = "1") int orderIndex,
+            @RequestParam(value = "order[0][dir]", defaultValue = "asc") String orderType,
+            @RequestParam(value = "search", required = false) String search,
+            @RequestParam(value = "orgID", required = false) String orgID
+    ) {
+
+        Map<String, Object> info = new HashMap<>();
+
+        Sort sort;
+        if (orderIndex > nameDic.length) orderIndex = 1;
+        if (orderType.equals("asc"))
+            sort = new Sort(Sort.Direction.ASC, nameDic[orderIndex - 1]);
+        else
+            sort = new Sort(Sort.Direction.DESC, nameDic[orderIndex - 1]);
+
+        PageRequest pageRequest = new PageRequest(
+                start / length, length, sort
+        );
+        //pageRequest.getSort().and(new Sort(Sort.Direction.ASC));
+
+        final BaseSpecificationsBuilder<M> builder = new BaseSpecificationsBuilder<>();
+        final String operationSetExper = Joiner.on("|").join(SearchOperation.SIMPLE_OPERATION_SET);
+        final Pattern pattern = Pattern.compile("(\\w+?)(" + operationSetExper + ")(\\p{Punct}?)(\\w+?)(\\p{Punct}?),");
+        final Matcher matcher = pattern.matcher(search + ",");
+        while (matcher.find()) {
+            builder.with(matcher.group(1), matcher.group(2), matcher.group(4), matcher.group(3), matcher.group(5));
+        }
+
+        if (orgID == null || orgID.equals("")) {
+            orgID = SpringSecurityUtil.getCurrentRealUserDetails().getOrgID().toString();
+        }
+
+        Org org = orgService.findOne(Long.parseLong(orgID));
+        List<BigInteger> bigIntegersTemp = orgService.findAllChildIDs(org.getCascadeID());
+        builder.with("orgID", "$",
+                bigIntegersTemp, "", "");
+
+        final Specification<M> spec = builder.build();
+        info.put("data", service.findAll(spec, pageRequest));
+        info.put("recordsFiltered", service.count(spec));
+        info.put("recordsTotal", service.count());
+
+        return info;
+    }
+
 
     @RequestMapping(value = "/validation.json", method = RequestMethod.POST)
     @ResponseBody

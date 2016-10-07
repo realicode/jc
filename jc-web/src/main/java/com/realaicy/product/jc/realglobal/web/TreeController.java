@@ -6,11 +6,9 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.realaicy.lib.core.mapper.JsonMapper;
 import com.realaicy.lib.core.orm.AbstractEntity;
 import com.realaicy.lib.core.service.BaseService;
-import com.realaicy.product.jc.modules.system.service.OrgService;
 import com.realaicy.product.jc.uitl.SpringSecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,34 +23,18 @@ import java.io.Serializable;
  * xxx
  */
 @Controller
-@CacheConfig(cacheNames = "realtree")
 public abstract class TreeController<M extends AbstractEntity, ID extends Serializable> {
 
     private static JsonMapper binder = JsonMapper.nonDefaultMapper();
-
-    private Logger log = LoggerFactory.getLogger(getClass());
-
-
     private final BaseService<M, ID> service;
-    private OrgService orgService;
     private final String initFormParam;
     private final String pageUrl;
     private final String newEntityUrl;
     private final String editEntityUrl;
     private final String searchEntityUrl;
-
     private final Class<M> aClass;
+    private Logger log = LoggerFactory.getLogger(getClass());
 
-
-    public TreeController(BaseService<M, ID> service, String initFormParam) {
-        this.service = service;
-        this.initFormParam = initFormParam;
-        this.newEntityUrl = null;
-        this.editEntityUrl = null;
-        this.searchEntityUrl = null;
-        this.pageUrl = null;
-        this.aClass = null;
-    }
 
     public TreeController(BaseService<M, ID> service, String initFormParam, String[] nameDic, String pageUrl,
                           String newEntityUrl, String editEntityUrl, String listUrl, String searchEntityUrl,
@@ -72,27 +54,28 @@ public abstract class TreeController<M extends AbstractEntity, ID extends Serial
         return this.pageUrl;
     }
 
+    @SuppressWarnings("unused")
     public Class<M> getaClass() {
         return aClass;
     }
 
     @RequestMapping("/list")
     @ResponseBody
-    @Cacheable(value = "realtree", key = "#root.target.getaClass().getSimpleName()+#root.target.getRealID()")
+    @Cacheable(key = "#root.target.getRealID()", cacheResolver = "runtimeCacheResolver")
     public String listTree(@RequestParam(value = "id", required = false, defaultValue = "2") final ID id) {
 
-        log.info("listTree");
-
-
+        assert aClass != null;
         if (!SpringSecurityUtil.hasPrivilege(aClass.getSimpleName() + "-" + "r"))
             return "NOPrivilege";
 
         M treeModel = service.findOne(getRealID());
+       // M treeModel = service.findOne(getRealID());
         FilterProvider filters = new SimpleFilterProvider().addFilter("realFilter", SimpleBeanPropertyFilter.serializeAllExcept("updateTime"));
         binder.getMapper().setFilterProvider(filters);
         String s = binder.toJson(treeModel);
         return "[" + s + "]";
     }
+
 
     public abstract ID getRealID();
 

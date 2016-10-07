@@ -6,6 +6,10 @@ import com.realaicy.product.jc.modules.system.repos.RoleRepos;
 import com.realaicy.product.jc.modules.system.service.RoleService;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
+import java.util.Collection;
+import java.util.List;
+
 /**
  * Created by realaicy on 16/3/14.
  * xxx
@@ -17,5 +21,10 @@ public class DefaultRoleService extends DefaultServiceImpl<Role, Long>
     @Override
     public Role findByRoleName(String roleName) {
         return ((RoleRepos) baseRepository).findByRoleName(roleName);
+    }
+
+    @Override
+    public List<Role> findByOrgIDIn(Collection<BigInteger> orgIDs) {
+        return ((RoleRepos) baseRepository).findByOrgIDIn(orgIDs);
     }
 }

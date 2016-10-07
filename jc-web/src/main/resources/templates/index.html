@@ -15,8 +15,8 @@
 
     <!-- #CSS Links -->
     <!-- Basic Styles -->
-    <link rel="stylesheet" type="text/css" media="screen" th:href="@{/smartadmin/css/bootstrap.min.css}"
-          href="../static/smartadmin/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" th:href="@{/smartadmin/css/bootstrap.css}"
+          href="../static/smartadmin/css/bootstrap.css"/>
     <link rel="stylesheet" type="text/css" media="screen" th:href="@{/smartadmin/css/font-awesome.min.css}"
           href="../static/smartadmin/css/font-awesome.min.css"/>
 
@@ -24,18 +24,10 @@
     <link rel="stylesheet" type="text/css" media="screen"
           th:href="@{/smartadmin/css/smartadmin-production-plugins.min.css}"
           href="../static/smartadmin/css/smartadmin-production-plugins.min.css"/>
-    <link rel="stylesheet" type="text/css" media="screen" th:href="@{/smartadmin/css/smartadmin-production.min.css}"
-          href="../static/smartadmin/css/smartadmin-production.min.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" th:href="@{/smartadmin/css/smartadmin-production.css}"
+          href="../static/smartadmin/css/smartadmin-production.css"/>
     <link rel="stylesheet" type="text/css" media="screen" th:href="@{/smartadmin/css/smartadmin-skins.min.css}"
           href="../static/smartadmin/css/smartadmin-skins.min.css"/>
-
-
-    <!-- We recommend you use "your_style.css" to override SmartAdmin
-         specific styles this will also ensure you retrain your customization with each SmartAdmin update.
-    <link rel="stylesheet" type="text/css" media="screen" href="css/your_style.css"> -->
-
-    <!--<link rel="stylesheet" type="text/css" media="screen" th:href="@{/smartadmin/css/select.dataTables.min.css}"-->
-    <!--href="../static/smartadmin/css/select.dataTables.min.css"/>-->
 
 
     <!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
@@ -201,16 +193,11 @@
                 </ul>
             </li>
         </ul>
-        <!-- end multiple lang -->
-
     </div>
 
 </header>
 <!-- END HEADER -->
 
-<!-- #NAVIGATION -->
-<!-- Left panel : Navigation area -->
-<!-- Note: This width of the aside area can be adjusted through LESS/SASS variables -->
 <aside id="left-panel">
 
     <!-- User info -->
@@ -220,11 +207,6 @@
                          <img th:src="@{/smartadmin/img/avatars/a1.jpg}"
                               src="../static/smartadmin/img/avatars/a1.jpg" alt="me" class="online"/>
                         <span th:text="${usernickname} "></span>
-
-                        <!--<span>-->
-                        <!--&lt;!&ndash;<span sec:authentication="name">Bob</span>&ndash;&gt;-->
-                        <!--<p th:text="${#httpServletRequest.remoteUser}"></p>-->
-                        <!--</span>-->
 						<i class="fa fa-angle-down"></i>
 					</a>
 				</span>
@@ -232,15 +214,7 @@
     <!-- end user info -->
 
     <nav>
-        <!--
-        NOTE: Notice the gaps after each icon usage <i></i>..
-        Please note that these links work a bit different than
-        traditional href="" links. See documentation for details.
-        -->
-
         <ul>
-
-
             <li class="" th:each="menu : ${realmenus}">
                 <a href="#"><i th:class="${menu.resIcon}" th:utext="${menu.resIconExt}"></i> <span
                         class="menu-item-parent" th:text="${menu.name}"></span></a>
@@ -251,12 +225,7 @@
                                 class="menu-item-parent" th:text="${submenu.name}"></span></a>
                     </li>
                 </ul>
-
             </li>
-
-
-
-
         </ul>
     </nav>
     <a href="#ajax/difver.html" class="btn btn-primary nav-demo-btn"><i class="fa fa-info-circle"></i> 智慧稽查</a>
@@ -286,16 +255,6 @@
             <!-- This is auto generated -->
         </ol>
         <!-- end breadcrumb -->
-
-        <!-- You can also add more buttons to the
-        ribbon for further usability
-
-        Example below:
-
-        <span class="ribbon-button-alignment pull-right" style="margin-right:25px">
-            <a href="#" id="search" class="btn btn-ribbon hidden-xs" data-title="search"><i class="fa fa-grid"></i> Change Grid</a>
-            <span id="add" class="btn btn-ribbon hidden-xs" data-title="add"><i class="fa fa-plus"></i> Add</span>
-            <button id="search" class="btn btn-ribbon" data-title="search"><i class="fa fa-search"></i> <span class="hidden-mobile">Search</span></button>
         </span> -->
 
     </div>
@@ -303,15 +262,8 @@
 
     <!-- #MAIN CONTENT -->
     <div id="content">
-
     </div>
-
-    <!-- END #MAIN CONTENT -->
-
 </div>
-<!-- END #MAIN PANEL -->
-
-<!-- #PAGE FOOTER -->
 <div class="page-footer">
     <div class="row">
         <div class="col-xs-12 col-sm-6">
@@ -371,46 +323,6 @@
     <!-- end row -->
 </div>
 <!-- END FOOTER -->
-
-<!-- #SHORTCUT AREA : With large tiles (activated via clicking user name tag)
-     Note: These tiles are completely responsive, you can add as many as you like -->
-<div id="shortcut">
-    <ul>
-        <li>
-            <a href="#ajax/inbox.html" class="jarvismetro-tile big-cubes bg-color-blue"> <span class="iconbox"> <i
-                    class="fa fa-envelope fa-4x"></i> <span>Mail <span
-                    class="label pull-right bg-color-darken">14</span></span> </span> </a>
-        </li>
-        <li>
-            <a href="#ajax/calendar.html" class="jarvismetro-tile big-cubes bg-color-orangeDark"> <span class="iconbox"> <i
-                    class="fa fa-calendar fa-4x"></i> <span>Calendar</span> </span> </a>
-        </li>
-        <li>
-            <a href="#ajax/gmap-xml.html" class="jarvismetro-tile big-cubes bg-color-purple"> <span class="iconbox"> <i
-                    class="fa fa-map-marker fa-4x"></i> <span>Maps</span> </span> </a>
-        </li>
-        <li>
-            <a href="#ajax/invoice.html" class="jarvismetro-tile big-cubes bg-color-blueDark"> <span class="iconbox"> <i
-                    class="fa fa-book fa-4x"></i> <span>Invoice <span class="label pull-right bg-color-darken">99</span></span> </span>
-            </a>
-        </li>
-        <li>
-            <a href="#ajax/gallery.html" class="jarvismetro-tile big-cubes bg-color-greenLight"> <span class="iconbox"> <i
-                    class="fa fa-picture-o fa-4x"></i> <span>Gallery </span> </span> </a>
-        </li>
-        <li>
-            <a href="#ajax/profile.html" class="jarvismetro-tile big-cubes selected bg-color-pinkDark"> <span
-                    class="iconbox"> <i class="fa fa-user fa-4x"></i> <span>My Profile </span> </span> </a>
-        </li>
-    </ul>
-</div>
-<!-- END SHORTCUT AREA -->
-
-<!--================================================== -->
-
-<!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)
-<script data-pace-options='{ "restartOnRequestAfter": true }' src="js/plugin/pace/pace.min.js"></script>-->
-
 
 <!-- #PLUGINS -->
 <script th:src="@{/smartadmin/js/libs/jquery-2.1.1.min.js}"

@@ -1,12 +1,7 @@
-<!-- widget edit box -->
 <div class="jarviswidget-editbox">
-    <!-- This area used as dropdown edit box -->
 </div>
-<!-- end widget edit box -->
-
-<!-- widget content -->
 <div class="widget-body no-padding">
-    <!--/*@thymesVar id="realmodel" type=""*/-->
+
     <form th:object="${realmodel}" method="POST" th:action="@{/system/org/save}"
           id="realentity" class="smart-form"
           xmlns:th="http://www.thymeleaf.org">
@@ -25,36 +20,40 @@
             <div class="row">
                 <section class="col col-6">
                     <label class="input"> <i class="icon-prepend fa fa-user"></i>
-                        <input type="text" name="name" th:field="*{name}" placeholder="组织机构名称">
+                        <input class="" type="text" name="name" th:field="*{name}" placeholder="组织机构名称"
+                               data-rule-required="true" data-msg-required="请输入组织机构名称">
+                        <b class="tooltip tooltip-bottom-right tooltip-realaicy"><span class="tooltip-realaicy">请输入组织机构名称</span></b>
                         <input id="updateflag" name="updateflag" type="hidden" th:value="${realneworupdate}">
                         <input id="updateID" name="updateID" type="hidden" th:value="${realUpdateID}">
-
-                        <b class="tooltip tooltip-bottom-right">字段帮助信息示例</b>
                     </label>
                 </section>
                 <section class="col col-6">
-                    <label class="input"> <i class="icon-prepend fa fa-envelope-o"></i>
-                        <input type="text" name="contactName" th:field="*{contactName}" placeholder="联系人">
+                    <label class="input"> <i class="icon-prepend fa fa-user"></i>
+                        <input class="temp" id="realtemp_a" type="text" name="contactName" th:field="*{contactName}"
+                               placeholder="联系人">
+                        <b class="tooltip tooltip-bottom-right tooltip-realaicy"><span
+                                class="tooltip-realaicy">请输入联系人姓名</span></b>
                     </label>
                 </section>
             </div>
             <div class="row">
                 <section class="col col-6">
-                    <label class="input"> <i class="icon-prepend fa fa-user"></i>
-                        <input type="text" id="contactTel" name="contactTel" th:field="*{contactTel}"
-                               placeholder="联系电话">
+                    <label class="input"> <i class="icon-prepend fa fa-envelope-o"></i>
+                        <input type="email" name="contactEmail" th:field="*{contactEmail}" placeholder="E-mail">
+                        <b class="tooltip tooltip-bottom-right tooltip-realaicy"><span class="tooltip-realaicy">请输入联系人电子邮箱地址</span></b>
                     </label>
                 </section>
-
                 <section class="col col-6">
-                    <label class="input"> <i class="icon-prepend fa fa-envelope-o"></i>
-                        <input type="text" name="resWeight" th:field="*{resWeight}" placeholder="显示权重">
+                    <label class="input"> <i
+                            class="icon-prepend fa fa-phone"></i>
+                        <input type="tel" name="contactTel" th:field="*{contactTel}" placeholder="联系人电话"
+                               data-mask="9999-999-9999">
+                        <b class="tooltip tooltip-bottom-right tooltip-realaicy"><span
+                                class="tooltip-realaicy">请输入联系电话</span></b>
                     </label>
                 </section>
             </div>
         </fieldset>
-
-
         <footer>
             <button type="reset" class="btn btn-primary">
                 重置数据
@@ -65,101 +64,98 @@
         </footer>
     </form>
 
+
+    <div class="row">
+        <div class="col-sm-12">
+        </div>
+    </div>
 </div>
 
-<script>
-    /*$("#realentity").submit(function (e) {
-
-     var url = "/system/user/save"; // the script where you handle the form input.
-
-     console.log("aaa")
-     $.ajax({
-     type: "POST",
-     url: url,
-     data: $("#realentity").serialize(), // serializes the form's elements.
-     success: function (data) {
-     alert(data); // show response from the php script.
-     }
-     });
-
-     e.preventDefault(); // avoid to execute the actual submit of the form.
-     });*/
-
-
-    $(document).ready(function () {
-
-        console.log("aaa" + $("#nowid").val());
-
-        console.log("add ready")
-        if ($("#updateflag").val() == "new") {
-
-        } else {
-
-        }
-
-
-    });
-
-    function realtemp() {
-
+<style>
+    .reasu {
+        background: #f0fff0;
+        border-color: #7DC27D;
     }
 
-    var validateForm = $("#realentity").validate({
+    .temp {;
+    }
+</style>
 
-        // Rules for form validation
-        rules: {
-            name: {
-                required: true
-            },
-            /*email: {
-             required: true,
-             email: true
-             },*/
-            contactName: {
-                required: true,
-                minlength: 3,
-                maxlength: 20
-            },
-            contactTel: {
-                required: true,
-                minlength: 4,
-                maxlength: 20
-            }
-        },
-        // Messages for form validation
-        messages: {
-            username: {
-                required: '请输入组织机构名称'
-            },
-            /*email: {
-             required: '请输入电子邮箱地址',
-             email: '请输入格式正确的电子邮箱地址'
-             },*/
-            contactName: {
-                required: '请输入联系人姓名'
-            },
-            contactTel: {
-                required: '请输入联系电话'
-            }
+
+<script type="text/javascript">
+    pageSetUp();
+
+    $("#realentity").validate({
+
+        success: function (label) {
+            $(label).css("color", "green");
+            $(label).text('OK');
+            $(label).prev().removeClass("state-error").addClass("state-success")
         },
 
+        highlight: function (label) {
+            $(label).parent().addClass("state-error").removeClass("state-success");
+            $(label).parent().next().addClass("realaicy");
+            $(label).parent().next().css("color", "red");
+        },
         // Do not change code below
         errorPlacement: function (error, element) {
             error.insertAfter(element.parent());
         },
+        debug: true,
+        // Rules for form validation
+        rules: {
+            name: {
+                required: true,
+                minlength: 3,
+                maxlength: 20
+            },
+            contactEmail: {
+                required: true,
+                email: true
+            },
+            contactName: {
+                required: true,
+                minlength: 2,
+                maxlength: 10
+            },
+            contactTel: {
+                required: true
+            }
+        },
+        messages: {
+            name: {
+                required: '请输入组织机构名称',
+                minlength: '请至少输入3个字符',
+                maxlength: '输入超过了20个字符'
+            },
+            contactEmail: {
+                required: '请输入电子邮箱地址',
+                email: '请输入格式正确的电子邮箱地址'
+            },
+            contactName: {
+                required: '请输入联系人姓名',
+                minlength: '请至少输入2个字符',
+                maxlength: '输入超过了10个字符'
+            },
+            contactTel: {
+                required: '请输入联系人电话'
+            }
+        },
+
         submitHandler: function (form) {
             if ($("#updateflag").val() == "new") {
-                console.log("newnew");
+                //console.log("newnew");
                 $.ajax({
                     url: form.action,
                     type: form.method,
                     data: $(form).serialize(),
                     success: function (response) {
-                        console.log("OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
-                        console.log(response);
-
                         if (response.substring(0, 2) == "ok") {
-                            console.log("11111111111" + response);
+                            $('#realalertinfo').text('——新建组织机构成功！');
+                            $('#realalert').fadeTo(2000, 500).delay(5000).slideUp(500, function () {
+                                //$("#realtemp_a").delay().slideUp(500);
+                            });
                             $.smallBox({
                                 title: "创建用户成功",
                                 content: "<i class='fa fa-clock-o'></i> <i>2 seconds ago...</i>",
@@ -170,7 +166,7 @@
                         }
 
                         else {
-                            console.log("2222222" + response);
+                            console.log(response);
 
                             $.SmartMessageBox({
                                 title: "出错了!",
@@ -179,8 +175,6 @@
                             })
                         }
                         $("#treetable").fancytree("getTree").reload();
-
-
                     }
                 });
             } else {
@@ -192,15 +186,20 @@
                     type: form.method,
                     data: $(form).serialize(),
                     success: function (response) {
-
-                        if (response.substring(0, 2) == "ok")
+                        if (response.substring(0, 2) == "ok") {
+                            $('#realalertinfo').text('——修改组织机构成功！');
+                            $('#realalert').fadeTo(2000, 500).delay(5000).slideUp(500, function () {
+                                //$("#realtemp_a").delay().slideUp(500);
+                            });
                             $.smallBox({
-                                title: "修改用户成功",
+                                title: "修改成功",
                                 content: "<i class='fa fa-clock-o'></i> <i>2 seconds ago...</i>",
                                 color: "#296191",
                                 iconSmall: "fa fa-thumbs-up bounce animated",
                                 timeout: 4000
                             });
+                        }
+
                         else {
                             $.SmartMessageBox({
                                 title: "出错了!",
@@ -216,6 +215,10 @@
         }
     });
 
+    var pagefunction = function () {
+
+    };
+    loadScript("smartadmin/js/plugin/jquery-form/jquery-form.min.js", pagefunction);
+
 
 </script>
-<!-- end widget content -->

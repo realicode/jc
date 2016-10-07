@@ -80,6 +80,27 @@ table.dataTable tbody {
     margin: 0px 0px 10px 0px;
 }
 
+.tooltip-realaicy {
+    font-family: "Microsoft YaHei", "微软雅黑", "宋体", sans-serif;
+    height: 24px;
+    line-height: 24px;
+    font-size: 14px;
+    vertical-align: bottom;
+}
+
+select.error, input.error {
+    color: red;
+}
+
+.realheight {
+    min-height: 100%;
+    height: 100%
+}
+.realaicy-datatables-footerheight {
+    min-height: 100%;
+    height: 100%;
+}
+
 .btn-realaicy {
     font-family: "Microsoft YaHei", "微软雅黑", "宋体", sans-serif;
     font-weight: 100;
