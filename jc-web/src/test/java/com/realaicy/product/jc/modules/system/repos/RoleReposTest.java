@@ -1,7 +1,6 @@
 package com.realaicy.product.jc.modules.system.repos;
 
 import com.realaicy.product.jc.Application;
-import com.realaicy.product.jc.modules.system.model.Org;
 import com.realaicy.product.jc.modules.system.model.Role;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -14,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -40,13 +37,13 @@ public class RoleReposTest {
     @Test
     public void testCreateRole() throws Exception {
         Role role = new Role();
-        role.setRoleName("测试角色" + LocalDateTime.now());
+        role.setName("测试角色" + LocalDateTime.now());
         repos.save(role);
     }
 
     @Test
     public void findByName() throws Exception {
-        Role role = repos.findByRoleName("秘书处处长");
+        Role role = repos.findByName("秘书处处长");
         assertNotNull(role);
     }
 
@@ -61,7 +58,7 @@ public class RoleReposTest {
     @Test
     public void testCreate() throws Exception {
         Role role = new Role();
-        role.setRoleName("测试");
+        role.setName("测试");
         role.setMenus("1");
         role.setRealauthorities("1");
         role.setRoleStatus("1");

@@ -1,7 +1,7 @@
 package com.realaicy.product.jc.common.persistence.event;
 
 import com.google.common.base.Preconditions;
-import com.realaicy.lib.core.orm.jpa.BaseEntity;
+import com.realaicy.lib.core.orm.jpa.entity.BaseEntity;
 import org.springframework.context.ApplicationEvent;
 
 public final class BeforeEntityCreateEvent<T extends BaseEntity> extends ApplicationEvent {

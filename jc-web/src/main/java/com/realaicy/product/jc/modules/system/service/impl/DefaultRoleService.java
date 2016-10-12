@@ -1,6 +1,6 @@
 package com.realaicy.product.jc.modules.system.service.impl;
 
-import com.realaicy.lib.core.service.DefaultServiceImpl;
+import com.realaicy.lib.core.service.impl.DefaultBaseServiceImpl;
 import com.realaicy.product.jc.modules.system.model.Role;
 import com.realaicy.product.jc.modules.system.repos.RoleRepos;
 import com.realaicy.product.jc.modules.system.service.RoleService;
@@ -15,12 +15,12 @@ import java.util.List;
  * xxx
  */
 @Service
-public class DefaultRoleService extends DefaultServiceImpl<Role, Long>
+public class DefaultRoleService extends DefaultBaseServiceImpl<Role, Long>
         implements RoleService {
 
     @Override
     public Role findByRoleName(String roleName) {
-        return ((RoleRepos) baseRepository).findByRoleName(roleName);
+        return ((RoleRepos) baseRepository).findByName(roleName);
     }
 
     @Override

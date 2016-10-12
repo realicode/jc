@@ -1,12 +1,6 @@
 package com.realaicy.product.jc.modules.project.model;
 
-/**
- * Created by realaicy on 16/7/16.
- *
- * @author Realaicy
- */
-
-import com.realaicy.lib.core.orm.jpa.BaseEntity;
+import com.realaicy.lib.core.orm.jpa.entity.CommonEntity;
 import com.realaicy.product.jc.modules.system.model.User;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,7 +13,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "jc_pj_info")
-public class ProjectInfo extends BaseEntity<Long> {
+public class ProjectInfo extends CommonEntity<Long> {
 
 
     /**
@@ -46,14 +40,6 @@ public class ProjectInfo extends BaseEntity<Long> {
     @Column(name = "BUDGET")
     private int budget;
 
-
-    /**
-     * 用户状态
-     */
-    @Column(name = "STATUS")
-    private short status;
-
-
     /**
      * 项目启动时间
      */
@@ -71,36 +57,6 @@ public class ProjectInfo extends BaseEntity<Long> {
     private Date pjDeadlineDate;
 
     /**
-     * 资源创建时间戳
-     */
-    @Column(name = "CREATETIME")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createTime;
-    /**
-     * 资源创建者
-     */
-    @Column(name = "CREATERID")
-    private Long createrID;
-    /**
-     * 资源修改时间戳
-     */
-    @Column(name = "UPDATETIME")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updateTime;
-    /**
-     * 资源修改者
-     */
-    @Column(name = "UPDATERID")
-    private Long updaterID;
-
-    /**
-     * 标识:是否已经被删除
-     */
-    @Column(name = "F_DELETE")
-    private Boolean isDelete;
-    /**
      * 项目经理
      */
     @ManyToOne(fetch = FetchType.EAGER)
@@ -114,47 +70,6 @@ public class ProjectInfo extends BaseEntity<Long> {
 
     public void setManager(User manager) {
         this.manager = manager;
-    }
-
-    public Boolean getDelete() {
-        return isDelete;
-    }
-
-    public void setDelete(Boolean delete) {
-        isDelete = delete;
-    }
-
-    public short getStatus() {
-        return status;
-    }
-
-    public void setStatus(short status) {
-        this.status = status;
-    }
-
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Long getCreaterID() {
-        return createrID;
-    }
-
-    public void setCreaterID(Long createrID) {
-        this.createrID = createrID;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
     }
 
     public String getPjName() {
@@ -206,12 +121,5 @@ public class ProjectInfo extends BaseEntity<Long> {
         this.pjDeadlineDate = pjDeadlineDate;
     }
 
-    public Long getUpdaterID() {
-        return updaterID;
-    }
-
-    public void setUpdaterID(Long updaterID) {
-        this.updaterID = updaterID;
-    }
 
 }

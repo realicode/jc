@@ -64,10 +64,10 @@ public class DocReposTest {
         Short resStatus = 1;
         DocRes docRes = new DocRes();
         docRes.setAutoExpand(true);
-        docRes.setCreateTime(new Date());
-        docRes.setCreaterID(parentID);
-        docRes.setUpdaterID(parentID);
-        docRes.setUpdateTime(new Date());
+//        docRes.setCreateTime(new Date());
+//        docRes.setCreaterID(parentID);
+//        docRes.setUpdaterID(parentID);
+//        docRes.setUpdateTime(new Date());
         //docRes.setName("测试文档目录层2" + new Date());
         docRes.setName("测试文档1");
         docRes.setResType(Short.valueOf("1"));
@@ -93,13 +93,11 @@ public class DocReposTest {
 
         assertThat(docRes.getChildren().get(0).getName(), equalTo("测试文档目录层1"));
 
-
         FilterProvider filters = new SimpleFilterProvider().addFilter("realFilter", SimpleBeanPropertyFilter.serializeAllExcept("updateTime"));
 
         binder.getMapper().setFilterProvider(filters);
 
         String beanString = binder.toJson(docRes);
-
 
         System.out.println(beanString);
 

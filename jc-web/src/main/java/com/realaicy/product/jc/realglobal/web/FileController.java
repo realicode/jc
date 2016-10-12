@@ -1,40 +1,18 @@
 package com.realaicy.product.jc.realglobal.web;
 
-import com.google.common.base.Joiner;
-import com.realaicy.lib.core.orm.AbstractEntity;
-import com.realaicy.lib.core.orm.jpa.search.BaseSpecificationsBuilder;
-import com.realaicy.lib.core.orm.jpa.search.SearchOperation;
-import com.realaicy.lib.core.service.BaseService;
 import org.apache.tika.Tika;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.activation.MimetypesFileTypeMap;
 import javax.imageio.ImageIO;
-import javax.validation.Valid;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.Serializable;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by realaicy on 16/8/18.
@@ -93,7 +71,6 @@ public class FileController {
 
         return new ResponseEntity<>(filename, HttpStatus.OK);
     } // method uploadFile
-
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     @ResponseBody

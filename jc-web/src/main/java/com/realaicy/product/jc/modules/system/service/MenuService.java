@@ -1,5 +1,6 @@
 package com.realaicy.product.jc.modules.system.service;
 
+import com.realaicy.lib.core.service.BaseCommonTreeableDeletableService;
 import com.realaicy.lib.core.service.BaseService;
 import com.realaicy.product.jc.modules.system.model.Menu;
 

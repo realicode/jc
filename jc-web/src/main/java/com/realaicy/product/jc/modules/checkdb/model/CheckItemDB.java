@@ -1,21 +1,12 @@
 package com.realaicy.product.jc.modules.checkdb.model;
 
-/**
- * Created by realaicy on 16/7/16.
- *
- * @author Realaicy
- */
-
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.realaicy.lib.core.orm.jpa.BaseEntity;
-import org.springframework.format.annotation.DateTimeFormat;
+import com.realaicy.lib.core.orm.jpa.entity.BaseEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,7 +24,6 @@ import java.util.List;
         // resultSetMapping = "AuthorValueMapping")
 })
 public class CheckItemDB extends BaseEntity<Long> {
-
 
     /**
      * 资源类型
@@ -92,50 +82,11 @@ public class CheckItemDB extends BaseEntity<Long> {
     @Column(name = "STATUS")
     private short status = 1;
 
-
     /**
      * 资源标识字符串(对应用户所持有的权限字符串)
      */
     @Column(name = "IDENTITY")
     private String resIdentity = "";
-
-
-    /**
-     * 资源创建时间戳
-     */
-    @Column(name = "CREATETIME")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createTime;
-
-    /**
-     * 资源创建者
-     */
-    @Column(name = "CREATERID")
-    private Long createrID;
-
-    /**
-     * 资源修改时间戳
-     */
-    @Column(name = "UPDATETIME")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updateTime;
-
-    /**
-     * 资源修改者
-     */
-    @Column(name = "UPDATERID")
-    private Long updaterID;
-
-
-    /**
-     * 自定义扩展
-     */
-    @Column(name = "CUSTOM_CODE")
-    private String customCode = "";
-
 
     /**
      * 自定义扩展
@@ -143,14 +94,6 @@ public class CheckItemDB extends BaseEntity<Long> {
 
     @Column(name = "CASCADE_ID")
     private String cascadeID = "";
-
-
-    /**
-     * 父亲菜单对象ID
-     *//*
-    //@Column(name = "PID", unique = false, nullable = true, insertable = false, updatable = false)
-    @Column(name = "PID", nullable = false, insertable = false, updatable = false)
-    private Long parentID;*/
 
     /**
      * 父亲菜单对象
@@ -166,31 +109,6 @@ public class CheckItemDB extends BaseEntity<Long> {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent")
     @OrderBy("resWeight")
     private List<CheckItemDB> children = new ArrayList<>();
-
-    /*public DocRes() {
-    }
-
-    public DocRes(short resType, String name, String uri, Short resIcon, Short resWeight, Boolean isShow, Boolean isFolder,
-                  Boolean isAutoExpand, short status, String resIdentity, Date createTime, Long createrID,
-                  Date updateTime, Long updaterID, String customCode, Long parentID, String cascadeID) {
-        this.resType = resType;
-        this.name = name;
-        this.uri = uri;
-        this.resIcon = resIcon;
-        this.resWeight = resWeight;
-        this.isShow = isShow;
-        this.isFolder = isFolder;
-        this.isAutoExpand = isAutoExpand;
-        this.status = status;
-        this.resIdentity = resIdentity;
-        this.createTime = createTime;
-        this.createrID = createrID;
-        this.updateTime = updateTime;
-        this.updaterID = updaterID;
-        this.customCode = customCode;
-        this.parentID = parentID;
-        this.cascadeID = cascadeID;
-    }*/
 
     public String getCascadeID() {
         return cascadeID;
@@ -278,46 +196,6 @@ public class CheckItemDB extends BaseEntity<Long> {
 
     public void setResIdentity(String resIdentity) {
         this.resIdentity = resIdentity;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Long getCreaterID() {
-        return createrID;
-    }
-
-    public void setCreaterID(Long createrID) {
-        this.createrID = createrID;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Long getUpdaterID() {
-        return updaterID;
-    }
-
-    public void setUpdaterID(Long updaterID) {
-        this.updaterID = updaterID;
-    }
-
-    public String getCustomCode() {
-        return customCode;
-    }
-
-    public void setCustomCode(String customCode) {
-        this.customCode = customCode;
     }
 
     public CheckItemDB getParent() {

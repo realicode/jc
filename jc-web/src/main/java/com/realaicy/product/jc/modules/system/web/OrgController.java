@@ -9,10 +9,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -20,6 +17,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by realaicy on 16/7/15.
@@ -29,7 +27,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/system/org")
 public class OrgController extends TreeController<Org, Long> {
-
 
     private OrgService orgService;
     static final private String[] nameDic = {"username", "password", "nickname", "createTime"};
@@ -54,21 +51,20 @@ public class OrgController extends TreeController<Org, Long> {
                           final BindingResult result, final ModelMap model,
                           @RequestParam(value = "updateflag", required = false) String updateflag,
                           @RequestParam(value = "updateID", required = false) Long updateID,
-                          @RequestParam(value = "portraitUrl", required = false) String portraitUrl,
                           @RequestParam(value = "pid") String pid,
                           HttpServletResponse httpServletResponse) {
 
-        if (updateflag.equals("new")) {
-
-            if (result.hasErrors()) {
-                try {
-                    httpServletResponse.getWriter().println("errrrrrrr");
-                    httpServletResponse.getWriter().close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        if (result.hasErrors()) {
+            try {
+                httpServletResponse.getWriter().println("errrrrrrr绑定出错！");
+                httpServletResponse.getWriter().close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
             }
+        }
 
+        if (updateflag.equals("new")) {
             if (orgService.findByNameWithInAParent(realmodel.getName(), Long.parseLong(pid)) != null) {
                 try {
                     httpServletResponse.getWriter().println("err: 名称已经存在,请重新填写组织机构名称！");
@@ -76,59 +72,69 @@ public class OrgController extends TreeController<Org, Long> {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
-
-
-            Org parent = orgService.findOne(Long.parseLong(pid));
-            realmodel.setParent(parent);
-            realmodel.setDeleteFlag(false);
-
-            List<Org> orgTempList = orgService.findByCascadeIDStartingWith(parent.getCascadeID());
-            if (orgTempList.size() == 1) {
-                realmodel.setCascadeID(parent.getCascadeID() + ".001");
             } else {
-                realmodel.setCascadeID(parent.getCascadeID() + "." + String.format("%03d", orgTempList.size()));
+                Org parent = orgService.findOne(Long.parseLong(pid));
+                realmodel.setParent(parent);
+                realmodel.setDeleteFlag(false);
 
+                List<Org> orgTempList = orgService.findByCascadeIDStartingWith(parent.getCascadeID());
+                if (orgTempList.size() == 1) {
+                    realmodel.setCascadeID(parent.getCascadeID() + ".001");
+                } else {
+                    realmodel.setCascadeID(parent.getCascadeID() + "." + String.format("%03d", orgTempList.size()));
+                }
+
+                realmodel.setFolder(true);
+                realmodel.setCreateTime(new Date());
+                //noinspection ConstantConditions
+                realmodel.setCreaterID(SpringSecurityUtil.getCurrentPrincipal().getId());
+                realmodel.setUpdateTime(realmodel.getCreateTime());
+                realmodel.setUpdaterID(SpringSecurityUtil.getCurrentPrincipal().getId());
+                orgService.save(realmodel);
+                System.out.println("OKKKK");
+                try {
+                    httpServletResponse.getWriter().println("ok");
+                    httpServletResponse.getWriter().close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
-            realmodel.setFolder(true);
-            realmodel.setCreateTime(new Date());
-            //noinspection ConstantConditions
-            realmodel.setCreaterID(SpringSecurityUtil.getCurrentPrincipal().getId());
-            realmodel.setUpdateTime(realmodel.getCreateTime());
-            realmodel.setUpdaterID(SpringSecurityUtil.getCurrentPrincipal().getId());
-            orgService.save(realmodel);
 
-        } else {//edit
-            if (result.hasErrors()) {
-                result.getFieldErrors().stream().filter(fieldError -> !bindingWhiteList.contains(fieldError.getField())).forEach(fieldError -> {
-                    try {
-                        httpServletResponse.getWriter().println("errrrrrrr");
-                        httpServletResponse.getWriter().close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-            }
+        } else if (updateflag.equals("editedit")) {//edit
             Org org = orgService.findOne(updateID);
-            org.setName(realmodel.getName());
-            org.setContactName(realmodel.getContactName());
-            org.setContactTel(realmodel.getContactTel());
-            realmodel.setContactEmail(realmodel.getContactEmail());
+            Org orgTemp = orgService.findByNameWithInAParent(realmodel.getName(), org.getParent().getId());
 
-            org.setUpdateTime(new Date());
-            //noinspection ConstantConditions
-            org.setUpdaterID(SpringSecurityUtil.getCurrentPrincipal().getId());
-            orgService.save(org);
+            if (orgTemp != null
+                    && !Objects.equals(orgTemp.getId(), updateID)) {
+                try {
+                    httpServletResponse.getWriter().println("err: 名称已经存在,请重新填写组织机构名称！");
+                    httpServletResponse.getWriter().close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                org.setName(realmodel.getName());
+                org.setContactName(realmodel.getContactName());
+                org.setContactTel(realmodel.getContactTel());
+                realmodel.setContactEmail(realmodel.getContactEmail());
+
+                org.setUpdateTime(new Date());
+                //noinspection ConstantConditions
+                org.setUpdaterID(SpringSecurityUtil.getCurrentPrincipal().getId());
+                orgService.save(org);
+                System.out.println("OKKKK");
+                try {
+                    httpServletResponse.getWriter().println("ok");
+                    httpServletResponse.getWriter().close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
         }
 
-        System.out.println("OKKKK");
-        try {
-            httpServletResponse.getWriter().println("ok");
-            httpServletResponse.getWriter().close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
     @Override

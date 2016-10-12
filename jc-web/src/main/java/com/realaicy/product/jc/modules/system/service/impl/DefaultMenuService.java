@@ -1,13 +1,12 @@
 package com.realaicy.product.jc.modules.system.service.impl;
 
-import com.realaicy.lib.core.service.DefaultServiceImpl;
+import com.realaicy.lib.core.service.impl.DefaultBaseServiceImpl;
 import com.realaicy.product.jc.modules.system.model.Menu;
 import com.realaicy.product.jc.modules.system.repos.MenuRepos;
 import com.realaicy.product.jc.modules.system.service.MenuService;
 import com.realaicy.product.jc.modules.system.service.RoleService;
 import com.realaicy.product.jc.uitl.SpringSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,7 @@ import java.util.*;
  * xxx
  */
 @Service
-public class DefaultMenuService extends DefaultServiceImpl<Menu, Long>
+public class DefaultMenuService extends DefaultBaseServiceImpl<Menu, Long>
         implements MenuService {
 
     //private Logger log = LoggerFactory.getLogger(getClass());

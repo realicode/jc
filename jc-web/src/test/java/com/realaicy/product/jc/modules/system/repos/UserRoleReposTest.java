@@ -6,7 +6,6 @@ import com.realaicy.product.jc.modules.system.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.support.ReplaceOverride;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -29,7 +28,7 @@ public class UserRoleReposTest {
     public void testCreateUserAndRole() throws Exception {
 
         Role role = new Role();
-        role.setRoleName("测试角色4");
+        role.setName("测试角色4");
         roleRepos.save(role);
 
         User user = new User();

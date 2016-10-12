@@ -1,6 +1,6 @@
 package com.realaicy.product.jc.modules.system.service.impl;
 
-import com.realaicy.lib.core.service.DefaultServiceImpl;
+import com.realaicy.lib.core.service.impl.DefaultBaseServiceImpl;
 import com.realaicy.product.jc.modules.system.model.User;
 import com.realaicy.product.jc.modules.system.repos.UserRepos;
 import com.realaicy.product.jc.modules.system.service.UserService;
@@ -14,7 +14,7 @@ import java.util.List;
  * xxx
  */
 @Service
-public class DefaultUserService extends DefaultServiceImpl<User, Long>
+public class DefaultUserService extends DefaultBaseServiceImpl<User, Long>
         implements UserService {
 
 

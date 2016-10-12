@@ -1,32 +1,30 @@
 package com.realaicy.product.jc.modules.doccenter.service.impl;
 
+import com.realaicy.lib.core.service.impl.DefaultBaseServiceImpl;
 import com.realaicy.product.jc.modules.doccenter.model.DocRes;
 import com.realaicy.product.jc.modules.doccenter.repos.DocRepos;
 import com.realaicy.product.jc.modules.doccenter.service.DocService;
-import com.realaicy.product.jc.modules.system.model.User;
-import com.realaicy.product.jc.modules.system.repos.UserRepos;
-import com.realaicy.product.jc.modules.system.service.UserService;
 import com.realaicy.product.jc.realglobal.config.StaticParams;
-import com.realaicy.lib.core.service.DefaultServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by realaicy on 16/3/14.
  * xxx
  */
 @Service
-public class DefaultDocService extends DefaultServiceImpl<DocRes, Long>
+public class DefaultDocService extends DefaultBaseServiceImpl<DocRes, Long>
         implements DocService {
 
-    @Autowired
+    private final
     DocRepos docRepos;
+
+    @Autowired
+    public DefaultDocService(DocRepos docRepos) {
+        this.docRepos = docRepos;
+    }
 
     @Override
     public String updateDocCatalog(Long ID, String title) {
@@ -53,7 +51,7 @@ public class DefaultDocService extends DefaultServiceImpl<DocRes, Long>
         docRes.setCreaterID(1L);
         docRes.setUpdaterID(1L);
         docRes.setUpdateTime(new Date());
-        //docRes.setName("测试文档目录层2" + new Date());
+        docRes.setName("测试文档目录层2" + new Date());
         docRes.setResType(Short.valueOf("1"));
         docRes.setCascadeID("1.005.001.001.001.0000001");
         docRes.setFolder(true);

@@ -1,7 +1,6 @@
 package com.realaicy.product.jc.modules.project.service;
 
 import com.realaicy.lib.core.service.BaseService;
-import com.realaicy.product.jc.modules.project.model.PJApply;
 import com.realaicy.product.jc.modules.project.model.ProjectInfo;
 
 /**

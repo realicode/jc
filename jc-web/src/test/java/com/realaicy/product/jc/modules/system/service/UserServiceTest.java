@@ -56,7 +56,7 @@ public class UserServiceTest {
     public void findUserRoles() throws Exception {
         userService.findByName("realaicy").getRoles();
         //assertThat(userService.findByName("realaicy").getNickname(), equalTo("刘旭东"));
-        assertThat(userService.findByName("realaicy").getRoles().get(0).getRoleName(), equalTo("超级管理员"));
+        assertThat(userService.findByName("realaicy").getRoles().get(0).getName(), equalTo("超级管理员"));
     }
 
     @Test

@@ -4,6 +4,7 @@ import com.realaicy.product.jc.modules.project.model.PJApply;
 import com.realaicy.product.jc.modules.project.model.ProjectInfo;
 import com.realaicy.product.jc.modules.project.service.PJApplyService;
 import com.realaicy.product.jc.modules.project.service.ProjectInfoService;
+import com.realaicy.product.jc.modules.system.service.OrgService;
 import com.realaicy.product.jc.modules.system.service.UserService;
 import com.realaicy.product.jc.realglobal.web.CRUDController;
 import com.realaicy.product.jc.uitl.SpringSecurityUtil;
@@ -38,11 +39,8 @@ public class ProjectInfoController extends CRUDController<ProjectInfo, Long> {
     static final private String listEntityUrl = "project/info/page";
     static final private String searchEntityUrl = "project/info/search";
 
-
-    @Autowired
     UserService userService;
 
-    @Autowired
     private RuntimeService runtimeService;
 
     @Autowired
@@ -50,14 +48,6 @@ public class ProjectInfoController extends CRUDController<ProjectInfo, Long> {
         super(service, "user", nameDic, pageUrl, newEntityUrl, editEntityUrl,
                 listEntityUrl, searchEntityUrl, ProjectInfo.class);
         this.service = service;
-    }
-
-    @Override
-    @RequestMapping(value = "/new", method = RequestMethod.GET)
-    public String newModel(Model model) {
-        model.addAttribute("realmodel", new ProjectInfo());
-        model.addAttribute("realneworupdate", "new");
-        return newEntityUrl;
     }
 
     @ResponseBody
@@ -74,7 +64,7 @@ public class ProjectInfoController extends CRUDController<ProjectInfo, Long> {
                 return "errrrrrrr";
             }
 
-            realmodel.setManager(userService.findOne(Long.parseLong(managerid)));
+            //realmodel.setManager(userService.findOne(Long.parseLong(managerid)));
             realmodel.setCreateTime(new Date());
             realmodel.setCreaterID(SpringSecurityUtil.getCurrentPrincipal().getId());
             realmodel.setUpdateTime(realmodel.getCreateTime());

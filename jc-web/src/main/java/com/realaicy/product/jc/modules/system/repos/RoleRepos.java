@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface RoleRepos extends BaseRepository<Role, Long> {
 
-    Role findByRoleName(String roleName);
+    Role findByName(String roleName);
 
     List<Role> findByOrgIDIn(Collection<BigInteger> orgIDs);
 

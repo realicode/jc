@@ -1,12 +1,9 @@
 package com.realaicy.product.jc.modules.system.model;
 
-
-import com.realaicy.lib.core.orm.jpa.BaseEntity;
-import org.springframework.format.annotation.DateTimeFormat;
+import com.realaicy.lib.core.orm.jpa.entity.CommonDeletableEntity;
 
 import javax.persistence.*;
 import java.math.BigInteger;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,14 +11,14 @@ import java.util.List;
  */
 @Entity
 @Table(name = "jc_sys_role")
-public class Role extends BaseEntity<Long> {
+public class Role extends CommonDeletableEntity<Long> {
 
 
     /**
      * 角色名称
      */
     @Column(name = "ROLENAME")
-    private String roleName;
+    private String name;
     /**
      * 角色所属组织
      */
@@ -37,30 +34,8 @@ public class Role extends BaseEntity<Long> {
      */
     @Column(name = "ROLETYPE")
     private String roleType;
-    /**
-     * 角色创建时间戳
-     */
-    @Column(name = "CREATETIME")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createTime;
-    /**
-     * 角色创建者
-     */
-    @Column(name = "CREATERID")
-    private Long createrID;
-    /**
-     * 角色修改时间戳
-     */
-    @Column(name = "UPDATETIME")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updateTime;
-    /**
-     * 角色修改者
-     */
-    @Column(name = "UPDATERID")
-    private Long updaterID;
+
+
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
     /**
@@ -96,12 +71,12 @@ public class Role extends BaseEntity<Long> {
         this.menus = menus;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public String getName() {
+        return name;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getRoleStatus() {
@@ -118,38 +93,6 @@ public class Role extends BaseEntity<Long> {
 
     public void setRoleType(String roleType) {
         this.roleType = roleType;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Long getCreaterID() {
-        return createrID;
-    }
-
-    public void setCreaterID(Long createrID) {
-        this.createrID = createrID;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Long getUpdaterID() {
-        return updaterID;
-    }
-
-    public void setUpdaterID(Long updaterID) {
-        this.updaterID = updaterID;
     }
 
     public List<User> getUsers() {

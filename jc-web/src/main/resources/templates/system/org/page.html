@@ -54,10 +54,50 @@
                  data-widget-fullscreenbutton="false">
                 <header>
                     <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                    <h2>新增 || 修改 || 查询组织机构 —— 控制面板</h2>
+                    <h2>新增 || 修改 组织机构 —— 控制面板</h2>
                 </header>
                 <div id="realeditdiv">
 
+                </div>
+            </div>
+        </article>
+        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="jarviswidget jarviswidget-color-darken widget-realaicy" id="real_treesearch"
+                 data-widget-editbutton="false"
+                 data-widget-collapsed="true"
+                 data-widget-deletebutton="false"
+                 data-widget-fullscreenbutton="false">
+                <header>
+                    <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                    <h2>查询组织机构</h2>
+                </header>
+                <div>
+                    <div class="jarviswidget-editbox">
+                    </div>
+                    <div class="widget-body">
+                        <form class="form-horizontal">
+                            <fieldset>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">组织机构名称</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control" name="searchname" placeholder="组织机构名称" type="text">
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <footer>
+                                <a href="javascript:void(0);" id="btnSearch2"
+                                   class="btn btn-labeled btn-primary"> <span
+                                        class="btn-label"><i class="glyphicon glyphicon-ok"></i></span>查询组织机构
+                                </a>
+                            </footer>
+                        </form>
+
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </article>
@@ -136,15 +176,15 @@
             <div class="col-sm-3">
                 <div class="input-group">
                     <div class="input-group-btn">
-                        <a href="javascript:void(0);" id="btnNew" disabled="disabled"
+                        <a href="javascript:void(0);" id="btnSearch"
                            class="btn btn-labeled btn-primary"> <span
-                                class="btn-label"><i class="glyphicon glyphicon-ok"></i></span>新建顶级组织机构
+                                class="btn-label"><i class="glyphicon glyphicon-ok"></i></span>查询组织机构
                         </a>
                     </div>
                 </div>
             </div>
             <div class="col-sm-3">
-                <a href="javascript:void(0);" class="btn btn-labeled btn-danger"> <span
+                <a href="javascript:void(0);" id="btnDel" class="btn btn-labeled btn-danger"> <span
                         class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>删除当前组织机构
                 </a>
             </div>
@@ -158,37 +198,41 @@
 </section>
 <script type="text/javascript">
     pageSetUp();
-    function realModifyName() {
-        console.log("realModifyName");
-        console.log($("#echoActive2").val());
-        var node = $("#tree2").fancytree("getActiveNode");
-        console.log("待更新的原始数据： " + node.data.id + node.title);
-        $.ajax({
-            url: "/doccenter/catalog/edit",
-            async: true,
-            data: {id: node.data.id, title: $("#echoActive2").val()},
-            type: "GET",
-            success: function (data) {
-                console.log("success");
-                $("#tree2").fancytree("getTree").reload();
-                console.log("success2222");
-            }
-        });
-        console.log("End");
-    }
+//    function realModifyName() {
+//        console.log("realModifyName");
+//        console.log($("#echoActive2").val());
+//        var node = $("#tree2").fancytree("getActiveNode");
+//        console.log("待更新的原始数据： " + node.data.id + node.title);
+//        $.ajax({
+//            url: "/doccenter/catalog/edit",
+//            async: true,
+//            data: {id: node.data.id, title: $("#echoActive2").val()},
+//            type: "GET",
+//            success: function (data) {
+//                console.log("success");
+//                $("#tree2").fancytree("getTree").reload();
+//                console.log("success2222");
+//            }
+//        });
+//        console.log("End");
+//    }
 
     var pagefunction = function () {
 
         var realmsg = "请先选择一个节点";
 
-
         $("#treetable").fancytree({
-            extensions: ["table"],
+            extensions: ["table", "filter"],
             checkbox: true,
             table: {
                 indentation: 20,
                 nodeColumnIdx: 2,
                 checkboxColumnIdx: 0
+            },
+            filter: {
+                counter: true, // Show a badge with number of matching child nodes near parent icons
+                hideExpandedCounter: true, // Hide counter badge, when parent is expanded
+                mode: "dimm"  // "dimm": Grayo
             },
             source: {
                 url: "/system/org/list",
@@ -207,18 +251,20 @@
             }
         });
 
-        $("#btnNew").click(function () {
+        $("#btnSearch").click(function () {
 
-            console.log("realCreateOrg");
-            var node = $("#treetable").fancytree("getActiveNode");
-            if (node == null || node == undefined || node == '') {
-                console.log("请先选择一个节点")
-            } else {
-                $("#realeditdiv").load("/system/org/new?pid=" + node.data.id + "&pname=" + encodeURIComponent(node.title));
+            $("#realeditdiv").load("/system/org/new?pid=" + node.data.id + "&pname=" + encodeURIComponent(node.title));
+            if ($("#real_entity").hasClass("jarviswidget-collapsed"))
+                $("#real_entity a.jarviswidget-toggle-btn").trigger("click");
+        });
 
-                if ($("#real_entity").hasClass("jarviswidget-collapsed"))
-                    $("#real_entity a.jarviswidget-toggle-btn").trigger("click");
-            }
+        $("#btnSearch2").click(function () {
+
+            $("#treetable").fancytree("getTree").filterNodes($("input[name=searchname]").val(), {
+                autoExpand: true,
+                leavesOnly: true
+            });
+
         });
 
         $("#btnSubNew").click(function () {
@@ -259,6 +305,67 @@
                 $("#realeditdiv").load("/system/org/show/" + node.data.id);
                 if ($("#real_entity").hasClass("jarviswidget-collapsed"))
                     $("#real_entity a.jarviswidget-toggle-btn").trigger("click");
+            }
+        });
+        $("#btnDel").click(function () {
+            var node = $("#treetable").fancytree("getActiveNode");
+            if (node == null || node == undefined || node == '') {
+                BootstrapDialog.alert({
+                    title: '系统提示信息：',
+                    message: realmsg,
+                    type: BootstrapDialog.TYPE_DANGER, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+                    closable: true, // <-- Default value is false
+                    buttonLabel: '确定', // <-- Default value is 'OK',
+                    callback: function (result) {
+                    }
+                });
+            } else {
+                console.log("deldel");
+
+                BootstrapDialog.show({
+                    title: '系统提示信息',
+                    message: '请确认是否删除选定数据.',
+                    buttons: [{
+                        label: '确认删除',
+                        action: function (dialog) {
+                            dialog.close()
+                            $("#updateflag").attr("value", 'deldel');
+                            $.ajax({
+                                url: '/system/org/del/' + node.data.id,
+                                type: 'GET',
+                                success: function (response) {
+                                    if (response.substring(0, 2) == "ok") {
+                                        $('#realalertinfo').text('——删除组织机构成功！');
+                                        $('#realalert').fadeTo(2000, 500).delay(5000).slideUp(500, function () {
+                                            //$("#realtemp_a").delay().slideUp(500);
+                                        });
+                                        $.smallBox({
+                                            title: "删除组织机构成功",
+                                            content: "<i class='fa fa-clock-o'></i> <i>2 seconds ago...</i>",
+                                            color: "#296191",
+                                            iconSmall: "fa fa-thumbs-up bounce animated",
+                                            timeout: 4000
+                                        });
+                                    }
+
+                                    else {
+                                        $.SmartMessageBox({
+                                            title: "出错了!",
+                                            content: response,
+                                            buttons: '[确定]'
+                                        })
+                                    }
+                                    $("#treetable").fancytree("getTree").reload();
+                                }
+                            });
+                        }
+                    }, {
+                        label: '取消',
+                        action: function (dialogItself) {
+                            dialogItself.close();
+                        }
+                    }]
+                });
             }
         });
     };

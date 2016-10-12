@@ -15,7 +15,7 @@ import java.util.List;
 public interface OrgRepos extends BaseRepository<Org, Long> {
 
     @Query(value = "SELECT * FROM jc_sys_org as org" +
-            " WHERE org.pid=:pid and org.name =:name", nativeQuery = true)
+            " WHERE org.pid=:pid and org.name =:name and org.F_DELETED=0", nativeQuery = true)
     Org findByNameWithInAParent(@Param("name") String name, @Param("pid") Long pid);
 
     @Query(value = "SELECT id FROM jc_sys_org as org" +

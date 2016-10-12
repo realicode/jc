@@ -1,9 +1,7 @@
 package com.realaicy.product.jc.modules.project.service.impl;
 
-import com.realaicy.lib.core.service.DefaultServiceImpl;
-import com.realaicy.product.jc.modules.project.model.PJApply;
+import com.realaicy.lib.core.service.impl.DefaultBaseServiceImpl;
 import com.realaicy.product.jc.modules.project.model.ProjectInfo;
-import com.realaicy.product.jc.modules.project.service.PJApplyService;
 import com.realaicy.product.jc.modules.project.service.ProjectInfoService;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +10,7 @@ import org.springframework.stereotype.Service;
  * xxx
  */
 @Service
-public class DefaultProjectInfoService extends DefaultServiceImpl<ProjectInfo, Long>
+public class DefaultProjectInfoService extends DefaultBaseServiceImpl<ProjectInfo, Long>
         implements ProjectInfoService {
-
 
 }

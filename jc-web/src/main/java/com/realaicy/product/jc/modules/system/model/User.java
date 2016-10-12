@@ -7,13 +7,11 @@ package com.realaicy.product.jc.modules.system.model;
  */
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.realaicy.lib.core.orm.jpa.BaseEntity;
+import com.realaicy.lib.core.orm.jpa.entity.CommonDeletableEntity;
 import com.realaicy.product.jc.modules.project.model.ProjectInfo;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,7 +19,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "jc_sys_user")
-public class User extends BaseEntity<Long> {
+public class User extends CommonDeletableEntity<Long> {
 
 
     /**
@@ -74,45 +72,13 @@ public class User extends BaseEntity<Long> {
      */
     @Column(name = "SEX")
     private char sex;
-    /**
-     * 标识:是否已经被删除
-     */
-    @Column(name = "F_DELETE")
-    private Boolean isDelete;
-    /**
-     * 用户状态
-     */
-    @Column(name = "STATUS")
-    private short status;
+
     /**
      * 用户类型
      */
     @Column(name = "USERTYPE")
     private short usertype;
-    /**
-     * 资源创建时间戳
-     */
-    @Column(name = "CREATETIME")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createTime;
-    /**
-     * 资源创建者
-     */
-    @Column(name = "CREATERID")
-    private Long createrID;
-    /**
-     * 资源修改时间戳
-     */
-    @Column(name = "UPDATETIME")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updateTime;
-    /**
-     * 资源修改者
-     */
-    @Column(name = "UPDATERID")
-    private Long updaterID;
+
     /**
      * 用户所属组织语义ID
      */
@@ -192,60 +158,12 @@ public class User extends BaseEntity<Long> {
         this.sex = sex;
     }
 
-    public Boolean getDelete() {
-        return isDelete;
-    }
-
-    public void setDelete(Boolean delete) {
-        isDelete = delete;
-    }
-
-    public short getStatus() {
-        return status;
-    }
-
-    public void setStatus(short status) {
-        this.status = status;
-    }
-
     public short getUsertype() {
         return usertype;
     }
 
     public void setUsertype(short usertype) {
         this.usertype = usertype;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Long getCreaterID() {
-        return createrID;
-    }
-
-    public void setCreaterID(Long createrID) {
-        this.createrID = createrID;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Long getUpdaterID() {
-        return updaterID;
-    }
-
-    public void setUpdaterID(Long updaterID) {
-        this.updaterID = updaterID;
     }
 
     public String getOrgCascadeID() {

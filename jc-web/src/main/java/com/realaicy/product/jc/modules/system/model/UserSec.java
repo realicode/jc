@@ -2,11 +2,9 @@ package com.realaicy.product.jc.modules.system.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.realaicy.lib.core.orm.jpa.BaseEntity;
-import org.springframework.format.annotation.DateTimeFormat;
+import com.realaicy.lib.core.orm.jpa.entity.CommonDeletableEntity;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,7 +12,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "jc_sys_user_sec")
-public class UserSec extends BaseEntity<Long> {
+public class UserSec extends CommonDeletableEntity<Long> {
 
 
     /**
@@ -54,30 +52,7 @@ public class UserSec extends BaseEntity<Long> {
     private boolean credentialsNonExpired;
     @Column(name = "ENABLED")
     private boolean enabled;
-    /**
-     * 资源创建时间戳
-     */
-    @Column(name = "CREATETIME")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createTime;
-    /**
-     * 资源创建者
-     */
-    @Column(name = "CREATERID")
-    private Long createrID;
-    /**
-     * 资源修改时间戳
-     */
-    @Column(name = "UPDATETIME")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updateTime;
-    /**
-     * 资源修改者
-     */
-    @Column(name = "UPDATERID")
-    private Long updaterID;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "jc_sys_user_role", joinColumns = @JoinColumn(name = "USERID"),
             inverseJoinColumns = @JoinColumn(name = "ROLEID"))
@@ -154,39 +129,6 @@ public class UserSec extends BaseEntity<Long> {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
-    }
-
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Long getCreaterID() {
-        return createrID;
-    }
-
-    public void setCreaterID(Long createrID) {
-        this.createrID = createrID;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Long getUpdaterID() {
-        return updaterID;
-    }
-
-    public void setUpdaterID(Long updaterID) {
-        this.updaterID = updaterID;
     }
 
     public List<Role> getRoles() {

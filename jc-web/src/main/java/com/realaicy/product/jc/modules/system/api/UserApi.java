@@ -1,6 +1,7 @@
 package com.realaicy.product.jc.modules.system.api;
 
 import com.realaicy.product.jc.modules.system.model.User;
+import com.realaicy.product.jc.modules.system.service.OrgService;
 import com.realaicy.product.jc.modules.system.service.UserService;
 import com.realaicy.product.jc.realglobal.web.CRUDController;
 import org.springframework.beans.factory.annotation.Autowired;

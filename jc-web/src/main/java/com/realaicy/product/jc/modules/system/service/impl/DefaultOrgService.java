@@ -1,6 +1,7 @@
 package com.realaicy.product.jc.modules.system.service.impl;
 
-import com.realaicy.lib.core.service.DefaultServiceImpl;
+
+import com.realaicy.lib.core.service.impl.DefaultBaseServiceImpl;
 import com.realaicy.product.jc.modules.system.model.Org;
 import com.realaicy.product.jc.modules.system.repos.OrgRepos;
 import com.realaicy.product.jc.modules.system.service.OrgService;
@@ -15,7 +16,7 @@ import java.util.List;
  * xxx
  */
 @Service
-public class DefaultOrgService extends DefaultServiceImpl<Org, Long>
+public class DefaultOrgService extends DefaultBaseServiceImpl<Org, Long>
         implements OrgService {
 
     @Override
@@ -30,6 +31,6 @@ public class DefaultOrgService extends DefaultServiceImpl<Org, Long>
 
     @Override
     public List<BigInteger> findAllChildIDs(@Param("cascadeid") String cascadeid) {
-        return ((OrgRepos) baseRepository).findAllChildIDs("%"+cascadeid+"%");
+        return ((OrgRepos) baseRepository).findAllChildIDs("%" + cascadeid + "%");
     }
 }

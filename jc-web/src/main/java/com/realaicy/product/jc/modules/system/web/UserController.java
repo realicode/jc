@@ -1,19 +1,14 @@
 package com.realaicy.product.jc.modules.system.web;
 
-import com.google.common.base.Joiner;
-import com.realaicy.lib.core.orm.jpa.search.BaseSpecificationsBuilder;
-import com.realaicy.lib.core.orm.jpa.search.SearchOperation;
 import com.realaicy.product.jc.modules.system.model.User;
 import com.realaicy.product.jc.modules.system.model.UserSec;
 import com.realaicy.product.jc.modules.system.repos.UserSecRepos;
+import com.realaicy.product.jc.modules.system.service.OrgService;
 import com.realaicy.product.jc.modules.system.service.UserService;
 import com.realaicy.product.jc.realglobal.web.CRUDController;
 import com.realaicy.product.jc.uitl.SpringSecurityUtil;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,8 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by realaicy on 16/7/15.
