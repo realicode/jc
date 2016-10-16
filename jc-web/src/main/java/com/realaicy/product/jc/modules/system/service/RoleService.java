@@ -2,6 +2,7 @@ package com.realaicy.product.jc.modules.system.service;
 
 import com.realaicy.lib.core.service.BaseService;
 import com.realaicy.product.jc.modules.system.model.Role;
+import org.springframework.data.repository.query.Param;
 
 import java.math.BigInteger;
 import java.util.Collection;
@@ -17,5 +18,9 @@ public interface RoleService extends BaseService<Role, Long> {
     Role findByRoleName(String roleName);
 
     List<Role> findByOrgIDIn(Collection<BigInteger> orgIDs);
+
+    List<Role> findByOrgID(BigInteger orgID);
+
+    Role findByNameWithInAOrg(String name, BigInteger orgid);
 
 }

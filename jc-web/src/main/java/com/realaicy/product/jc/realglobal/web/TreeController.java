@@ -8,7 +8,7 @@ import com.realaicy.lib.core.orm.jpa.entity.BaseEntity;
 import com.realaicy.lib.core.orm.plugin.CommonData;
 import com.realaicy.lib.core.orm.plugin.Treeable;
 import com.realaicy.lib.core.service.BaseService;
-import com.realaicy.product.jc.uitl.SpringSecurityUtil;
+import com.realaicy.product.jc.common.security.OrgRestricted;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
@@ -31,7 +31,6 @@ public abstract class TreeController<M extends BaseEntity<ID> & Treeable<ID> & C
 
     private static JsonMapper binder = JsonMapper.nonDefaultMapper();
     private final BaseService<M, ID> service;
-    private final String pageUrl;
     private final Class<M> aClass;
     private final String newEntityUrl;
 
@@ -42,15 +41,8 @@ public abstract class TreeController<M extends BaseEntity<ID> & Treeable<ID> & C
                           Class<M> aClass) {
         super(service, initFormParam, nameDic, pageUrl, newEntityUrl, editEntityUrl, listUrl, searchEntityUrl, aClass);
         this.service = service;
-        this.pageUrl = pageUrl;
         this.newEntityUrl = newEntityUrl;
         this.aClass = aClass;
-    }
-
-
-    @RequestMapping(value = "/page", method = RequestMethod.GET)
-    public String listEntityPage() {
-        return this.pageUrl;
     }
 
     @SuppressWarnings("unused")
@@ -58,35 +50,16 @@ public abstract class TreeController<M extends BaseEntity<ID> & Treeable<ID> & C
         return aClass;
     }
 
-    @RequestMapping("/list")
-    @ResponseBody
-    @Cacheable(key = "#root.target.getRealID()", cacheResolver = "runtimeCacheResolver")
-    public String listTree(@RequestParam(value = "id", required = false, defaultValue = "2") final ID id) {
-
-        log.info("listTree: id:" + id);
-
-        assert aClass != null;
-        if (!SpringSecurityUtil.hasPrivilege(aClass.getSimpleName() + "-" + "r"))
-            return "NOPrivilege";
-
-        M treeModel = service.findOne(getRealID());
-        // M treeModel = service.findOne(getRealID());
-        FilterProvider filters = new SimpleFilterProvider().addFilter("realFilter", SimpleBeanPropertyFilter.serializeAllExcept("updateTime"));
-        binder.getMapper().setFilterProvider(filters);
-        String s = binder.toJson(treeModel);
-        return "[" + s + "]";
-    }
-
-
-    public abstract ID getRealID();
 
     @Override
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newModel(Model model,
                            @RequestParam(value = "pid", required = false) final ID pid,
                            @RequestParam(value = "pname", required = false) final String pname) {
+
+        if (!checkAuth("c", aClass.getSimpleName()))
+            return getNoAuthViewName();
         try {
-            assert aClass != null;
             model.addAttribute("realmodel", aClass.newInstance());
             model.addAttribute("pname", pname);
             model.addAttribute("pid", pid);
@@ -96,4 +69,36 @@ public abstract class TreeController<M extends BaseEntity<ID> & Treeable<ID> & C
         model.addAttribute("realneworupdate", "new");
         return newEntityUrl;
     }
+
+    @RequestMapping("/list")
+    //@PreAuthorize("@realSecurityService.hasPermission(#root.target.getaClass().getSimpleName() + \"-\" + \"r\")")
+    //@PreAuthorize("hasPermission('r',)")
+    @ResponseBody
+    @Cacheable(key = "#root.target.getRealID()", cacheResolver = "runtimeCacheResolver")
+    public String listTree(@RequestParam(value = "id", required = false) final ID id) {
+
+        log.info("listTree: id:" + id);
+
+        if (!checkAuth("c", aClass.getSimpleName()))
+            return getNoAuthString();
+
+        M treeModel;
+
+        //noinspection unchecked
+        if (id != null && service instanceof OrgRestricted && ((OrgRestricted<ID>) service).withinOrgRestrict(id)) {
+            treeModel = service.findOne(id);
+        } else {
+            treeModel = service.findOne(getRealID());
+        }
+
+        FilterProvider filters = new SimpleFilterProvider().addFilter("realFilter", SimpleBeanPropertyFilter.serializeAllExcept("updateTime"));
+        binder.getMapper().setFilterProvider(filters);
+        String s = binder.toJson(treeModel);
+        return "[" + s + "]";
+    }
+
+
+    public abstract ID getRealID();
+
+
 }

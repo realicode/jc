@@ -1,6 +1,6 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" style="height: 100%">
 <head>
     <meta charset="utf-8"/>
     <title>SmartJC 智慧稽查服务平台</title>
@@ -46,7 +46,8 @@
 
 </head>
 
-<body class="smart-style-0 desktop-detected">
+<body class="smart-style-0 desktop-detected fixed-navigation fixed-header fixed-page-footer"
+      style="min-height: 99%;height: 99%">
 
 <!-- #HEADER -->
 <header id="header">
@@ -237,8 +238,7 @@
 <!-- END NAVIGATION -->
 
 <!-- #MAIN PANEL -->
-<div id="main" role="main">
-
+<div id="main" role="main" style="height: 99%;min-height: 99%">
     <!-- RIBBON -->
     <div id="ribbon">
 				<span class="ribbon-button-alignment"> 
@@ -249,19 +249,16 @@
                           data-reset-msg="Would you like to RESET all your saved widgets and clear LocalStorage?"><i
                             class="fa fa-refresh"></i></span>
 				</span>
-
         <!-- breadcrumb -->
         <ol class="breadcrumb">
             <!-- This is auto generated -->
         </ol>
         <!-- end breadcrumb -->
-        </span> -->
-
     </div>
     <!-- END RIBBON -->
 
     <!-- #MAIN CONTENT -->
-    <div id="content">
+    <div id="content" style="min-height: 99%;height: 99%">
     </div>
 </div>
 <div class="page-footer">

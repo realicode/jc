@@ -13,14 +13,11 @@
             <div class="row">
                 <div class="col-sm-12" style="margin-bottom: 10px">
                     <div class="form-group">
-                        <select multiple="multiple" size="10" name="duallistbox_demo2" id="initializeDuallistbox">
-                            <option value="option1">中国肿瘤临床试验稽查——协作组</option>
-                            <option value="option2">中国肿瘤临床试验稽查——专家组</option>
-                            <option value="option3" selected="selected">中国肿瘤临床试验稽查——秘书处</option>
-                            <option value="option4">中国肿瘤临床试验稽查——稽查组</option>
-                            <option value="option5">中国肿瘤临床试验稽查——预稽查组</option>
-                            <option value="option7">申请方——项目经理组</option>
-                            <option value="option8">申请方——秘书组</option>
+                        <select multiple="multiple" size="10" name="user2role" id="user2role">
+                            <option th:each="type : ${allRoles}"
+                                    th:value="${type}"
+                                    th:text="${type}">
+                            </option>
 
                         </select>
                     </div>
@@ -48,7 +45,7 @@
         loadScript("smartadmin/js/plugin/bootstrap-duallistbox/jquery.bootstrap-duallistbox.min.js", initializeDuallistbox);
 
         function initializeDuallistbox() {
-            var initializeDuallistbox = $('#initializeDuallistbox').bootstrapDualListbox({
+            var dbox = $('#user2role').bootstrapDualListbox({
                 nonSelectedListLabel: '可选角色',
                 selectedListLabel: '已选角色',
                 preserveSelectionOnMove: 'moved',

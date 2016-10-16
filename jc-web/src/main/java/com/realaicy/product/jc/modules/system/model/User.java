@@ -78,11 +78,9 @@ public class User extends CommonDeletableEntity<Long> {
      */
     @Column(name = "USERTYPE")
     private short usertype;
-
     /**
      * 用户所属组织语义ID
      */
-
     @Column(name = "ORGCASID")
     private String orgCascadeID;
     @ManyToMany(fetch = FetchType.EAGER)
@@ -90,9 +88,18 @@ public class User extends CommonDeletableEntity<Long> {
             inverseJoinColumns = @JoinColumn(name = "ROLEID"))
     @JsonIgnore
     private List<Role> roles;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "manager")
     @JsonIgnore
     private List<ProjectInfo> projects;
+
+    public Long getOrgID() {
+        return orgID;
+    }
+
+    public void setOrgID(Long orgID) {
+        this.orgID = orgID;
+    }
 
     public Long getTenantID() {
         return tenantID;

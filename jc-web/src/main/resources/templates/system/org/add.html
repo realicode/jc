@@ -36,7 +36,7 @@
                     <label class="input"> <i
                             class="icon-prepend fa fa-phone"></i>
                         <input type="tel" name="contactTel" th:field="*{contactTel}" placeholder="联系人电话"
-                               data-mask="9999-999-9999">
+                               data-mask="99999999999">
                         <b class="tooltip tooltip-bottom-right tooltip-realaicy"><span
                                 class="tooltip-realaicy">请输入联系电话</span></b>
                     </label>
@@ -76,6 +76,15 @@
 
 
     var pagefunction = function () {
+
+        // 手机号码验证
+        jQuery.validator.addMethod("isMobile", function (value, element) {
+            var length = value.length;
+            var mobile = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;
+            return this.optional(element) || (length == 11 && mobile.test(value));
+        }, "请正确填写您的手机号码");
+
+
         $("#realentity").validate({
 
             success: function (label) {
@@ -111,7 +120,9 @@
                     maxlength: 10
                 },
                 contactTel: {
-                    required: true
+                    required: true,
+                    number: true,
+                    isMobile: true
                 }
             },
             messages: {
@@ -130,7 +141,9 @@
                     maxlength: '输入超过了10个字符'
                 },
                 contactTel: {
-                    required: '请输入联系人电话'
+                    required: '请输入联系人电话',
+                    number: '请输入正确的电话号码',
+                    isMobile: '请输入正确的电话号码'
                 }
             },
 

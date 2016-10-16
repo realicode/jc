@@ -14,36 +14,50 @@
             <div class="row">
                 <section class="col col-6">
                     <label class="input"> <i class="icon-prepend fa fa-user"></i>
-                        <input type="text" name="username" th:field="*{username}" placeholder="用户名称">
+                        <input type="text" name="username" th:field="*{username}" placeholder="用户名称"
+                               data-rule-required="true" data-msg-required="请输入用户名称">
+                        <b class="tooltip tooltip-bottom-right tooltip-realaicy"><span
+                                class="tooltip-realaicy">请输入用户名称</span></b>
                         <input id="updateflag" name="updateflag" type="hidden" th:value="${realneworupdate}">
                         <input id="updateID" name="updateID" type="hidden" th:value="${realUpdateID}">
-
-                        <b class="tooltip tooltip-bottom-right">字段帮助信息示例</b>
+                        <input id="orgID" name="orgID" type="hidden" th:value="${orgID}">
                     </label>
                 </section>
                 <section class="col col-6">
                     <label class="input"> <i class="icon-prepend fa fa-envelope-o"></i>
-                        <input type="email" name="email" th:field="*{email}" placeholder="电子邮箱">
+                        <input type="email" name="email" th:field="*{email}" placeholder="电子邮箱"
+                               data-rule-required="true" data-msg-required="请输入电子邮箱">
+                        <b class="tooltip tooltip-bottom-right tooltip-realaicy"><span
+                                class="tooltip-realaicy">请输入电子邮箱</span></b>
                     </label>
                 </section>
             </div>
             <div class="row">
                 <section class="col col-6">
                     <label class="input"> <i class="icon-prepend fa fa-user"></i>
-                        <input type="password" id="password" name="password" th:field="*{password}" placeholder="用户密码">
+                        <input type="password" id="password" name="password" th:field="*{password}" placeholder="用户密码"
+                               data-rule-required="true" data-msg-required="用户密码">
+                        <b class="tooltip tooltip-bottom-right tooltip-realaicy"><span
+                                class="tooltip-realaicy">请输入用户密码</span></b>
                     </label>
                 </section>
 
                 <section class="col col-6">
                     <label class="input"> <i class="icon-prepend fa fa-envelope-o"></i>
-                        <input type="text" name="email" th:field="*{nickname}" placeholder="用户昵称">
+                        <input type="text" name="email" th:field="*{nickname}" placeholder="用户昵称"
+                               data-rule-required="true" data-msg-required="用户昵称">
+                        <b class="tooltip tooltip-bottom-right tooltip-realaicy"><span
+                                class="tooltip-realaicy">请输入用户昵称</span></b>
                     </label>
                 </section>
             </div>
             <div class="row">
                 <section class="col col-6">
                     <label class="input"> <i class="icon-prepend fa fa-user"></i>
-                        <input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="确认密码">
+                        <input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="确认密码"
+                               data-rule-required="true" data-msg-required="确认密码">
+                        <b class="tooltip tooltip-bottom-right tooltip-realaicy"><span
+                                class="tooltip-realaicy">请输入确认密码</span></b>
                     </label>
                 </section>
                 <section class="col col-6">
@@ -65,7 +79,7 @@
                         <div class="button"><input type="file" name="portrait" id="portrait">
                             点击上传
                         </div>
-                        <input type="text" id="portraitPath" placeholder="请上传用户头像" readonly="">
+                        <input type="text" id="portraitPath" name="portraitPath" placeholder="请上传用户头像" readonly="">
                         <input type="hidden" id="portraitUrl" name="portraitUrl">
 
                     </label>
@@ -76,17 +90,10 @@
                     <img id="touxiangreview" th:src="${(realmodel.portraitUrl != null && !#strings.isEmpty(realmodel.portraitUrl)) ?
                     realmodel.portraitUrl : 'http://127.0.0.1:32002/tmp/upload/tmp/male.png'}"
                     />
-
                 </section>
-
-
                 <section class=" col col-4">
-
                 </section>
-
             </div>
-
-
         </fieldset>
 
 
@@ -103,50 +110,27 @@
 </div>
 
 <script>
-    /*$("#realentity").submit(function (e) {
-
-     var url = "/system/user/save"; // the script where you handle the form input.
-
-     console.log("aaa")
-     $.ajax({
-     type: "POST",
-     url: url,
-     data: $("#realentity").serialize(), // serializes the form's elements.
-     success: function (data) {
-     alert(data); // show response from the php script.
-     }
-     });
-
-     e.preventDefault(); // avoid to execute the actual submit of the form.
-     });*/
-
 
     $(document).ready(function () {
         console.log("add ready")
         if ($("#updateflag").val() == "new") {
             $("#password").attr("disabled", false);
             $("#passwordConfirm").attr("disabled", false);
+            $("#username").attr("disabled", false);
         } else {
+            $("#username").attr("disabled", true);
             $("#password").attr("disabled", true);
             $("#passwordConfirm").attr("disabled", true);
         }
 
         $("#portrait").on("change", uploadPortrait);
         //$("#file").on("change", realtemp);
-
-
     });
-
-    function realtemp() {
-
-    }
-
 
     function uploadPortrait() {
 
         console.log("In uploadPortrait()");
         $("#portraitPath").attr("value", $("#portrait").val());
-
 
         $.ajax({
             'beforeSend': function (request) {
@@ -174,24 +158,34 @@
     } // f
 
     var validateForm = $("#realentity").validate({
+        success: function (label) {
+            $(label).css("color", "green");
+            $(label).text('OK');
+            $(label).prev().removeClass("state-error").addClass("state-success")
+        },
 
-        // Rules for form validation
+        highlight: function (label) {
+            $(label).parent().addClass("state-error").removeClass("state-success");
+            $(label).parent().next().addClass("realaicy");
+            $(label).parent().next().css("color", "red");
+        },
+        debug: true,
         rules: {
             username: {
                 required: true
             },
-            /*email: {
-             required: true,
-             email: true
-             },*/
+            email: {
+                required: true,
+                email: true
+            },
             password: {
                 required: true,
-                minlength: 3,
+                minlength: 6,
                 maxlength: 20
             },
             passwordConfirm: {
                 required: true,
-                minlength: 3,
+                minlength: 6,
                 maxlength: 20,
                 equalTo: '#password'
             }
@@ -201,10 +195,10 @@
             username: {
                 required: '请输入用户名'
             },
-            /*email: {
-             required: '请输入电子邮箱地址',
-             email: '请输入格式正确的电子邮箱地址'
-             },*/
+            email: {
+                required: '请输入电子邮箱地址',
+                email: '请输入格式正确的电子邮箱地址'
+            },
             password: {
                 required: '请输入密码'
             },

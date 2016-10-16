@@ -12,8 +12,8 @@ public final class SpringSecurityPrincipal extends RealUserDetails {
     public SpringSecurityPrincipal(final Long id, final String username, final String password, final String nickName, boolean enabled,
                                    boolean accountNonExpired, boolean credentialsNonExpired,
                                    boolean accountNonLocked,
-                                   final Collection<? extends GrantedAuthority> authorities, HashSet<String> realAuthorities, Long orgID, final String uuidToSet) {
-        super(id, username, password, nickName, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities, realAuthorities, orgID);
+                                   final Collection<? extends GrantedAuthority> authorities, HashSet<String> realAuthorities, Long orgID, String orgCascadeID, final String uuidToSet) {
+        super(id, username, password, nickName, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities, realAuthorities, orgID, orgCascadeID);
 
         uuid = uuidToSet;
     }

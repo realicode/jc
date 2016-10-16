@@ -1,25 +1,15 @@
 package com.realaicy.product.jc.modules.project.web;
 
+import com.realaicy.product.jc.common.exception.SaveNewException;
 import com.realaicy.product.jc.modules.project.model.PJApply;
 import com.realaicy.product.jc.modules.project.service.PJApplyService;
-import com.realaicy.product.jc.modules.system.model.User;
-import com.realaicy.product.jc.modules.system.model.UserSec;
-import com.realaicy.product.jc.modules.system.repos.UserSecRepos;
-import com.realaicy.product.jc.modules.system.service.UserService;
 import com.realaicy.product.jc.realglobal.web.CRUDController;
 import com.realaicy.product.jc.uitl.SpringSecurityUtil;
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -72,43 +62,13 @@ public class PJApplyController extends CRUDController<PJApply, Long> {
         return "ok";
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveModel(@Valid @ModelAttribute("realmodel") final PJApply realmodel,
-                            final BindingResult result, final ModelMap model,
-                            @RequestParam(value = "updateflag", required = false) String updateflag,
-                            @RequestParam(value = "updateID", required = false) Long updateID,
-                            @RequestParam(value = "portraitUrl", required = false) String portraitUrl) {
-
-        if (updateflag.equals("new")) {
-
-            if (result.hasErrors()) {
-                return "errrrrrrr";
-            }
-
-
-            realmodel.setCreateTime(new Date());
-            realmodel.setCreaterID(SpringSecurityUtil.getCurrentPrincipal().getId());
-            realmodel.setUpdateTime(realmodel.getCreateTime());
-            realmodel.setUpdaterID(realmodel.getCreaterID());
-            service.save(realmodel);
-
-        } else {
-            if (result.hasErrors()) {
-
-                for (FieldError fieldError : result.getFieldErrors()) {
-                    if (!bindingWhiteList.contains(fieldError.getField()))
-                        return "errrrrrrr";
-                }
-            }
-            PJApply pjApply = service.findOne(updateID);
-            pjApply.setUpdateTime(new Date());
-            pjApply.setUpdaterID(SpringSecurityUtil.getCurrentPrincipal().getId());
-            service.save(pjApply);
-        }
-
-        return "ok";
+    @Override
+    protected void InternalSaveNew(PJApply realmodel, Long updateID, Long pid) throws SaveNewException {
 
     }
 
+    @Override
+    protected PJApply InternalSaveUpdate(PJApply realmodel, Long updateID, Long pid) throws SaveNewException {
+        return null;
+    }
 }

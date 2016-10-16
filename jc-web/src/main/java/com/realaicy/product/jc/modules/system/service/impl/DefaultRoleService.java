@@ -27,4 +27,14 @@ public class DefaultRoleService extends DefaultBaseServiceImpl<Role, Long>
     public List<Role> findByOrgIDIn(Collection<BigInteger> orgIDs) {
         return ((RoleRepos) baseRepository).findByOrgIDIn(orgIDs);
     }
+
+    @Override
+    public List<Role> findByOrgID(BigInteger orgID) {
+        return ((RoleRepos) baseRepository).findByOrgID(orgID);
+    }
+
+    @Override
+    public Role findByNameWithInAOrg(String name, BigInteger orgIDs) {
+        return ((RoleRepos) baseRepository).findByNameWithInAOrg(name, orgIDs);
+    }
 }

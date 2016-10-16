@@ -93,12 +93,12 @@
                     data: $(form).serialize(),
                     success: function (response) {
                         if (response.substring(0, 2) == "ok") {
-                            $('#realalertinfo').text('——新建组织机构成功！');
+                            $('#realalertinfo').text('——新建角色成功！');
                             $('#realalert').fadeTo(2000, 500).delay(5000).slideUp(500, function () {
                                 //$("#realtemp_a").delay().slideUp(500);
                             });
                             $.smallBox({
-                                title: "创建用户成功",
+                                title: "创建角色成功",
                                 content: "<i class='fa fa-clock-o'></i> <i>2 seconds ago...</i>",
                                 color: "#296191",
                                 iconSmall: "fa fa-thumbs-up bounce animated",

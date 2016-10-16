@@ -1,23 +1,23 @@
 package com.realaicy.product.jc.modules.system.web;
 
+import com.realaicy.product.jc.common.exception.SaveNewException;
+import com.realaicy.product.jc.modules.system.model.Role;
 import com.realaicy.product.jc.modules.system.model.User;
 import com.realaicy.product.jc.modules.system.model.UserSec;
+import com.realaicy.product.jc.modules.system.model.vo.UserVO;
 import com.realaicy.product.jc.modules.system.repos.UserSecRepos;
-import com.realaicy.product.jc.modules.system.service.OrgService;
+import com.realaicy.product.jc.modules.system.service.RoleService;
 import com.realaicy.product.jc.modules.system.service.UserService;
-import com.realaicy.product.jc.realglobal.web.CRUDController;
-import com.realaicy.product.jc.uitl.SpringSecurityUtil;
+import com.realaicy.product.jc.realglobal.web.CRUDWithVOController;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigInteger;
 import java.util.*;
 
 /**
@@ -27,11 +27,13 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/system/user")
-public class UserController extends CRUDController<User, Long> {
+public class UserController extends CRUDWithVOController<User, Long, UserVO> {
 
     private UserService userService;
+    private RoleService roleService;
     static final private String[] nameDic = {"username", "password", "nickname", "createTime"};
-    static final private List<String> bindingWhiteList = Arrays.asList("password");
+    @SuppressWarnings("unused")
+    static final private List<String> editBindWhiteList = Arrays.asList("username", "password");
     static final private String pageUrl = "system/user/page";
     static final private String newEntityUrl = "system/user/add";
     static final private String editEntityUrl = "system/user/add";
@@ -41,83 +43,23 @@ public class UserController extends CRUDController<User, Long> {
 
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, RoleService roleService, PasswordEncoder bcryptEncoder, UserSecRepos userSecRepos) {
         super(userService, "user", nameDic, pageUrl, newEntityUrl, editEntityUrl,
-                listEntityUrl, searchEntityUrl, User.class);
+                listEntityUrl, searchEntityUrl, User.class, UserVO.class, editBindWhiteList);
         this.userService = userService;
+        this.roleService = roleService;
+        this.bcryptEncoder = bcryptEncoder;
+        this.userSecRepos = userSecRepos;
     }
 
-    @Autowired
-    PasswordEncoder bcryptEncoder;
+    private final PasswordEncoder bcryptEncoder;
 
-    @Autowired
-    UserSecRepos userSecRepos;
-
-
-    @ResponseBody
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveModel(@Valid @ModelAttribute("realmodel") final User realmodel,
-                            final BindingResult result, final ModelMap model,
-                            @RequestParam(value = "updateflag", required = false) String updateflag,
-                            @RequestParam(value = "updateID", required = false) Long updateID,
-                            @RequestParam(value = "portraitUrl", required = false) String portraitUrl) {
-
-        if (updateflag.equals("new")) {
-
-            if (result.hasErrors()) {
-                return "errrrrrrr";
-            }
-
-            if (userService.findByName(realmodel.getUsername()) != null)
-                return "err: 用户名已经存在,请重新填写用户名";
-
-            realmodel.setPortraitUrl(portraitUrl);
-            realmodel.setPassword(bcryptEncoder.encode(realmodel.getPassword()));
-            realmodel.setCreateTime(new Date());
-            realmodel.setCreaterID(SpringSecurityUtil.getCurrentPrincipal().getId());
-            realmodel.setUpdateTime(realmodel.getCreateTime());
-            realmodel.setUpdaterID(realmodel.getCreaterID());
-            userService.save(realmodel);
-
-            UserSec userSec = new UserSec();
-            try {
-                BeanUtils.copyProperties(userSec, realmodel);
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-                return "err: IllegalAccessException";
-
-            }
-            userSec.setAccountNonExpired(true);
-            userSec.setCredentialsNonExpired(true);
-            userSec.setAccountNonLocked(true);
-            userSec.setEnabled(true);
-
-            userSecRepos.save(userSec);
-
-        } else {
-            if (result.hasErrors()) {
-
-                for (FieldError fieldError : result.getFieldErrors()) {
-                    if (!bindingWhiteList.contains(fieldError.getField()))
-                        return "errrrrrrr";
-                }
-            }
-            User user = userService.findOne(updateID);
-            user.setNickname(realmodel.getNickname());
-            user.setUpdateTime(new Date());
-            user.setUpdaterID(SpringSecurityUtil.getCurrentPrincipal().getId());
-            userService.save(user);
-        }
-
-        return "ok";
-
-    }
-
+    private final UserSecRepos userSecRepos;
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, value = "/list4select", produces = "application/json")
     public Map<String, Object> findAllBySpecificationToSelect(
-            @RequestParam(value = "q", required = true) String search) {
+            @RequestParam(value = "q") String search) {
 
         Map<String, Object> info = new HashMap<>();
 
@@ -126,8 +68,47 @@ public class UserController extends CRUDController<User, Long> {
         return info;
     }
 
-    @RequestMapping(value = "/user2role/{id}", method = RequestMethod.GET)
-    public String userToRole(@PathVariable("id") final Long id) {
+    @RequestMapping(value = "/user2role/{userid}", method = RequestMethod.GET)
+    public String userToRole(@PathVariable("userid") final Long userid,
+                             Model model) {
+        User user = userService.findOne(userid);
+        List<Role> roles = roleService.findByOrgID(BigInteger.valueOf(user.getOrgID()));
+        model.addAttribute("allRoles", roleService.findByOrgID(BigInteger.valueOf(user.getOrgID())));
+
         return userToRoleUrl;
+    }
+
+    @Override
+    protected void InternalSaveNew(UserVO realmodel, Long updateID, Long pid) throws SaveNewException {
+
+        if (userService.findByName(realmodel.getUsername()) != null)
+            throw new SaveNewException("error用户名称已存在!");
+
+        realmodel.setPassword(bcryptEncoder.encode(realmodel.getPassword()));
+
+        UserSec userSec = new UserSec();
+        try {
+            BeanUtils.copyProperties(userSec, realmodel);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+            throw new SaveNewException(e.getMessage());
+
+        }
+        userSec.setAccountNonExpired(true);
+        userSec.setCredentialsNonExpired(true);
+        userSec.setAccountNonLocked(true);
+        userSec.setEnabled(true);
+        userSecRepos.save(userSec);
+
+        realmodel.setOrgCascadeID(getOrgService().findOne(realmodel.getOrgID()).getCascadeID());
+    }
+
+    @Override
+    protected User InternalSaveUpdate(UserVO realmodel, Long updateID, Long pid) throws SaveNewException {
+        User user = userService.findOne(updateID);
+        user.setNickname(realmodel.getNickname());
+        user.setEmail(realmodel.getEmail());
+        user.setSex(realmodel.getSex());
+        return user;
     }
 }

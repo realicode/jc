@@ -198,24 +198,24 @@
 </section>
 <script type="text/javascript">
     pageSetUp();
-//    function realModifyName() {
-//        console.log("realModifyName");
-//        console.log($("#echoActive2").val());
-//        var node = $("#tree2").fancytree("getActiveNode");
-//        console.log("待更新的原始数据： " + node.data.id + node.title);
-//        $.ajax({
-//            url: "/doccenter/catalog/edit",
-//            async: true,
-//            data: {id: node.data.id, title: $("#echoActive2").val()},
-//            type: "GET",
-//            success: function (data) {
-//                console.log("success");
-//                $("#tree2").fancytree("getTree").reload();
-//                console.log("success2222");
-//            }
-//        });
-//        console.log("End");
-//    }
+    //    function realModifyName() {
+    //        console.log("realModifyName");
+    //        console.log($("#echoActive2").val());
+    //        var node = $("#tree2").fancytree("getActiveNode");
+    //        console.log("待更新的原始数据： " + node.data.id + node.title);
+    //        $.ajax({
+    //            url: "/doccenter/catalog/edit",
+    //            async: true,
+    //            data: {id: node.data.id, title: $("#echoActive2").val()},
+    //            type: "GET",
+    //            success: function (data) {
+    //                console.log("success");
+    //                $("#tree2").fancytree("getTree").reload();
+    //                console.log("success2222");
+    //            }
+    //        });
+    //        console.log("End");
+    //    }
 
     var pagefunction = function () {
 
@@ -252,13 +252,13 @@
         });
 
         $("#btnSearch").click(function () {
+            if ($("#real_treesearch").hasClass("jarviswidget-collapsed"))
+                $("#real_treesearch a.jarviswidget-toggle-btn").trigger("click");
 
-            $("#realeditdiv").load("/system/org/new?pid=" + node.data.id + "&pname=" + encodeURIComponent(node.title));
-            if ($("#real_entity").hasClass("jarviswidget-collapsed"))
-                $("#real_entity a.jarviswidget-toggle-btn").trigger("click");
         });
 
         $("#btnSearch2").click(function () {
+            console.log("bbb");
 
             $("#treetable").fancytree("getTree").filterNodes($("input[name=searchname]").val(), {
                 autoExpand: true,

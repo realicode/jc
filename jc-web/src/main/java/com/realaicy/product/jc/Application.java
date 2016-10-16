@@ -72,7 +72,6 @@ public class Application extends CachingConfigurerSupport {
         defaultCacheConfiguration.setMaxEntriesLocalHeap(200);
         //defaultCacheConfiguration.setMaxBytesLocalHeap("52428800");//50MB
         defaultCacheConfiguration.setMemoryStoreEvictionPolicy("LRU");
-
         config.addCache(defaultCacheConfiguration);
 
         CacheConfiguration wUsermenuCacheConfiguration = new CacheConfiguration();
@@ -81,7 +80,6 @@ public class Application extends CachingConfigurerSupport {
         wUsermenuCacheConfiguration.setMaxEntriesLocalHeap(200);
         //wUsermenuCacheConfiguration.setMaxBytesLocalHeap("52428800");//50MB
         wUsermenuCacheConfiguration.setMemoryStoreEvictionPolicy("LRU");
-
         config.addCache(wUsermenuCacheConfiguration);
 
         CacheConfiguration wOrgCacheConfiguration = new CacheConfiguration();
@@ -90,8 +88,24 @@ public class Application extends CachingConfigurerSupport {
         wOrgCacheConfiguration.setMaxEntriesLocalHeap(200);
         //wOrgCacheConfiguration.setMaxBytesLocalHeap("52428800");//50MB
         wOrgCacheConfiguration.setMemoryStoreEvictionPolicy("LRU");
-
         config.addCache(wOrgCacheConfiguration);
+
+        CacheConfiguration wRoleCacheConfiguration = new CacheConfiguration();
+        wRoleCacheConfiguration.setName("RoleController");
+        wRoleCacheConfiguration.setEternal(false);
+        wRoleCacheConfiguration.setMaxEntriesLocalHeap(200);
+        //wOrgCacheConfiguration.setMaxBytesLocalHeap("52428800");//50MB
+        wRoleCacheConfiguration.setMemoryStoreEvictionPolicy("LRU");
+        config.addCache(wRoleCacheConfiguration);
+
+        CacheConfiguration wUserCacheConfiguration = new CacheConfiguration();
+        wUserCacheConfiguration.setName("UserController");
+        wUserCacheConfiguration.setEternal(false);
+        wUserCacheConfiguration.setMaxEntriesLocalHeap(200);
+        //wOrgCacheConfiguration.setMaxBytesLocalHeap("52428800");//50MB
+        wUserCacheConfiguration.setMemoryStoreEvictionPolicy("LRU");
+        config.addCache(wUserCacheConfiguration);
+
         return new EhCacheCacheManager(net.sf.ehcache.CacheManager.newInstance(config));
     }
 

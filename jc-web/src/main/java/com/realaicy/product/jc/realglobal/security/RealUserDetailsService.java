@@ -57,7 +57,7 @@ public class RealUserDetailsService implements UserDetailsService {
 
                 return new RealUserDetails(userSec.getId(), userSec.getUsername(), userSec.getPassword(), userSec.getNickname()
                         , userSec.isEnabled(), userSec.isAccountNonExpired(), userSec.isCredentialsNonExpired(), userSec.isAccountNonLocked()
-                        , grantedAuthorities, realAuthorities, userSec.getOrgID());
+                        , grantedAuthorities, realAuthorities, userSec.getOrgID(), userSec.getOrgCascadeID());
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new UsernameNotFoundException("user role select fail");

@@ -1,7 +1,8 @@
 package com.realaicy.product.jc.modules.system.service;
 
-import com.realaicy.lib.core.service.BaseService;
+import com.realaicy.lib.core.service.BaseServiceWithVO;
 import com.realaicy.product.jc.modules.system.model.User;
+import com.realaicy.product.jc.modules.system.model.vo.UserVO;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  * Created by realaicy on 16/3/14.
  * xxx
  */
-public interface UserService extends BaseService<User, Long> {
+public interface UserService extends BaseServiceWithVO<User, Long, UserVO> {
 
     User findByName(String username);
 

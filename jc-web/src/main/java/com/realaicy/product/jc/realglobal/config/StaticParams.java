@@ -10,6 +10,7 @@ public class StaticParams {
         public static final String CSS = "/smartadmin/css/**";
         public static final String JS = "/smartadmin/js/**";
         public static final String SB_ALL = "/smartadmin/**";
+        public static final String REALAICY_ALL = "/realaicy/**";
         public static final String IMG = "/smartadmin/img/**";
         public static final String FONT = "/smartadmin/fonts/**";
         public static final String STATIC = "/static/**";

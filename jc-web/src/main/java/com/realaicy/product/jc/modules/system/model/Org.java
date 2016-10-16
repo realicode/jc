@@ -3,6 +3,7 @@ package com.realaicy.product.jc.modules.system.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.realaicy.lib.core.orm.jpa.entity.CommonTreeableDeletableEntity;
+import com.realaicy.product.jc.common.security.OrgRestricted;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -14,7 +15,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "jc_sys_org")
-public class Org extends CommonTreeableDeletableEntity<Long> {
+public class Org extends CommonTreeableDeletableEntity<Long>{
 
 
     /**

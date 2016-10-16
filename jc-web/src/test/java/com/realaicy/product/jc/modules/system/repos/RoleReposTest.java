@@ -72,8 +72,18 @@ public class RoleReposTest {
         List<Role> roles1 = repos.findByOrgIDIn(orgs);
         assertNotNull(roles1);
 
-      orgs = orgRepos.findAllChildIDs("%1.004%");
+        orgs = orgRepos.findAllChildIDs("%1.004%");
         List<Role> roles2 = repos.findByOrgIDIn(orgs);
         assertNotNull(roles2);
+    }
+
+
+    @Test
+    public void findByOrgID() throws Exception {
+        List<BigInteger> orgs = orgRepos.findAllChildIDs("%1%");
+        List<Role> roles1 = repos.findByOrgID(BigInteger.valueOf(49));
+        assertNotNull(roles1);
+
+
     }
 }

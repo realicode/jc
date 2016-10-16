@@ -8,6 +8,7 @@ import com.realaicy.lib.core.orm.plugin.CommonData;
 import com.realaicy.lib.core.orm.plugin.LogicDeletable;
 import com.realaicy.lib.core.service.BaseService;
 import com.realaicy.product.jc.common.aop.annotations.Perfable;
+import com.realaicy.product.jc.common.exception.SaveNewException;
 import com.realaicy.product.jc.modules.system.model.Org;
 import com.realaicy.product.jc.modules.system.service.OrgService;
 import com.realaicy.product.jc.uitl.SpringSecurityUtil;
@@ -18,10 +19,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,28 +40,24 @@ import java.util.regex.Pattern;
 public abstract class CRUDController<M extends BaseEntity<ID> & CommonData<ID>,
         ID extends Serializable> {
 
+    private final static String noAuthViewName = "global/errorpage/NOPrivilege";
+    private final static String noAuthString = "NOPrivilege";
     private final BaseService<M, ID> service;
     private final String initFormParam;
     private final String[] nameDic;
     private final String pageUrl;
     private final String newEntityUrl;
     private final String editEntityUrl;
+    @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private final String listUrl;
     private final String searchEntityUrl;
     private final Class<M> aClass;
-    private OrgService orgService;
 
-    public CRUDController(BaseService<M, ID> service, String initFormParam) {
-        this.service = service;
-        this.initFormParam = initFormParam;
-        this.nameDic = null;
-        this.newEntityUrl = null;
-        this.editEntityUrl = null;
-        this.listUrl = null;
-        this.searchEntityUrl = null;
-        this.pageUrl = null;
-        this.aClass = null;
+    protected OrgService getOrgService() {
+        return orgService;
     }
+
+    private OrgService orgService;
 
     public CRUDController(BaseService<M, ID> service, String initFormParam, String[] nameDic, String pageUrl,
                           String newEntityUrl, String editEntityUrl, String listUrl, String searchEntityUrl,
@@ -73,8 +73,12 @@ public abstract class CRUDController<M extends BaseEntity<ID> & CommonData<ID>,
         this.aClass = aClass;
     }
 
-    public OrgService getOrgService() {
-        return orgService;
+    static String getNoAuthString() {
+        return noAuthString;
+    }
+
+    static String getNoAuthViewName() {
+        return noAuthViewName;
     }
 
     @Autowired
@@ -84,7 +88,76 @@ public abstract class CRUDController<M extends BaseEntity<ID> & CommonData<ID>,
 
     @RequestMapping(value = "/page", method = RequestMethod.GET)
     public String listEntityPage() {
-        return this.pageUrl;
+        if (checkAuth("r", aClass.getSimpleName()))
+            return this.pageUrl;
+        else
+            return noAuthViewName;
+    }
+
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
+    public String newModel(Model model,
+                           @RequestParam(value = "pid", required = false) ID pid,
+                           @RequestParam(value = "pname", required = false) String pname) {
+        if (!checkAuth("c", aClass.getSimpleName()))
+            return noAuthViewName;
+
+        try {
+            model.addAttribute("realmodel", aClass.newInstance());
+        } catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("realneworupdate", "new");
+        return newEntityUrl;
+    }
+
+    @RequestMapping(value = "/new/{orgID}", method = RequestMethod.GET)
+    public String newModel(@PathVariable("orgID") final Long orgID, Model model) {
+        if (!checkAuth("c", aClass.getSimpleName()))
+            return noAuthViewName;
+        try {
+            model.addAttribute("realmodel", aClass.newInstance());
+
+        } catch (IllegalAccessException | InstantiationException e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("realneworupdate", "new");
+        model.addAttribute("orgID", orgID);
+        return newEntityUrl;
+    }
+
+    @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
+    public String showModel(@PathVariable("id") final ID id, Model model) {
+        if (!checkAuth("r", aClass.getSimpleName()))
+            return noAuthViewName;
+        model.addAttribute("realmodel", service.findOne(id));
+        model.addAttribute("realUpdateID", id);
+        return editEntityUrl;
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public String search() {
+        if (!checkAuth("s", aClass.getSimpleName()))
+            return noAuthViewName;
+        return searchEntityUrl;
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.GET, value = "/spec")
+    public List<M> findAllBySpecification(@RequestParam(value = "search", required = false) final String search) {
+
+        if (!checkAuth("s", aClass.getSimpleName()))
+            return null;
+
+        final BaseSpecificationsBuilder<M> builder = new BaseSpecificationsBuilder<>();
+        final String operationSetExper = Joiner.on("|").join(SearchOperation.SIMPLE_OPERATION_SET);
+        final Pattern pattern = Pattern.compile("(\\w+?)(" + operationSetExper + ")(\\p{Punct}?)(\\w+?)(\\p{Punct}?),");
+        final Matcher matcher = pattern.matcher(search + ",");
+        while (matcher.find()) {
+            builder.with(matcher.group(1), matcher.group(2), matcher.group(4), matcher.group(3), matcher.group(5));
+        }
+
+        final Specification<M> spec = builder.build();
+        return service.findAll(spec);
     }
 
     @Perfable
@@ -98,6 +171,9 @@ public abstract class CRUDController<M extends BaseEntity<ID> & CommonData<ID>,
             @RequestParam(value = "search", required = false) String search,
             @RequestParam(value = "orgID", required = false) String orgID
     ) {
+
+        if (!checkAuth("r", aClass.getSimpleName()))
+            return null;
 
         Map<String, Object> info = new HashMap<>();
 
@@ -122,6 +198,7 @@ public abstract class CRUDController<M extends BaseEntity<ID> & CommonData<ID>,
         }
 
         if (orgID == null || orgID.equals("")) {
+            //noinspection ConstantConditions
             orgID = SpringSecurityUtil.getCurrentRealUserDetails().getOrgID().toString();
         }
 
@@ -130,6 +207,11 @@ public abstract class CRUDController<M extends BaseEntity<ID> & CommonData<ID>,
         builder.with("orgID", "$",
                 bigIntegersTemp, "", "");
 
+        if (LogicDeletable.class.isAssignableFrom(aClass)) {
+            builder.with("deleteFlag", ":", false, "", "");
+        }
+
+
         final Specification<M> spec = builder.build();
         info.put("data", service.findAll(spec, pageRequest));
         info.put("recordsFiltered", service.count(spec));
@@ -137,134 +219,10 @@ public abstract class CRUDController<M extends BaseEntity<ID> & CommonData<ID>,
         return info;
     }
 
-    /*@RequestMapping(value = "/new", method = RequestMethod.GET)
-    public String newModel(Model model) {
-        try {
-            model.addAttribute("realmodel", aClass.newInstance());
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        model.addAttribute("realneworupdate", "new");
-        return newEntityUrl;
-    }*/
 
-    @RequestMapping(value = "/new", method = RequestMethod.GET)
-    public String newModel(Model model,
-                           @RequestParam(value = "pid", required = false) ID pid,
-                           @RequestParam(value = "pname", required = false) String pname) {
-        try {
-            model.addAttribute("realmodel", aClass.newInstance());
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        model.addAttribute("realneworupdate", "new");
-        return newEntityUrl;
-    }
-
-    @RequestMapping(value = "/new/{orgID}", method = RequestMethod.GET)
-    public String newModel(@PathVariable("orgID") final Long orgID, Model model) {
-        try {
-            model.addAttribute("realmodel", aClass.newInstance());
-
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        }
-        model.addAttribute("realneworupdate", "new");
-        model.addAttribute("orgID", orgID);
-        return newEntityUrl;
-    }
-
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public String search(Model model) {
-        return searchEntityUrl;
-    }
-
-
-    @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
-    public String showModel(@PathVariable("id") final ID id, Model model) {
-        model.addAttribute("realmodel", service.findOne(id));
-        model.addAttribute("realUpdateID", id);
-        return editEntityUrl;
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "/spec")
-    public List<M> findAllBySpecification(@RequestParam(value = "search", required = false) final String search) {
-        final BaseSpecificationsBuilder<M> builder = new BaseSpecificationsBuilder<>();
-        final String operationSetExper = Joiner.on("|").join(SearchOperation.SIMPLE_OPERATION_SET);
-        final Pattern pattern = Pattern.compile("(\\w+?)(" + operationSetExper + ")(\\p{Punct}?)(\\w+?)(\\p{Punct}?),");
-        final Matcher matcher = pattern.matcher(search + ",");
-        while (matcher.find()) {
-            builder.with(matcher.group(1), matcher.group(2), matcher.group(4), matcher.group(3), matcher.group(5));
-        }
-
-        final Specification<M> spec = builder.build();
-        return service.findAll(spec);
-    }
-
-    /*@Perfable
-    @ResponseBody
-    @RequestMapping(method = RequestMethod.POST, value = "/list4dt")
-    public Map<String, Object> findAllBySpecificationToDT(
-            @RequestParam(value = "start", defaultValue = "0") int start,
-            @RequestParam(value = "length", defaultValue = "30") int length,
-            @RequestParam(value = "order[0][column]", defaultValue = "1") int orderIndex,
-            @RequestParam(value = "order[0][dir]", defaultValue = "asc") String orderType,
-            @RequestParam(value = "search", required = false) final String search) {
-
-        Map<String, Object> info = new HashMap<>();
-
-        Sort sort;
-        if (orderIndex > nameDic.length) orderIndex = 1;
-        if (orderType.equals("asc"))
-            sort = new Sort(Sort.Direction.ASC, nameDic[orderIndex - 1]);
-        else
-            sort = new Sort(Sort.Direction.DESC, nameDic[orderIndex - 1]);
-
-        PageRequest pageRequest = new PageRequest(
-                start / length, length, sort
-        );
-        //pageRequest.getSort().and(new Sort(Sort.Direction.ASC));
-
-        if (search != null && !search.equals("")) {
-            final BaseSpecificationsBuilder<M> builder = new BaseSpecificationsBuilder<>();
-            final String operationSetExper = Joiner.on("|").join(SearchOperation.SIMPLE_OPERATION_SET);
-            final Pattern pattern = Pattern.compile("(\\w+?)(" + operationSetExper + ")(\\p{Punct}?)(\\w+?)(\\p{Punct}?),");
-            final Matcher matcher = pattern.matcher(search + ",");
-            while (matcher.find()) {
-                builder.with(matcher.group(1), matcher.group(2), matcher.group(4), matcher.group(3), matcher.group(5));
-            }
-            final Specification<M> spec = builder.build();
-            info.put("data", service.findAll(spec, pageRequest));
-            info.put("recordsFiltered", service.count(spec));
-
-        } else {
-
-            info.put("data", service.findAll(pageRequest));
-            info.put("recordsFiltered", service.count());
-
-        }
-
-        info.put("recordsTotal", service.count());
-
-        return info;
-    }*/
-
-
-    /* @RequestMapping(value = "/validation.json", method = RequestMethod.POST)
-     @ResponseBody
-     public Boolean ValidationResponseajaxValidation(@Valid M t, BindingResult result) {
-         // same as in the example
-         return Boolean.TRUE;
-     }
- */
     @RequestMapping(method = RequestMethod.GET)
     public String initForm(Model model) {
+        System.out.println("M:" + model);
         //service.initializeForm(model);
         return initFormParam;   // Now initialized by the constructor
     }
@@ -273,6 +231,10 @@ public abstract class CRUDController<M extends BaseEntity<ID> & CommonData<ID>,
     @ResponseBody
     @CacheEvict(cacheResolver = "runtimeCacheResolver", allEntries = true)
     public String delModel(@PathVariable("id") final ID id) {
+
+        if (!checkAuth("d", aClass.getSimpleName()))
+            return noAuthString;
+
         M entity = service.findOne(id);
         if (entity instanceof LogicDeletable) {
             ((LogicDeletable) entity).markDeleted();
@@ -282,6 +244,67 @@ public abstract class CRUDController<M extends BaseEntity<ID> & CommonData<ID>,
         }
         return "ok";
     }
+
+
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @ResponseBody
+    @CacheEvict(cacheResolver = "runtimeCacheResolver", allEntries = true)
+    public String saveModel(@Valid @ModelAttribute("realmodel") final M realmodel,
+                            final BindingResult result,
+                            @RequestParam(value = "updateflag", required = false) String updateflag,
+                            @RequestParam(value = "updateID", required = false) ID updateID,
+                            @RequestParam(value = "pid", required = false) ID pid) {
+
+        if (!checkAuth("c", aClass.getSimpleName()))
+            return noAuthString;
+
+        if (result.hasErrors()) {
+            return "error绑定异常（非页面提交，你是机器人？）";
+        }
+
+        if (updateflag.equals("new")) {
+            try {
+                InternalSaveNew(realmodel, updateID, pid);
+            } catch (SaveNewException e) {
+                return e.getMessage();
+            }
+
+            if (realmodel instanceof CommonData) {
+                realmodel.setCreateTime(new Date());
+                //noinspection unchecked,ConstantConditions
+                realmodel.setCreaterID((ID) SpringSecurityUtil.getCurrentPrincipal().getId());
+                realmodel.setUpdateTime(realmodel.getCreateTime());
+                realmodel.setUpdaterID(realmodel.getCreaterID());
+            }
+
+            service.save(realmodel);
+            return "ok";
+
+        } else if (updateflag.equals("editedit")) {//edit
+            try {
+                M entity = InternalSaveUpdate(realmodel, updateID, pid);
+                if (entity instanceof CommonData) {
+                    entity.setUpdateTime(new Date());
+                    //noinspection unchecked,ConstantConditions
+                    entity.setUpdaterID((ID) SpringSecurityUtil.getCurrentPrincipal().getId());
+                    service.save(entity);
+                }
+            } catch (SaveNewException e) {
+                return e.getMessage();
+            }
+            return "ok";
+        }// end of edit
+        return null;
+    }
+
+
+    boolean checkAuth(String reqAuthString, String objType) {
+        return SpringSecurityUtil.hasPrivilege(objType + "-" + "a") || SpringSecurityUtil.hasPrivilege(objType + "-" + reqAuthString);
+    }
+
+    protected abstract void InternalSaveNew(M realmodel, ID updateID, ID pid) throws SaveNewException;
+
+    protected abstract M InternalSaveUpdate(M realmodel, ID updateID, ID pid) throws SaveNewException;
 
 
 }

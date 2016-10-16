@@ -1,7 +1,7 @@
 package com.realaicy.product.jc.modules.system.api;
 
+import com.realaicy.product.jc.common.exception.SaveNewException;
 import com.realaicy.product.jc.modules.system.model.User;
-import com.realaicy.product.jc.modules.system.service.OrgService;
 import com.realaicy.product.jc.modules.system.service.UserService;
 import com.realaicy.product.jc.realglobal.web.CRUDController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class UserApi extends CRUDController<User, Long> {
 
     @Autowired
     public UserApi(UserService userService) {
-        super(userService, "user");
+        super(userService, "user", null, "", "", " ", "", "", null);
         this.userService = userService;
     }
 
@@ -31,5 +31,15 @@ public class UserApi extends CRUDController<User, Long> {
 
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    @Override
+    protected void InternalSaveNew(User realmodel, Long updateID, Long pid) throws SaveNewException {
+
+    }
+
+    @Override
+    protected User InternalSaveUpdate(User realmodel, Long updateID, Long pid) throws SaveNewException {
+        return null;
     }
 }

@@ -5,6 +5,7 @@ import com.realaicy.lib.core.service.impl.DefaultBaseServiceImpl;
 import com.realaicy.product.jc.modules.system.model.Org;
 import com.realaicy.product.jc.modules.system.repos.OrgRepos;
 import com.realaicy.product.jc.modules.system.service.OrgService;
+import com.realaicy.product.jc.uitl.SpringSecurityUtil;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
@@ -32,5 +33,12 @@ public class DefaultOrgService extends DefaultBaseServiceImpl<Org, Long>
     @Override
     public List<BigInteger> findAllChildIDs(@Param("cascadeid") String cascadeid) {
         return ((OrgRepos) baseRepository).findAllChildIDs("%" + cascadeid + "%");
+    }
+
+
+    @Override
+    public boolean withinOrgRestrict(Long id) {
+
+        return findOne(id).getCascadeID().startsWith(SpringSecurityUtil.getCurrentRealUserDetails().getOrgCascadeID());
     }
 }

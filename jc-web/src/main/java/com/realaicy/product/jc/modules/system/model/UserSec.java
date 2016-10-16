@@ -31,7 +31,17 @@ public class UserSec extends CommonDeletableEntity<Long> {
      */
     @Column(name = "USERNAME")
     private String username;
+
+    public String getOrgCascadeID() {
+        return orgCascadeID;
+    }
+
+    public void setOrgCascadeID(String orgCascadeID) {
+        this.orgCascadeID = orgCascadeID;
+    }
+
     /**
+
      * 用户密码(加密后的密文)
      */
     @Column(name = "PASSWORD")
@@ -41,6 +51,13 @@ public class UserSec extends CommonDeletableEntity<Long> {
      */
     @Column(name = "NICKNAME")
     private String nickname;
+
+    /**
+     * 用户所属组织语义ID
+     */
+    @Column(name = "ORGCASID")
+    private String orgCascadeID;
+
     /**
      * 标识:各种标识
      */
