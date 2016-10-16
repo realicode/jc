@@ -6,56 +6,52 @@
 
 <!-- widget content -->
 <div class="widget-body no-padding">
-    <form>
+    <form class="">
 
         <fieldset>
+            <legend>
+                分配角色
+            </legend>
 
-            <div class="row">
-                <div class="col-sm-12" style="margin-bottom: 10px">
-                    <div class="form-group">
-                        <select multiple="multiple" size="10" name="user2role" id="user2role">
-                            <option th:each="type : ${allRoles}"
-                                    th:value="${type}"
-                                    th:text="${type}">
-                            </option>
-
-                        </select>
-                    </div>
-                </div>
+            <div class="form-group">
+                <label></label>
+                <select multiple style="width:100%" class="select2" id="realrole">
+                </select>
 
             </div>
 
         </fieldset>
 
-        <footer>
+        <div class="form-actions">
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn btn-default" type="submit">
+                        取消
+                    </button>
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-save"></i>
+                        提交数据
+                    </button>
+                </div>
+            </div>
+        </div>
 
-            <button type="submit" class="btn btn-primary">
-                提交数据
-            </button>
-        </footer>
     </form>
 
 
 </div>
 
-<script>
+<script type="text/javascript">
 
+    var rolelist=[{text:'aaaa',children:[{id:1,text:"11"},{id:2,text:"22",selected:true}]},{text:'bbbb',children:[{text:"cccc",children:[{id:3,text:"33"},{id:4,text:"44",selected:true}]}]}];
+
+    pageSetUp();
     var pagefunction = function () {
+        $(".select2").select2({
+           data:rolelist
 
-        loadScript("smartadmin/js/plugin/bootstrap-duallistbox/jquery.bootstrap-duallistbox.min.js", initializeDuallistbox);
-
-        function initializeDuallistbox() {
-            var dbox = $('#user2role').bootstrapDualListbox({
-                nonSelectedListLabel: '可选角色',
-                selectedListLabel: '已选角色',
-                preserveSelectionOnMove: 'moved',
-                moveOnSelect: false,
-            });
-        }
+        });
     };
 
     pagefunction();
-
-
 </script>
-<!-- end widget content -->

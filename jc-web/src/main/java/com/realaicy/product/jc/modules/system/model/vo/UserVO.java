@@ -13,6 +13,7 @@ import javax.persistence.Column;
 public class UserVO extends BaseVO<Long> {
 
 
+    private Long id;
     /**
      * 用户名称
      */
@@ -23,8 +24,6 @@ public class UserVO extends BaseVO<Long> {
      */
     @NotEmpty
     private String nickname;
-
-
     /**
      * 用户密码(加密后的密文)
      */
@@ -51,6 +50,14 @@ public class UserVO extends BaseVO<Long> {
      * 用户性别
      */
     private char sex;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getOrgID() {
         return orgID;

@@ -1,6 +1,7 @@
 package com.realaicy.product.jc.modules.system.web;
 
 import com.realaicy.product.jc.common.exception.SaveNewException;
+import com.realaicy.product.jc.modules.system.model.Org;
 import com.realaicy.product.jc.modules.system.model.Role;
 import com.realaicy.product.jc.modules.system.model.User;
 import com.realaicy.product.jc.modules.system.model.UserSec;
@@ -72,7 +73,17 @@ public class UserController extends CRUDWithVOController<User, Long, UserVO> {
     public String userToRole(@PathVariable("userid") final Long userid,
                              Model model) {
         User user = userService.findOne(userid);
-        List<Role> roles = roleService.findByOrgID(BigInteger.valueOf(user.getOrgID()));
+
+        List<Org> orgs = getOrgService().findByCascadeIDStartingWith("");
+
+
+        List<Role> allRoles = roleService.findByOrgID(BigInteger.valueOf(user.getOrgID()));
+
+
+        List<Role> existRoles = user.getRoles();
+        List<Role> availableRoles;
+
+
         model.addAttribute("allRoles", roleService.findByOrgID(BigInteger.valueOf(user.getOrgID())));
 
         return userToRoleUrl;
@@ -98,8 +109,8 @@ public class UserController extends CRUDWithVOController<User, Long, UserVO> {
         userSec.setCredentialsNonExpired(true);
         userSec.setAccountNonLocked(true);
         userSec.setEnabled(true);
-        userSecRepos.save(userSec);
-
+        //userSecRepos.save(userSec);
+        realmodel.setId(userSecRepos.save(userSec).getId());
         realmodel.setOrgCascadeID(getOrgService().findOne(realmodel.getOrgID()).getCascadeID());
     }
 

@@ -5,6 +5,7 @@ import com.realaicy.product.jc.modules.system.model.Role;
 import com.realaicy.product.jc.modules.system.repos.RoleRepos;
 import com.realaicy.product.jc.modules.system.service.RoleService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
 import java.util.Collection;
@@ -15,6 +16,7 @@ import java.util.List;
  * xxx
  */
 @Service
+@Transactional
 public class DefaultRoleService extends DefaultBaseServiceImpl<Role, Long>
         implements RoleService {
 

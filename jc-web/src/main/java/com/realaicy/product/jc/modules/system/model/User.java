@@ -83,15 +83,29 @@ public class User extends CommonDeletableEntity<Long> {
      */
     @Column(name = "ORGCASID")
     private String orgCascadeID;
-    @ManyToMany(fetch = FetchType.EAGER)
+
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "jc_sys_user_role", joinColumns = @JoinColumn(name = "USERID"),
             inverseJoinColumns = @JoinColumn(name = "ROLEID"))
     @JsonIgnore
     private List<Role> roles;
+    /**
+     * 用户类型
+     */
+    @Column(name = "ROLENAMES")
+    private String rolenames;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "manager")
     @JsonIgnore
     private List<ProjectInfo> projects;
+
+    public String getRolenames() {
+        return rolenames;
+    }
+
+    public void setRolenames(String rolenames) {
+        this.rolenames = rolenames;
+    }
 
     public Long getOrgID() {
         return orgID;

@@ -7,6 +7,7 @@ import com.realaicy.product.jc.modules.system.repos.UserRepos;
 import com.realaicy.product.jc.modules.system.service.UserService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ import java.util.List;
  * xxx
  */
 @Service
+@Transactional
 public class DefaultUserService extends DefaultBaseServiceImpl<User, Long>
         implements UserService {
 

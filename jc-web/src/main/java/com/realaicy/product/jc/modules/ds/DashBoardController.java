@@ -29,4 +29,10 @@ public class DashBoardController {
 
         return "dashboard/flot";
     }
+
+    @RequestMapping("/map")
+    public String f3() {
+
+        return "dashboard/map";
+    }
 }
