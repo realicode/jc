@@ -1,7 +1,9 @@
 package com.realaicy.product.jc.modules.system.model.vo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.realaicy.lib.core.model.vo.BaseVO;
 
+import javax.persistence.Column;
 import java.util.List;
 
 /**
@@ -11,18 +13,45 @@ import java.util.List;
  */
 public class User2RoleVO extends BaseVO<Long> {
 
-    private String orgName;
+    @JsonProperty("title")
+    private String name;
+    @JsonProperty("realid")
     private Long id;
     private boolean selected;
+    @JsonProperty("hideCheckbox")
+    public boolean isIfHideCheckbox() {
+        return ifHideCheckbox;
+    }
+
+    public void setIfHideCheckbox(boolean ifHideCheckbox) {
+        this.ifHideCheckbox = ifHideCheckbox;
+    }
+
+    private boolean ifHideCheckbox;
+
+    /**
+     * 资源是否是叶子节点
+     */
+    @Column(name = "IS_FOLDER")
+    @JsonProperty("folder")
+    private Boolean isFolder;
+
+    public Boolean getFolder() {
+        return isFolder;
+    }
+
+    public void setFolder(Boolean folder) {
+        isFolder = folder;
+    }
 
     private List<User2RoleVO> children;
 
-    public String getOrgName() {
-        return orgName;
+    public String getName() {
+        return name;
     }
 
-    public void setOrgName(String orgName) {
-        this.orgName = orgName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getId() {

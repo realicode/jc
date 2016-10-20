@@ -36,6 +36,11 @@ public class DefaultRoleService extends DefaultBaseServiceImpl<Role, Long>
     }
 
     @Override
+    public List<Role> findByOrgIDAndDeleteFlag(BigInteger orgID, Boolean deleteFlag) {
+        return ((RoleRepos) baseRepository).findByOrgIDAndDeleteFlag(orgID, deleteFlag);
+    }
+
+    @Override
     public Role findByNameWithInAOrg(String name, BigInteger orgIDs) {
         return ((RoleRepos) baseRepository).findByNameWithInAOrg(name, orgIDs);
     }

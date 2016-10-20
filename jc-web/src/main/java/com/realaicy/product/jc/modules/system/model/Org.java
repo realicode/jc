@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "jc_sys_org")
-public class Org extends CommonTreeableDeletableEntity<Long>{
+public class Org extends CommonTreeableDeletableEntity<Long> {
 
 
     /**
@@ -54,6 +54,7 @@ public class Org extends CommonTreeableDeletableEntity<Long>{
 
     //所属租户
     private String tenantID;
+    
     /**
      * 父亲菜单对象
      */

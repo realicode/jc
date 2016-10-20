@@ -1,33 +1,21 @@
-<!-- widget edit box -->
-<div class="jarviswidget-editbox">
-    <!-- This area used as dropdown edit box -->
+<div class="jarviswidget-editbox" xmlns:th="http://www.w3.org/1999/xhtml">
 </div>
-<!-- end widget edit box -->
-
-<!-- widget content -->
 <div class="widget-body no-padding">
-    <form class="">
-
+    <form id="realroletree" method="post" th:action="@{/system/user/u2rsave}">
         <fieldset>
             <legend>
                 分配角色
             </legend>
-
             <div class="form-group">
                 <label></label>
-                <select multiple style="width:100%" class="select2" id="realrole">
-                </select>
-
+                <input id="user2role" name="user2role" type="hidden" th:value="${user2role}">
+                <input id="userid" name="userid" type="hidden" th:value="${userid}">
+                <div id="tree2"></div>
             </div>
-
         </fieldset>
-
         <div class="form-actions">
             <div class="row">
                 <div class="col-md-12">
-                    <button class="btn btn-default" type="submit">
-                        取消
-                    </button>
                     <button class="btn btn-primary" type="submit">
                         <i class="fa fa-save"></i>
                         提交数据
@@ -35,23 +23,59 @@
                 </div>
             </div>
         </div>
-
     </form>
-
-
 </div>
 
 <script type="text/javascript">
 
-    var rolelist=[{text:'aaaa',children:[{id:1,text:"11"},{id:2,text:"22",selected:true}]},{text:'bbbb',children:[{text:"cccc",children:[{id:3,text:"33"},{id:4,text:"44",selected:true}]}]}];
+    var realrols = '';
 
     pageSetUp();
-    var pagefunction = function () {
-        $(".select2").select2({
-           data:rolelist
 
+    var pagefunction = function () {
+
+        var treeData = JSON.parse("[" + $('#user2role').val() + "]");
+        $("#tree2").fancytree({
+            checkbox: true,
+            selectMode: 2,
+            source: treeData,
+            select: function (event, data) {
+                var selNodes = data.tree.getSelectedNodes();
+                var selKeys = $.map(selNodes, function (node) {
+                    return node.data.realid;
+                });
+                realrols = selKeys.join(", ");
+            }
+        });
+
+        $("#realroletree").validate({
+            debug: true,
+            submitHandler: function (form) {
+                var selNodes = $('#tree2').fancytree("getTree").getSelectedNodes();
+                var selKeys = $.map(selNodes, function (node) {
+                    return node.data.realid;
+                });
+                realrols = selKeys.join(",");
+                $.ajax({
+                    url: '/system/user/u2rsave',
+                    type: 'post',
+                    data: {
+                        userid: $('#userid').val(),
+                        user2role: realrols,
+                        _csrf: $("meta[name='_csrf']").attr("content")
+                    },
+                    success: function (response) {
+                        if (response == "ok") {
+                            real_g_success("用户分配角色成功");
+                        }
+                        else {
+                            real_g_fail(response);
+                        }
+                    }
+                });
+            }
         });
     };
-
     pagefunction();
+
 </script>

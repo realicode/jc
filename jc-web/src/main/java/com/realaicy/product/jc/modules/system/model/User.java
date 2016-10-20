@@ -13,6 +13,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 文档实体类
@@ -88,7 +89,7 @@ public class User extends CommonDeletableEntity<Long> {
     @JoinTable(name = "jc_sys_user_role", joinColumns = @JoinColumn(name = "USERID"),
             inverseJoinColumns = @JoinColumn(name = "ROLEID"))
     @JsonIgnore
-    private List<Role> roles;
+    private Set<Role> roles;
     /**
      * 用户类型
      */
@@ -195,11 +196,11 @@ public class User extends CommonDeletableEntity<Long> {
         this.orgCascadeID = orgCascadeID;
     }
 
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 

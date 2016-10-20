@@ -70,3 +70,139 @@ $("#smart-styles > a")
             .remove();
         $this.prepend("<i class='fa fa-check fa-fw' id='skin-checked'></i>");
     });
+
+
+function real_g_success(msg) {
+    console.log(msg);
+    $('#realalertinfo').text(msg);
+    $('#realalert').fadeTo(2000, 500).delay(5000).slideUp(500, function () {
+    });
+    $.smallBox({
+        title: msg,
+        content: "<i class='fa fa-clock-o'></i> <i>2 seconds ago...</i>",
+        color: "#296191",
+        iconSmall: "fa fa-thumbs-up bounce animated",
+        timeout: 4000
+    });
+    $('#article_real_entity').hide();
+    $('#dt_basic_real').DataTable().draw();
+}
+
+function real_g_fail(msg) {
+    $.SmartMessageBox({
+        title: "出错了!",
+        content: msg,
+        buttons: '[确定]'
+    })
+}
+function realalert(msg) {
+    BootstrapDialog.alert({
+        title: '系统提示信息：',
+        message: msg,
+        type: BootstrapDialog.TYPE_DANGER, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+        closable: true, // <-- Default value is false
+        buttonLabel: '确定', // <-- Default value is 'OK',
+        callback: function (result) {
+        }
+    });
+}
+// function realloadpage(url, wapper, div) {
+//     console.log("url2:" + url);
+//     //wapper.show();
+//     $('#article_real_entity').show();
+//     $('#realeditdiv').load(url, function () {
+//     });
+//     // div.load(url, function () {
+//     // });
+//     $('html, body').animate({scrollTop: 0}, 'normal');
+// }
+
+function realloadpage(url) {
+    console.log("url3:" + url);
+    $('#article_real_entity').show();
+    $('#realeditdiv').load(url, function () {
+    });
+    $('html, body').animate({scrollTop: 0}, 'normal');
+}
+
+function real_g_del(msg, url) {
+    var rows_selected = $('#dt_basic_real').DataTable().column(0).checkboxes.selected();
+    if (rows_selected.length <= 0 || rows_selected.length > 1) {
+        var msg_in;
+        if (rows_selected.length <= 0)
+            msg_in = "请选择一个待删除的" + msg;
+        else
+            msg_in = "请求操作不支持多选，请选择一个并且只选择一个待删除的" + msg;
+        realalert(msg_in);
+    } else {
+        BootstrapDialog.show({
+            title: '系统提示信息',
+            message: '请确认是否删除选定数据.',
+            buttons: [{
+                label: '确认删除',
+                action: function (dialog) {
+                    dialog.close();
+                    $("#updateflag").attr("value", 'deldel');
+                    $.each(rows_selected, function (index, rowId) {
+                        console.log("id: " + rowId);
+                        $.ajax({
+                            url: url + rowId,
+                            type: 'GET',
+                            success: function (response) {
+                                if (response.substring(0, 2) == "ok") {
+                                    real_g_success("——删除" + msg + "成功！");
+
+                                    $('#dt_basic_real').DataTable().columns().checkboxes.deselect();
+                                }
+                                else {
+                                    real_g_fail(response);
+                                }
+                            }
+                        });
+                    });
+                }
+            }, {
+                label: '取消',
+                action: function (dialogItself) {
+                    dialogItself.close();
+                }
+            }]
+        });
+    }
+}
+
+
+realaicy_g_var_tableopt_lang = {
+    "processing": "处理中...",
+    "lengthMenu": "每页显示 _MENU_ 项结果",
+    "zeroRecords": "没有匹配结果",
+    "info": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+    "infoEmpty": "显示第 0 至 0 项结果，共 0 项",
+    "infoFiltered": "(由 _MAX_ 项结果过滤)",
+    "infoPostFix": "",
+    "search": "搜索:",
+    "searchPlaceholder": "搜索...",
+    "url": "",
+    "emptyTable": "表中数据为空",
+    "loadingRecords": "载入中...",
+    "infoThousands": ",",
+    "paginate": {
+        "first": "首页",
+        "previous": "上页",
+        "next": "下页",
+        "last": "末页"
+    },
+    "aria": {
+        paginate: {
+            first: '首页',
+            previous: '上页',
+            next: '下页',
+            last: '末页'
+        },
+        "sortAscending": ": 以升序排列此列",
+        "sortDescending": ": 以降序排列此列"
+    },
+    "decimal": "-",
+    "thousands": "."
+};
+

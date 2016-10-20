@@ -80,10 +80,13 @@ public class RoleReposTest {
 
     @Test
     public void findByOrgID() throws Exception {
-        List<BigInteger> orgs = orgRepos.findAllChildIDs("%1%");
         List<Role> roles1 = repos.findByOrgID(BigInteger.valueOf(49));
         assertNotNull(roles1);
+    }
 
-
+    @Test
+    public void findByOrgIDAndD() throws Exception {
+        List<Role> roles1 = repos.findByOrgIDAndDeleteFlag(BigInteger.valueOf(58),false);
+        assertNotNull(roles1);
     }
 }

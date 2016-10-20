@@ -32,7 +32,7 @@ public class DefaultOrgService extends DefaultBaseServiceImpl<Org, Long>
 
     @Override
     public List<BigInteger> findAllChildIDs(@Param("cascadeid") String cascadeid) {
-        return ((OrgRepos) baseRepository).findAllChildIDs("%" + cascadeid + "%");
+        return ((OrgRepos) baseRepository).findAllChildIDs(cascadeid + "%");
     }
 
 

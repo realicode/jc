@@ -191,7 +191,7 @@ public abstract class CRUDController<M extends BaseEntity<ID> & CommonData<ID>,
 
         final BaseSpecificationsBuilder<M> builder = new BaseSpecificationsBuilder<>();
         final String operationSetExper = Joiner.on("|").join(SearchOperation.SIMPLE_OPERATION_SET);
-        final Pattern pattern = Pattern.compile("(\\w+?)(" + operationSetExper + ")(\\p{Punct}?)(\\w+?)(\\p{Punct}?),");
+        final Pattern pattern = Pattern.compile("(\\w+?)(" + operationSetExper + ")(\\p{Punct}?)(\\p{L}+?)(\\p{Punct}?),");
         final Matcher matcher = pattern.matcher(search + ",");
         while (matcher.find()) {
             builder.with(matcher.group(1), matcher.group(2), matcher.group(4), matcher.group(3), matcher.group(5));
@@ -306,5 +306,11 @@ public abstract class CRUDController<M extends BaseEntity<ID> & CommonData<ID>,
 
     protected abstract M InternalSaveUpdate(M realmodel, ID updateID, ID pid) throws SaveNewException;
 
+    @RequestMapping(value = "/a", method = RequestMethod.POST)
+    @ResponseBody
+    public String userToRoleSave(@RequestParam(value = "userid", required = false) String userid) {
 
+
+        return "ok";
+    }
 }

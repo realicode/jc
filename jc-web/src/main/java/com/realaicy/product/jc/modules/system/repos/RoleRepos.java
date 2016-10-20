@@ -20,6 +20,8 @@ public interface RoleRepos extends BaseRepository<Role, Long> {
 
     List<Role> findByOrgID(BigInteger orgID);
 
+    List<Role> findByOrgIDAndDeleteFlag(BigInteger orgID, Boolean deleteFlag);
+
     List<Role> findByOrgIDIn(Collection<BigInteger> orgIDs);
 
     @Query(value = "SELECT * FROM jc_sys_role as role" +

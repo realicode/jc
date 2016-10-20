@@ -21,6 +21,9 @@ public interface RoleService extends BaseService<Role, Long> {
 
     List<Role> findByOrgID(BigInteger orgID);
 
+    List<Role> findByOrgIDAndDeleteFlag(BigInteger orgID, Boolean deleteFlag);
+
+
     Role findByNameWithInAOrg(String name, BigInteger orgid);
 
 }

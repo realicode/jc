@@ -10,7 +10,8 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by realaicy on 16/7/6.
@@ -34,7 +35,7 @@ public class UserRoleReposTest {
         User user = new User();
         user.setUsername("test_4");
         user.setNickname("刘旭东");
-        List<Role> roleList = new ArrayList<Role>();
+        Set<Role> roleList = new HashSet<>();
         roleList.add(role);
         user.setRoles(roleList);
         userRepos.saveAndFlush(user);
@@ -47,7 +48,7 @@ public class UserRoleReposTest {
         User user = userRepos.findOne(5L);
         Role role = roleRepos.findOne(2L);
 
-        List<Role> roleList = user.getRoles();
+        Set<Role> roleList = user.getRoles();
         roleList.add(role);
 
         user.setRoles(roleList);

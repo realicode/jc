@@ -1,10 +1,12 @@
 package com.realaicy.product.jc.modules.system.web;
 
+import com.realaicy.lib.core.mapper.JsonMapper;
 import com.realaicy.product.jc.common.exception.SaveNewException;
 import com.realaicy.product.jc.modules.system.model.Org;
 import com.realaicy.product.jc.modules.system.model.Role;
 import com.realaicy.product.jc.modules.system.model.User;
 import com.realaicy.product.jc.modules.system.model.UserSec;
+import com.realaicy.product.jc.modules.system.model.vo.User2RoleVO;
 import com.realaicy.product.jc.modules.system.model.vo.UserVO;
 import com.realaicy.product.jc.modules.system.repos.UserSecRepos;
 import com.realaicy.product.jc.modules.system.service.RoleService;
@@ -29,6 +31,9 @@ import java.util.*;
 @Controller
 @RequestMapping("/system/user")
 public class UserController extends CRUDWithVOController<User, Long, UserVO> {
+
+    private static JsonMapper binder = JsonMapper.nonDefaultMapper();
+
 
     private UserService userService;
     private RoleService roleService;
@@ -72,21 +77,76 @@ public class UserController extends CRUDWithVOController<User, Long, UserVO> {
     @RequestMapping(value = "/user2role/{userid}", method = RequestMethod.GET)
     public String userToRole(@PathVariable("userid") final Long userid,
                              Model model) {
+
         User user = userService.findOne(userid);
 
-        List<Org> orgs = getOrgService().findByCascadeIDStartingWith("");
+        User2RoleVO user2RoleVO = new User2RoleVO();
 
+        Org org = getOrgService().findOne(user.getOrgID());
 
-        List<Role> allRoles = roleService.findByOrgID(BigInteger.valueOf(user.getOrgID()));
+        user2RoleVO = productVONode(org, user.getRoles());
 
+        model.addAttribute("user2role", binder.toJson(user2RoleVO));
 
-        List<Role> existRoles = user.getRoles();
-        List<Role> availableRoles;
-
-
-        model.addAttribute("allRoles", roleService.findByOrgID(BigInteger.valueOf(user.getOrgID())));
+        model.addAttribute("userid", userid);
 
         return userToRoleUrl;
+    }
+
+    @RequestMapping(value = "/u2rsave", method = RequestMethod.POST)
+    @ResponseBody
+    public String userToRoleSave(@RequestParam(value = "userid", required = false) Long userid,
+                                 @RequestParam(value = "user2role", required = false) String user2role) {
+
+        User user = userService.findOne(userid);
+
+        String roleNames = "";
+        user.getRoles().clear();
+        user.setRolenames(roleNames);
+        userService.save(user);
+        if (user2role != null && !Objects.equals(user2role, "")) {
+            for (String str : user2role.split(",")) {
+                Role roleTemp = roleService.findOne(Long.valueOf(str));
+                user.getRoles().add(roleService.findOne(Long.valueOf(str)));
+                roleNames += roleTemp.getName();
+                roleNames += ",";
+            }
+            user.setRolenames(roleNames.substring(0, roleNames.length() - 1));
+            userService.save(user);
+        }
+
+
+        return "ok";
+    }
+
+
+    private User2RoleVO productVONode(Org org, Set<Role> roles) {
+        User2RoleVO user2RoleVO = new User2RoleVO();
+        user2RoleVO.setId(org.getId());
+        user2RoleVO.setName(org.getName());
+        user2RoleVO.setFolder(true);
+        user2RoleVO.setIfHideCheckbox(true);
+        List<Role> rolesTemp = roleService.findByOrgIDAndDeleteFlag(BigInteger.valueOf(org.getId()), false);
+        List<User2RoleVO> childrenTemp = new ArrayList<>();
+        if (rolesTemp.size() > 1) {
+            for (Role role : rolesTemp) {
+                User2RoleVO user2RoleVOTemp = new User2RoleVO();
+                user2RoleVOTemp.setId(role.getId());
+                user2RoleVOTemp.setName(role.getName());
+                if (roles.contains(role))
+                    user2RoleVOTemp.setSelected(true);
+                childrenTemp.add(user2RoleVOTemp);
+            }
+        }
+
+        if (org.getChildren().size() > 1) {//如果有孩子 则递归处理孩子
+            for (Org orgChild : org.getChildren()) {
+                childrenTemp.add(productVONode(orgChild, roles));
+            }
+        }
+        user2RoleVO.setChildren(childrenTemp);
+        return user2RoleVO;
+
     }
 
     @Override

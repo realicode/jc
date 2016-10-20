@@ -1,44 +1,17 @@
-<title>组织机构</title>
+<title>用户</title>
 <link rel="stylesheet" xmlns:th="http://www.thymeleaf.org"
       th:href="@{/realaicy/css/fancytree/ui.fancytree.css}"
       href="../../../static/realaicy/css/fancytree/ui.fancytree.css"/>
 <link rel="stylesheet" xmlns:th="http://www.thymeleaf.org"
       th:href="@{/realaicy/css/bootstrap-dialog.min.css}"
       href="../../../static/realaicy/css/bootstrap-dialog.min.css"/>
-<div class="row">
-    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
-        <h1 class="page-title txt-color-blueDark">
-            <i class="fa fa-gears fa-fw "></i>
-            系统管理
-            <span>>
+<div class="row no-margin no-padding" style="height: 40px">
+    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4 no-margin no-padding" style="height: 40px;font-size: 16px">
+        <i class="fa-fw fa fa-home"></i>
+        系统管理
+        <span>>
 				用户管理
 			</span>
-        </h1>
-    </div>
-    <div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
-        <ul id="sparks" class="">
-            <li class="sparks-info">
-                <h5> My Income <span class="txt-color-blue">$47,171</span></h5>
-                <div class="sparkline txt-color-blue hidden-mobile hidden-md hidden-sm">
-                    1300, 1877, 2500, 2577, 2000, 2100, 3000, 2700, 3631, 2471, 2700, 3631, 2471
-                </div>
-            </li>
-            <li class="sparks-info">
-                <h5> Site Traffic <span class="txt-color-purple"><i class="fa fa-arrow-circle-up"
-                                                                    data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;45%</span>
-                </h5>
-                <div class="sparkline txt-color-purple hidden-mobile hidden-md hidden-sm">
-                    110,150,300,130,400,240,220,310,220,300, 270, 210
-                </div>
-            </li>
-            <li class="sparks-info">
-                <h5> Site Orders <span class="txt-color-greenDark"><i class="fa fa-shopping-cart"></i>&nbsp;2447</span>
-                </h5>
-                <div class="sparkline txt-color-greenDark hidden-mobile hidden-md hidden-sm">
-                    110,150,300,130,400,240,220,310,220,300, 270, 210
-                </div>
-            </li>
-        </ul>
     </div>
 </div>
 <div class="row realheight">
@@ -49,22 +22,27 @@
             <strong>操作成功!</strong> <span id="realalertinfo"></span>
         </div>
         <div class="row realheight">
-            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12 realheight">
-                <div class="jarviswidget jarviswidget-color-darken widget-realaicy" id="real_entity"
+            <article id="article_real_entity" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-margin" hidden="hidden"
+            >
+                <div class="jarviswidget jarviswidget-color-darken widget-realaicy" id="real_entity_user"
                      data-widget-editbutton="false"
-                     data-widget-collapsed="true"
+                     data-widget-collapsed="false"
                      data-widget-deletebutton="false"
                      data-widget-fullscreenbutton="false">
+
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                         <h2>新增 || 修改 || 查询用户 —— 控制面板</h2>
                     </header>
                     <div id="realeditdiv">
+
                     </div>
                 </div>
+            </article>
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12 realheight">
                 <div class="realheight">
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 realheight"
-                         style="padding-left: 2px;padding-right: 6px">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 no-margin"
+                         style="min-height: 100%;padding-bottom: 30px;padding-left: 2px;padding-right: 6px">
                         <div class="jarviswidget no-padding realheight" id="wid-id-1">
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-comments"></i> </span>
@@ -74,11 +52,11 @@
                                 <div class="jarviswidget-editbox">
                                 </div>
                                 <div class="widget-body no-padding">
-                                    <div class="custom-scroll table-responsive no-padding no-margin">
+                                    <div class="custom-scroll table-responsive no-padding no-margin realheight">
                                         <table id="treetable"
                                                class="table table-striped table-bordered table-hover no-padding no-margin">
                                             <colgroup style="width: 100%">
-                                                <col width="20px"/>
+                                                <col width="30px"/>
                                                 <col width="30px"/>
                                                 <col width="*"/>
                                             </colgroup>
@@ -97,20 +75,20 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding no-margin realheight">
-                        <div class="jarviswidget jarviswidget-color-darken realheight" id="wid-id-real0"
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-margin"
+                         style="min-height: 100%;padding-bottom: 30px;padding-left: 1px;padding-right: 1px">
+                        <div class="jarviswidget jarviswidget-color-darken" id="wid-id-real0" style="min-height: 100%"
                              data-widget-editbutton="false">
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                                 <h2>用户列表</h2>
                             </header>
-                            <div class="realheight">
+                            <div style="min-height: 100%">
                                 <div class="jarviswidget-editbox">
-                                    <!-- This area used as dropdown edit box -->
                                 </div>
-                                <div class="widget-body no-padding realheight">
+                                <div class="widget-body no-padding" style="min-height: 100%">
                                     <table id="dt_basic_real" class="table table-striped table-bordered table-hover"
-                                    >
+                                           style="min-height: 100%">
                                         <thead>
                                         <tr>
                                             <th>
@@ -131,7 +109,6 @@
                                             </th>
                                             <th>
                                             </th>
-
                                         </tr>
                                         <tr>
                                             <th>
@@ -147,13 +124,10 @@
                                             <th class="realaicy_table_header">创建时间</th>
                                             <th class="realaicy_table_header">操作按钮</th>
                                         </tr>
-
                                         </thead>
                                         <tbody></tbody>
                                     </table>
-
                                 </div>
-                                <!-- end widget content -->
                             </div>
                         </div>
                     </div>
@@ -164,24 +138,19 @@
 </div>
 
 <script type="text/javascript">
+    pageSetUp();
 
     var realOrgID = "";
-    var realmsg = "请先选择用户";
-
 
     function realdel() {
-        console.log("realdel");
         var rows_selected = $('#dt_basic_real').DataTable().column(0).checkboxes.selected();
         if (rows_selected.length <= 0 || rows_selected.length > 1) {
-            BootstrapDialog.alert({
-                title: '系统提示信息：',
-                message: realmsg,
-                type: BootstrapDialog.TYPE_DANGER, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
-                closable: true, // <-- Default value is false
-                buttonLabel: '确定', // <-- Default value is 'OK',
-                callback: function (result) {
-                }
-            });
+            var msg;
+            if (rows_selected.length <= 0)
+                msg = "请选择一个待删除的用户";
+            else
+                msg = "请求操作不支持多选，请选择一个并且只选择一个待删除的用户！";
+            realalert(msg);
         } else {
             BootstrapDialog.show({
                 title: '系统提示信息',
@@ -191,7 +160,6 @@
                     action: function (dialog) {
                         dialog.close();
                         $("#updateflag").attr("value", 'deldel');
-
                         $.each(rows_selected, function (index, rowId) {
                             console.log("id: " + rowId);
                             $.ajax({
@@ -199,32 +167,14 @@
                                 type: 'GET',
                                 success: function (response) {
                                     if (response.substring(0, 2) == "ok") {
-                                        $('#dt_basic_real').DataTable().draw();
-                                        $('#dt_basic_real').DataTable().columns().checkboxes.deselect();
-                                        $('#realalertinfo').text('——删除角色成功！');
-                                        $('#realalert').fadeTo(2000, 500).delay(5000).slideUp(500, function () {
-                                            //$("#realtemp_a").delay().slideUp(500);
-                                        });
-                                        $.smallBox({
-                                            title: "删除角色成功",
-                                            content: "<i class='fa fa-clock-o'></i> <i>2 seconds ago...</i>",
-                                            color: "#296191",
-                                            iconSmall: "fa fa-thumbs-up bounce animated",
-                                            timeout: 4000
-                                        });
+                                        real_g_success("——删除用户成功！");
                                     }
-
                                     else {
-                                        $.SmartMessageBox({
-                                            title: "出错了!",
-                                            content: response,
-                                            buttons: '[确定]'
-                                        })
+                                        real_g_fail(response);
                                     }
                                 }
                             });
                         });
-
                     }
                 }, {
                     label: '取消',
@@ -235,17 +185,8 @@
             });
         }
     }
-    pageSetUp();
 
     var pagefunction = function () {
-
-        $("#realbtn-search").on("click", function () {
-            //do something here
-            console.log("cccccccccccccccccccccc");
-            // realtable.search("哈哈哈哈哈哈").draw();
-            realtable.columns(1).search("哈哈哈哈哈哈").draw();
-            console.log("dddddddddddddddddddddd");
-        });
 
         $("#treetable").fancytree({
             extensions: ["table"],
@@ -278,39 +219,7 @@
                     scrollCollapse: true,
                     "pagingType": "full_numbers",
                     "searching": true,
-                    "language": {
-                        "processing": "处理中...",
-                        "lengthMenu": "每页显示 _MENU_ 项结果",
-                        "zeroRecords": "没有匹配结果",
-                        "info": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-                        "infoEmpty": "显示第 0 至 0 项结果，共 0 项",
-                        "infoFiltered": "(由 _MAX_ 项结果过滤)",
-                        "infoPostFix": "",
-                        "search": "搜索:",
-                        "searchPlaceholder": "搜索...",
-                        "url": "",
-                        "emptyTable": "表中数据为空",
-                        "loadingRecords": "载入中...",
-                        "infoThousands": ",",
-                        "paginate": {
-                            "first": "首页",
-                            "previous": "上页",
-                            "next": "下页",
-                            "last": "末页"
-                        },
-                        "aria": {
-                            paginate: {
-                                first: '首页',
-                                previous: '上页',
-                                next: '下页',
-                                last: '末页'
-                            },
-                            "sortAscending": ": 以升序排列此列",
-                            "sortDescending": ": 以降序排列此列"
-                        },
-                        "decimal": "-",
-                        "thousands": "."
-                    },
+                    "language": realaicy_g_var_tableopt_lang,
                     "dom": "<'dt-toolbar'<'col-xs-12 col-sm-10'B><'col-sm-2 col-xs-2 hidden-xs'C>r>" +
                     "t" +
                     "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
@@ -320,81 +229,46 @@
                             text: '<i class="glyphicon glyphicon-plus"></i> 新增',
                             className: 'btn btn-info real_datatables_button_class_left btn-realaicy',
                             action: function (e, dt, node, config) {
-                                console.log("新增!");
-                                console.log("realOrgID: " + realOrgID);
-                                console.log("新增!");
                                 if (realOrgID == '') {
-                                    BootstrapDialog.alert({
-                                        title: '系统提示信息：',
-                                        message: '请选择组织机构',
-                                        type: BootstrapDialog.TYPE_DANGER, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
-                                        closable: true, // <-- Default value is false
-                                        buttonLabel: '确定', // <-- Default value is 'OK',
-                                        callback: function (result) {
-                                        }
-                                    });
+                                    realalert("请选择组织机构")
                                 } else {
-                                    $("#realeditdiv").load("/system/user/new/" + realOrgID, function () {
-                                    });
-                                    if ($("#real_entity").hasClass("jarviswidget-collapsed"))
-                                        $("#real_entity a.jarviswidget-toggle-btn").trigger("click");
+                                    //realloadpage("/system/user/new/" + realOrgID, $('#real_entity_user_wapper'), $('#realeditdiv_user'));
+                                    realloadpage("/system/user/new/" + realOrgID);
                                 }
-                                console.log("新增按钮结束!");
                             }
                         },
                         {
                             text: '<i style="font-size:0.5em;" class="glyphicon glyphicon-pencil"></i> 修改',
                             className: 'btn btn-info real_datatables_button_class_ingroup btn-realaicy',
                             action: function (e, dt, node, config) {
-                                console.log("修改按钮!");
-
                                 var rows_selected = realtable.column(0).checkboxes.selected();
                                 if (rows_selected.length <= 0 || rows_selected.length > 1) {
-                                    BootstrapDialog.alert({
-                                        title: '系统提示信息：',
-                                        message: realmsg,
-                                        type: BootstrapDialog.TYPE_DANGER, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
-                                        closable: true, // <-- Default value is false
-                                        buttonLabel: '确定', // <-- Default value is 'OK',
-                                        callback: function (result) {
-                                        }
-                                    });
+                                    var msg;
+                                    if (rows_selected.length <= 0)
+                                        msg = "请选择一个待修改的用户";
+                                    else
+                                        msg = "请求操作不支持多选，请选择一个并且只选择一个待修改的用户！";
+                                    realalert(msg);
                                 } else {
                                     $.each(rows_selected, function (index, rowId) {
-                                        console.log("id: " + rowId);
-                                        $("#realeditdiv").load("/system/user/show/" + rowId, function () {
-                                        });
+                                        realloadpage("/system/user/show/" + rowId);
                                     });
-
-                                    if ($("#real_entity").hasClass("jarviswidget-collapsed"))
-                                        $("#real_entity a.jarviswidget-toggle-btn").trigger("click");
-
-                                    $('html, body').animate({scrollTop: 0}, 'normal');
                                 }
-                                console.log("修改按钮结束!");
                             }
                         },
                         {
                             text: '<i  class="fa fa-trash-o"></i> 删除',
                             className: 'btn btn-info real_datatables_button_class_ingroup btn-realaicy',
                             action: function (e, dt, node, config) {
-                                console.log("删除按钮!");
-                                realdel();
-                                console.log("删除按钮结束!");
+                                real_g_del("用户", '/system/user/del/');
+                                //realdel();
                             }
                         },
                         {
                             text: '<i  class="fa fa-trash-o"></i> 批量删除',
                             className: 'btn btn-danger real_datatables_button_class_right btn-realaicy',
                             action: function (e, dt, node, config) {
-                                //alert('Button activated');
-                                var rows_selected = realtable.column(0).checkboxes.selected();
-                                $.each(rows_selected, function (index, rowId) {
-                                    console.log("id: " + rowId);
-                                });
-                                if (rows_selected.length > 0) {
-                                    console.log("youyouyou: ");
-                                }
+                                realalert("功能实现敬请期待。。。。。。");
                             }
                         },
                         {
@@ -408,12 +282,7 @@
                             text: '自助复杂查询',
                             className: 'btn btn-info real_datatables_button_class_ingroup btn-realaicy',
                             action: function (e, dt, node, config) {
-                                $("#realeditdiv").load("/system/user/search", function () {
-
-                                });
-                                if ($("#real_entity").hasClass("jarviswidget-collapsed"))
-                                    $("#real_entity a.jarviswidget-toggle-btn").trigger("click");
-                                $('html, body').animate({scrollTop: 0}, 'normal');
+                                realloadpage("/system/user/search");
                             }
                         },
                         {
@@ -424,7 +293,6 @@
                             }
                         },
                         'excel'
-
                     ],
 
                     ajax: {
@@ -435,20 +303,15 @@
                             var header = $("meta[name='_csrf_header']").attr("content");
                             request.setRequestHeader(header, token);
                         },
-
                         "data": function (d) {
-                            // d.custom = $('#myInput').val();
-                            // etc
                             delete d.columns;
                             var searchString = "";
                             var search_username = $("#real_filter_username").val();
                             var search_nickname = $("#real_filter_nickname").val();
-
                             if (search_username != undefined && search_username != "") {
                                 searchString += "username:*";
                                 searchString += search_username;
                                 searchString += "*";
-
                             }
                             if (search_nickname != undefined && search_nickname != "") {
                                 searchString += ",nickname:*";
@@ -460,13 +323,9 @@
 
                         },
                         error: function (xhr, status, error) {
-                            //console.log("realaicy:");
-                            // console.log(status);
-                            //console.log(xhr.responseText);
                             if (xhr.responseText.indexOf("invalid") == 0) {
                                 location = "http://127.0.0.1:48080/";
                             }
-                            //window.location = "http://127.0.0.1:48080/login";
                         }
                     },
                     processing: true,
@@ -486,7 +345,6 @@
                         {
                             searchable: false,
                             orderable: false,
-//                                className: 'select-checkbox',
                             targets: 0,
                             'checkboxes': {
                                 'selectRow': false
@@ -494,74 +352,19 @@
                         },
                         {
                             targets: 4,
-                            //render: $.fn.dataTable.render.moment('MMMM Do YYYY, h:mm:ss a')
                             render: function (data, type, row) {
-                                //console.log("data" + data);
                                 return data;
-                                //return (moment(data).tz('Asia/Shanghai').format("YYYY-MM-DD HH:mm:ss"));
                             }
-
                         }],
                     select: {
                         style: 'multi'
-//                            selector: ':not(:last-child)'
                     },
                     "order": [[1, 'asc']]
                 });
 
-
         $('#dt_basic_real').on('click', '.btn-intable-realaicy', function () {
-            var data = realtable.row($(this).parents('tr')).data();
-            console.log("data: " + data.id);
-
-            $("#realeditdiv").load("/system/user/user2role/" + data.id, function () {
-            });
-
-
-            if ($("#real_entity").hasClass("jarviswidget-collapsed"))
-                $("#real_entity a.jarviswidget-toggle-btn").trigger("click");
-            $('html, body').animate({scrollTop: 0}, 'normal');
+            realloadpage("/system/user/user2role/" + realtable.row($(this).parents('tr')).data().id);
         });
-
     };
-
-    // load related plugins
-
-    loadScript("smartadmin/js/plugin/datatables/jquery.dataTables_10.12.min.js", function () {
-        loadScript("smartadmin/js/plugin/datatables/dataTables.bootstrap.min.js", function () {
-            loadScript("smartadmin/js/plugin/datatables/dataTables.buttons.min.js", function () {
-                loadScript("smartadmin/js/plugin/datatables/buttons.bootstrap.min.js", function () {
-//                    loadScript("smartadmin/js/plugin/datatables/dataTables.select.min.js", function () {
-                    loadScript("smartadmin/js/plugin/datatables/dataTables.checkboxes.min.js", function () {
-                        loadScript("smartadmin/js/plugin/moment/moment.min.js", function () {
-                            loadScript("smartadmin/js/plugin/moment/moment-timezone.min.js", function () {
-                                loadScript("smartadmin/js/libs/jszip.min.js", function () {
-                                    loadScript("smartadmin/js/plugin/datatables/pdfmake.min.js", function () {
-                                        loadScript("smartadmin/js/plugin/datatables/vfs_fonts.js", function () {
-                                            loadScript("smartadmin/js/plugin/datatables/buttons.html5.min.js", function () {
-                                                loadScript("smartadmin/js/plugin/datatables/buttons.print.min.js", function () {
-                                                    loadScript("smartadmin/js/plugin/datatables/buttons.colVis.min.js", function () {
-                                                        loadScript("smartadmin/js/plugin/datatables/dataTables.colVis.min.js", function () {
-                                                            loadScript("smartadmin/js/plugin/datatable-responsive/datatables.responsive.min.js", function () {
-                                                                loadScript("realaicy/js/fancytree/jquery.fancytree-all.js", function () {
-                                                                    loadScript("realaicy/js/bootstrap-dialog.min.js", pagefunction);
-                                                                });
-                                                            });
-                                                        });
-                                                    });
-                                                });
-                                            });
-                                        });
-                                    });
-                                });
-                            });
-                        });
-                    });
-//                    });
-                });
-            });
-        });
-    });
-
-
+    pagefunction();
 </script>

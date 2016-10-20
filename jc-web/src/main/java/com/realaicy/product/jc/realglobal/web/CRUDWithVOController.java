@@ -43,7 +43,7 @@ import static com.realaicy.lib.core.utils.RealBeanUtils.getNullPropertyNames;
  */
 @Controller
 public abstract class CRUDWithVOController<M extends BaseEntity<ID> & CommonData<ID>,
-        ID extends Serializable, V extends BaseVO> {
+        ID extends Serializable, V extends BaseVO<ID>> {
 
     private final static String noAuthViewName = "global/errorpage/NOPrivilege";
     private final static String noAuthString = "NOPrivilege";
@@ -207,7 +207,7 @@ public abstract class CRUDWithVOController<M extends BaseEntity<ID> & CommonData
 
         final BaseSpecificationsBuilder<M> builder = new BaseSpecificationsBuilder<>();
         final String operationSetExper = Joiner.on("|").join(SearchOperation.SIMPLE_OPERATION_SET);
-        final Pattern pattern = Pattern.compile("(\\w+?)(" + operationSetExper + ")(\\p{Punct}?)(\\w+?)(\\p{Punct}?),");
+        final Pattern pattern = Pattern.compile("(\\w+?)(" + operationSetExper + ")(\\p{Punct}?)(\\p{L}+?)(\\p{Punct}?),");
         final Matcher matcher = pattern.matcher(search + ",");
         while (matcher.find()) {
             builder.with(matcher.group(1), matcher.group(2), matcher.group(4), matcher.group(3), matcher.group(5));
@@ -332,5 +332,12 @@ public abstract class CRUDWithVOController<M extends BaseEntity<ID> & CommonData
 
     protected abstract M InternalSaveUpdate(V realmodel, ID updateID, ID pid) throws SaveNewException;
 
+    @RequestMapping(value = "/b", method = RequestMethod.POST)
+    @ResponseBody
+    public String real4test(@RequestParam(value = "userid", required = false) String userid) {
+
+
+        return "ok";
+    }
 
 }
