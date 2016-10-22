@@ -17,7 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = "jc_sys_menu")
 @JsonFilter("rfMenu")
-public class Menu extends CommonTreeableDeletableEntity<Long> implements Cloneable {
+public class Menu extends CommonTreeableDeletableEntity<Long, Menu> implements Cloneable {
 
     @Override
     public Object clone() throws CloneNotSupportedException {
@@ -50,13 +50,13 @@ public class Menu extends CommonTreeableDeletableEntity<Long> implements Cloneab
     @Column(name = "IDENTITY")
     private String resIdentity = "";
 
-    /**
-     * 父亲菜单对象
-     */
-    @ManyToOne
-    @JoinColumn(name = "PID")
-    @JsonIgnore
-    private Menu parent;
+//    /**
+//     * 父亲菜单对象
+//     */
+//    @ManyToOne
+//    @JoinColumn(name = "PID")
+//    @JsonIgnore
+//    private Menu parent;
     /**
      * 孩子菜单对象
      */
@@ -96,14 +96,6 @@ public class Menu extends CommonTreeableDeletableEntity<Long> implements Cloneab
 
     public void setResIdentity(String resIdentity) {
         this.resIdentity = resIdentity;
-    }
-
-    public Menu getParent() {
-        return parent;
-    }
-
-    public void setParent(Menu parent) {
-        this.parent = parent;
     }
 
     public List<Menu> getChildren() {

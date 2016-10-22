@@ -2,11 +2,12 @@ package com.realaicy.product.jc.modules.system.web;
 
 import com.realaicy.product.jc.common.exception.SaveNewException;
 import com.realaicy.product.jc.modules.system.model.Role;
+import com.realaicy.product.jc.modules.system.model.vo.RoleVO;
 import com.realaicy.product.jc.modules.system.service.RoleService;
-import com.realaicy.product.jc.realglobal.web.CRUDController;
+import com.realaicy.product.jc.realglobal.web.CRUDWithVOController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Collections;
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/system/role")
-public class RoleController extends CRUDController<Role, Long> {
+public class RoleController extends CRUDWithVOController<Role, Long, RoleVO> {
 
     private RoleService roleService;
     static final private String[] nameDic = {"name"};
@@ -33,21 +34,25 @@ public class RoleController extends CRUDController<Role, Long> {
     @Autowired
     public RoleController(RoleService roleService) {
         super(roleService, "role", nameDic, pageUrl, newEntityUrl, editEntityUrl,
-                listEntityUrl, searchEntityUrl, Role.class);
+                listEntityUrl, searchEntityUrl, Role.class, RoleVO.class, bindingWhiteList);
         this.roleService = roleService;
     }
 
     @Override
-    protected void InternalSaveNew(Role realmodel, Long updateID, Long pid) throws SaveNewException {
+    protected void InternalSaveNew(RoleVO realmodel, Long updateID, Long pid) throws SaveNewException {
         if (roleService.findByNameWithInAOrg(realmodel.getName(), realmodel.getOrgID()) != null)
             throw new SaveNewException("error角色名称已存在!");
     }
 
     @Override
-    protected Role InternalSaveUpdate(Role realmodel, Long updateID, Long pid) throws SaveNewException {
+    protected Role InternalSaveUpdate(RoleVO realmodel, Long updateID, Long pid) throws SaveNewException {
         Role org = roleService.findOne(updateID);
-
         org.setName(realmodel.getName());
         return org;
+    }
+
+    @Override
+    protected void extendSave(Role po, Long updateID, Long pid) {
+
     }
 }

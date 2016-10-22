@@ -7,6 +7,7 @@ import com.realaicy.lib.core.orm.jpa.entity.CommonTreeableDeletableEntity;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = "jc_m_doc_allinone")
 @JsonFilter("realFilter")
-public class DocRes extends CommonTreeableDeletableEntity<Long> {
+public class DocRes extends CommonTreeableDeletableEntity<Long, DocRes> {
 
 
     /**
@@ -25,6 +26,18 @@ public class DocRes extends CommonTreeableDeletableEntity<Long> {
     @Column(name = "RES_TYPE")
     private short resType;
 
+    /**
+     * 角色所属组织
+     */
+    @Column(name = "ORGID")
+    private BigInteger orgID;
+
+    /**
+     * 角色所属组织
+     */
+    @Column(name = "F_ORGROOT")
+
+    private Boolean orgRootFlag;
     /**
      * 资源名称
      */
@@ -37,21 +50,11 @@ public class DocRes extends CommonTreeableDeletableEntity<Long> {
      */
     @Column(name = "URI")
     private String uri;
-
     /**
      * 资源标识字符串(对应用户所持有的权限字符串)
      */
     @Column(name = "IDENTITY")
     private String resIdentity = "";
-
-    /**
-     * 父亲菜单对象
-     */
-    @ManyToOne
-    @JoinColumn(name = "PID")
-    @JsonIgnore
-    private DocRes parent;
-
     /**
      * 孩子菜单对象
      */
@@ -59,6 +62,30 @@ public class DocRes extends CommonTreeableDeletableEntity<Long> {
     @OrderBy("resWeight")
     @Where(clause = "IS_FOLDER='1'")
     private List<DocRes> children = new ArrayList<>();
+
+    public BigInteger getOrgID() {
+        return orgID;
+    }
+
+    public void setOrgID(BigInteger orgID) {
+        this.orgID = orgID;
+    }
+
+    public Boolean getOrgRootFlag() {
+        return orgRootFlag;
+    }
+
+//    /**
+//     * 父亲菜单对象
+//     */
+//    @ManyToOne
+//    @JoinColumn(name = "PID")
+//    @JsonIgnore
+//    private DocRes parent;
+
+    public void setOrgRootFlag(Boolean orgRootFlag) {
+        this.orgRootFlag = orgRootFlag;
+    }
 
     public short getResType() {
         return resType;
@@ -90,14 +117,6 @@ public class DocRes extends CommonTreeableDeletableEntity<Long> {
 
     public void setResIdentity(String resIdentity) {
         this.resIdentity = resIdentity;
-    }
-
-    public DocRes getParent() {
-        return parent;
-    }
-
-    public void setParent(DocRes parent) {
-        this.parent = parent;
     }
 
     public List<DocRes> getChildren() {

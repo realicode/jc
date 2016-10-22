@@ -85,6 +85,7 @@ function real_g_success(msg) {
         timeout: 4000
     });
     $('#article_real_entity').hide();
+    $('#dt_basic_real').DataTable().columns().checkboxes.deselect();
     $('#dt_basic_real').DataTable().draw();
 }
 

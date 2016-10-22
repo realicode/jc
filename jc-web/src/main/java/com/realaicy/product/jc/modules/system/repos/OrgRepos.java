@@ -12,11 +12,11 @@ import java.util.List;
  * Created by realaicy on 2016/3/13.
  * XXX
  */
-public interface OrgRepos extends BaseRepository<Org, Long> {
+public interface OrgRepos extends BaseRepository<Org, BigInteger> {
 
     @Query(value = "SELECT * FROM jc_sys_org as org" +
             " WHERE org.pid=:pid and org.name =:name and org.F_DELETED=0", nativeQuery = true)
-    Org findByNameWithInAParent(@Param("name") String name, @Param("pid") Long pid);
+    Org findByNameWithInAParent(@Param("name") String name, @Param("pid") BigInteger pid);
 
     @Query(value = "SELECT id FROM jc_sys_org as org" +
             " WHERE org.CASCADE_ID like :cascadeid and org.F_DELETED = 0", nativeQuery = true)

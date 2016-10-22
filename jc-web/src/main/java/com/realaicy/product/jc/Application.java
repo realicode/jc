@@ -106,6 +106,14 @@ public class Application extends CachingConfigurerSupport {
         wUserCacheConfiguration.setMemoryStoreEvictionPolicy("LRU");
         config.addCache(wUserCacheConfiguration);
 
+        CacheConfiguration wDocCacheConfiguration = new CacheConfiguration();
+        wDocCacheConfiguration.setName("DocController");
+        wDocCacheConfiguration.setEternal(false);
+        wDocCacheConfiguration.setMaxEntriesLocalHeap(200);
+        //wOrgCacheConfiguration.setMaxBytesLocalHeap("52428800");//50MB
+        wDocCacheConfiguration.setMemoryStoreEvictionPolicy("LRU");
+        config.addCache(wDocCacheConfiguration);
+
         return new EhCacheCacheManager(net.sf.ehcache.CacheManager.newInstance(config));
     }
 

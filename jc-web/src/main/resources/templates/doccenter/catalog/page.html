@@ -11,9 +11,9 @@
 <div class="row no-margin no-padding" style="height: 40px">
     <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4 no-margin no-padding" style="height: 40px;font-size: 16px">
         <i class="fa-fw fa fa-home"></i>
-        系统管理
+        文档管理中心
         <span>>
-				组织机构管理
+				文档目录管理
 			</span>
     </div>
 </div>
@@ -32,7 +32,7 @@
                  data-widget-fullscreenbutton="false">
                 <header>
                     <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                    <h2>新增 || 修改 组织机构 —— 控制面板</h2>
+                    <h2>新增 || 修改 文档目录 —— 控制面板</h2>
                 </header>
                 <div id="realeditdiv">
                 </div>
@@ -46,7 +46,7 @@
                  data-widget-fullscreenbutton="false">
                 <header>
                     <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                    <h2>查询组织机构</h2>
+                    <h2>查询文档目录</h2>
                 </header>
                 <div>
                     <div class="jarviswidget-editbox">
@@ -55,17 +55,17 @@
                         <form class="form-horizontal">
                             <fieldset align="left">
                                 <div class="form-group" align="left">
-                                    <label class="col-md-2 control-label">组织机构名称</label>
+                                    <label class="col-md-2 control-label">文档目录名称</label>
                                     <div class="col-md-10">
                                         <input class="form-control" id="searchname" name="searchname"
-                                               placeholder="组织机构名称" type="text">
+                                               placeholder="文档目录名称" type="text">
                                     </div>
                                 </div>
                             </fieldset>
                             <footer align="right">
                                 <a href="javascript:void(0);" id="btnSearch2"
                                    class="btn btn-labeled btn-primary"> <span
-                                        class="btn-label"><i class="glyphicon glyphicon-ok"></i></span>查询组织机构
+                                        class="btn-label"><i class="glyphicon glyphicon-ok"></i></span>查询文档目录
                                 </a>
                                 <a href="javascript:void(0);" id="btnSearchClear"
                                    class="btn btn-labeled btn-primary"> <span
@@ -89,7 +89,7 @@
                      data-widget-togglebutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-comments"></i> </span>
-                        <h2>组织结构树</h2>
+                        <h2>文档目录列表</h2>
                     </header>
                     <div>
                         <div class="jarviswidget-editbox">
@@ -102,7 +102,7 @@
                                             <div class="input-group-btn">
                                                 <a href="javascript:void(0);" id="btnModify"
                                                    class="btn btn-labeled btn-primary"> <span
-                                                        class="btn-label"><i class="fa fa-pencil"></i></span>机构信息编辑 </a>
+                                                        class="btn-label"><i class="fa fa-pencil"></i></span>目录信息编辑 </a>
                                             </div>
                                         </div>
                                     </div>
@@ -111,7 +111,7 @@
                                             <div class="input-group-btn">
                                                 <a href="javascript:void(0);" id="btnSubNew"
                                                    class="btn btn-labeled btn-info"> <span
-                                                        class="btn-label"><i class="glyphicon glyphicon-ok"></i></span>新建下级组织机构
+                                                        class="btn-label"><i class="glyphicon glyphicon-ok"></i></span>新建下级目录
                                                 </a>
                                             </div>
                                         </div>
@@ -121,7 +121,7 @@
                                             <div class="input-group-btn">
                                                 <a href="javascript:void(0);" id="btnSearch"
                                                    class="btn btn-labeled btn-primary"> <span
-                                                        class="btn-label"><i class="glyphicon glyphicon-ok"></i></span>查询组织机构
+                                                        class="btn-label"><i class="glyphicon glyphicon-ok"></i></span>查询目录
                                                 </a>
                                             </div>
                                         </div>
@@ -129,7 +129,7 @@
                                     <div class="col-sm-3">
                                         <a href="javascript:void(0);" id="btnDel"
                                            class="btn btn-labeled btn-danger"> <span
-                                                class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>删除当前组织机构
+                                                class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>删除当前目录
                                         </a>
                                     </div>
                                 </form>
@@ -141,16 +141,12 @@
                                     <col width="30px"/>
                                     <col width="30px"/>
                                     <col width="*"/>
-                                    <col width="50px"/>
-                                    <col width="60px"/>
                                 </colgroup>
                                 <thead>
                                 <tr>
                                     <th></th>
                                     <th>#</th>
-                                    <th>组织机构名称</th>
-                                    <th>联系人</th>
-                                    <th>联系电话</th>
+                                    <th>目录名称</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -172,7 +168,7 @@
 
     var pagefunction = function () {
 
-        var realmsg = "请先选择一个组织";
+        var realmsg = "请先选择一个目录";
 
         $("#treetable").fancytree({
             extensions: ["table", "filter"],
@@ -188,15 +184,13 @@
                 mode: "hide"  // "dimm": Grayo
             },
             source: {
-                url: "/system/org/list",
+                url: "/doccenter/catalog/list",
                 cache: false
             },
             renderColumns: function (event, data) {
                 var node = data.node,
                         $tdList = $(node.tr).find(">td");
                 $tdList.eq(1).text(node.getIndexHier()).addClass("alignRight");
-                $tdList.eq(3).text(node.data.contactName);
-                $tdList.eq(4).text(node.data.contactTel);
             },
             activate: function (event, data) {
                 var node = data.node;
@@ -226,7 +220,7 @@
             console.log("realCreateSubOrg");
             var node = $("#treetable").fancytree("getActiveNode");
             if (node == null || node == undefined || node == '') {
-                realalert("请先选择组织机构");
+                realalert("请先选择目录");
             } else {
                 realloadpage("/system/org/new?pid=" + node.data.id + "&pname=" + encodeURIComponent(node.title));
             }
@@ -236,7 +230,7 @@
         $("#btnModify").click(function () {
             var node = $("#treetable").fancytree("getActiveNode");
             if (node == null || node == undefined || node == '') {
-                realalert("请先选择组织机构");
+                realalert("请先选择目录");
             } else {
                 realloadpage("/system/org/show/" + node.data.id);
             }
@@ -245,7 +239,7 @@
         $("#btnDel").click(function () {
             var node = $("#treetable").fancytree("getActiveNode");
             if (node == null || node == undefined || node == '') {
-                realalert("请先选择组织机构");
+                realalert("请先选择目录");
             } else {
                 BootstrapDialog.show({
                     title: '系统提示信息',
@@ -260,7 +254,7 @@
                                 type: 'GET',
                                 success: function (response) {
                                     if (response.substring(0, 2) == "ok") {
-                                        real_g_success("删除组织机构成功！");
+                                        real_g_success("删除目录成功！");
                                     }
                                     else {
                                         real_g_fail(response);

@@ -2,6 +2,7 @@ package com.realaicy.product.jc.modules.system.service.impl;
 
 import com.realaicy.lib.core.service.impl.DefaultBaseServiceImpl;
 import com.realaicy.product.jc.modules.system.model.Role;
+import com.realaicy.product.jc.modules.system.model.vo.RoleVO;
 import com.realaicy.product.jc.modules.system.repos.RoleRepos;
 import com.realaicy.product.jc.modules.system.service.RoleService;
 import org.springframework.stereotype.Service;
@@ -43,5 +44,10 @@ public class DefaultRoleService extends DefaultBaseServiceImpl<Role, Long>
     @Override
     public Role findByNameWithInAOrg(String name, BigInteger orgIDs) {
         return ((RoleRepos) baseRepository).findByNameWithInAOrg(name, orgIDs);
+    }
+
+    @Override
+    public void saveFromVO(Role po, RoleVO vo) {
+
     }
 }

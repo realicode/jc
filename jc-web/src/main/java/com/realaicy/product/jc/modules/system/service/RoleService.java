@@ -1,8 +1,8 @@
 package com.realaicy.product.jc.modules.system.service;
 
-import com.realaicy.lib.core.service.BaseService;
+import com.realaicy.lib.core.service.BaseServiceWithVO;
 import com.realaicy.product.jc.modules.system.model.Role;
-import org.springframework.data.repository.query.Param;
+import com.realaicy.product.jc.modules.system.model.vo.RoleVO;
 
 import java.math.BigInteger;
 import java.util.Collection;
@@ -12,7 +12,7 @@ import java.util.List;
  * Created by realaicy on 16/3/14.
  * xxx
  */
-public interface RoleService extends BaseService<Role, Long> {
+public interface RoleService extends BaseServiceWithVO<Role, Long, RoleVO> {
 
 
     Role findByRoleName(String roleName);

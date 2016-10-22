@@ -1,7 +1,6 @@
 package com.realaicy.product.jc.modules.checkdb.service;
 
 import com.realaicy.product.jc.modules.checkdb.model.CheckItemDB;
-import com.realaicy.product.jc.modules.doccenter.model.DocRes;
 import com.realaicy.lib.core.service.BaseService;
 
 /**

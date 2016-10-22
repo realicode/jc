@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "jc_m_doc_allinone")
 @JsonFilter("realFilter2")
-public class DocFileRes extends CommonTreeableDeletableEntity<Long> {
+public class DocFileRes extends CommonTreeableDeletableEntity<Long,DocFileRes> {
 
     /**
      * 资源类型
@@ -43,13 +43,13 @@ public class DocFileRes extends CommonTreeableDeletableEntity<Long> {
     private String resIdentity = "";
 
 
-    /**
-     * 父亲菜单对象
-     */
-    @ManyToOne
-    @JoinColumn(name = "PID")
-    @JsonIgnore
-    private DocFileRes parent;
+//    /**
+//     * 父亲菜单对象
+//     */
+//    @ManyToOne
+//    @JoinColumn(name = "PID")
+//    @JsonIgnore
+//    private DocFileRes parent;
 
     /**
      * 孩子菜单对象
@@ -89,14 +89,6 @@ public class DocFileRes extends CommonTreeableDeletableEntity<Long> {
 
     public void setResIdentity(String resIdentity) {
         this.resIdentity = resIdentity;
-    }
-
-    public DocFileRes getParent() {
-        return parent;
-    }
-
-    public void setParent(DocFileRes parent) {
-        this.parent = parent;
     }
 
     public List<DocFileRes> getChildren() {

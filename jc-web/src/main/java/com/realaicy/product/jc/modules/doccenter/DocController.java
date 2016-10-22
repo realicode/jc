@@ -4,84 +4,79 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.realaicy.lib.core.mapper.JsonMapper;
+import com.realaicy.product.jc.common.exception.SaveNewException;
 import com.realaicy.product.jc.modules.doccenter.model.DocFileRes;
 import com.realaicy.product.jc.modules.doccenter.model.DocRes;
+import com.realaicy.product.jc.modules.doccenter.model.vo.DocVO;
 import com.realaicy.product.jc.modules.doccenter.repos.DocFileRepos;
 import com.realaicy.product.jc.modules.doccenter.repos.DocRepos;
 import com.realaicy.product.jc.modules.doccenter.service.DocFileService;
 import com.realaicy.product.jc.modules.doccenter.service.DocService;
+import com.realaicy.product.jc.modules.system.model.Org;
+import com.realaicy.product.jc.modules.system.model.vo.OrgVO;
+import com.realaicy.product.jc.modules.system.service.OrgService;
+import com.realaicy.product.jc.realglobal.web.TreeController;
+import com.realaicy.product.jc.uitl.SpringSecurityUtil;
+import com.sun.javadoc.Doc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Date;
+import java.math.BigInteger;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by realaicy on 16/6/2.
  * xx
  */
 @Controller
-@RequestMapping("/doccenter")
-public class DocController {
+@RequestMapping("/doccenter/catalog")
+public class DocController extends TreeController<DocRes, Long, DocVO> {
 
-    @Autowired
+
+    private DocService docService;
+    static final private String[] nameDic = {"username", "password", "nickname", "createTime"};
+    static final private List<String> bindingWhiteList = Collections.singletonList("password");
+    static final private String pageUrl = "doccenter/catalog/page";
+    static final private String newEntityUrl = "doccenter/catalog/add";
+    static final private String editEntityUrl = "doccenter/catalog/add";
+    static final private String listEntityUrl = "doccenter/catalog/page";
+    static final private String searchEntityUrl = "doccenter/catalog/search";
+
+    private final
     DocRepos docRepos;
 
-    @Autowired
-    DocService docService;
-
-    @Autowired
+    private final
     DocFileRepos docFileRepos;
 
-    @Autowired
+    private final
     DocFileService docFileService;
 
     private static JsonMapper binder = JsonMapper.nonDefaultMapper();
 
+    @Autowired
+    public DocController(DocFileService docFileService, DocFileRepos docFileRepos, DocRepos docRepos, DocService docService) {
 
-    @RequestMapping("/overview")
-    public String overview(@RequestParam(value = "name", required = false, defaultValue = "World V2") String name, Model model) {
-        model.addAttribute("name", name + "V2");
-        model.addAttribute("realsign", new Date());
 
-        return "doccenter/overview";
+        super(docService, "doc/catalog", nameDic, pageUrl, newEntityUrl, editEntityUrl,
+                listEntityUrl, searchEntityUrl, DocRes.class, DocVO.class, bindingWhiteList);
+
+        this.docFileService = docFileService;
+        this.docFileRepos = docFileRepos;
+        this.docRepos = docRepos;
+        this.docService = docService;
     }
 
-    @RequestMapping("/manager")
-    public String manager(@RequestParam(value = "name", required = false, defaultValue = "World V2") String name, Model model) {
-        model.addAttribute("name", name + "V2");
-        model.addAttribute("realsign", new Date());
-
-        return "doccenter/manager";
-    }
 
     @RequestMapping("/m2")
-    public String manager2(@RequestParam(value = "name", required = false, defaultValue = "World V2") String name, Model model) {
-        model.addAttribute("name", name + "V2");
-        model.addAttribute("realsign", new Date());
-
+    public String manager2() {
         return "doccenter/m2";
     }
 
-    @RequestMapping("/catalog/list")
-    @ResponseBody
-    public String listDocCatalog() {
-
-        DocRes docRes = docRepos.findOne(1L);
-
-
-        FilterProvider filters = new SimpleFilterProvider().addFilter("realFilter", SimpleBeanPropertyFilter.serializeAllExcept("updateTime"));
-
-        binder.getMapper().setFilterProvider(filters);
-
-        String beanString = binder.toJson(docRes);
-
-        return beanString;
-    }
 
     @RequestMapping("/catalog/listDocAll")
     @ResponseBody
@@ -93,9 +88,7 @@ public class DocController {
 
         binder.getMapper().setFilterProvider(filters);
 
-        String beanString = binder.toJson(docFileRes);
-
-        return beanString;
+        return binder.toJson(docFileRes);
     }
 
     @RequestMapping(value = "/catalog/edit", method = RequestMethod.GET)
@@ -120,5 +113,22 @@ public class DocController {
     public String createDocCatalogSub(@RequestParam(value = "id") String id, @RequestParam(value = "title") String name) {
 
         return docService.createDocCatalog(Long.parseLong(id), name, true);
+    }
+
+    @Override
+    public Long getRealID() {
+        //noinspection ConstantConditions
+        Long orgID = SpringSecurityUtil.getCurrentRealUserDetails().getOrgID();
+        return docService.findOrgRootDocCatalogID(BigInteger.valueOf(orgID)).getId();
+    }
+
+    @Override
+    protected void InternalSaveNew(DocVO realmodel, Long updateID, Long pid) throws SaveNewException {
+
+    }
+
+    @Override
+    protected DocRes InternalSaveUpdate(DocVO realmodel, Long updateID, Long pid) throws SaveNewException {
+        return null;
     }
 }

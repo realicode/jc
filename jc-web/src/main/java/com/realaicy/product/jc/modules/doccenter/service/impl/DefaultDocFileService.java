@@ -41,7 +41,7 @@ public class DefaultDocFileService extends DefaultBaseServiceImpl<DocFileRes, Lo
         if (ifSub) {
             docResParent = docRepos.findOne(ID);
         } else {
-            docResParent = docRepos.findOne(ID).getParent();
+            docResParent = (DocRes) docRepos.findOne(ID).getParent();
         }
 
         DocRes docRes = new DocRes();

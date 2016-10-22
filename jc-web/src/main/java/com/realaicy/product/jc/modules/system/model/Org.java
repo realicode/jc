@@ -1,12 +1,11 @@
 package com.realaicy.product.jc.modules.system.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.realaicy.lib.core.orm.jpa.entity.CommonTreeableDeletableEntity;
-import com.realaicy.product.jc.common.security.OrgRestricted;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "jc_sys_org")
-public class Org extends CommonTreeableDeletableEntity<Long> {
+public class Org extends CommonTreeableDeletableEntity<BigInteger, Org> {
 
 
     /**
@@ -42,7 +41,7 @@ public class Org extends CommonTreeableDeletableEntity<Long> {
     @Column(name = "CONTACT_NAME")
     private String contactName;
     /**
-     * 联系人姓名
+     * 联系人邮箱
      */
     @Column(name = "CONTACT_EMAIL")
     private String contactEmail;
@@ -54,14 +53,14 @@ public class Org extends CommonTreeableDeletableEntity<Long> {
 
     //所属租户
     private String tenantID;
-    
-    /**
-     * 父亲菜单对象
-     */
-    @ManyToOne
-    @JoinColumn(name = "PID")
-    @JsonIgnore
-    private Org parent;
+
+//    /**
+//     * 父亲菜单对象
+//     */
+//    @ManyToOne
+//    @JoinColumn(name = "PID")
+//    @JsonIgnore
+//    private Org parent;
     /**
      * 孩子菜单对象
      */
@@ -124,14 +123,6 @@ public class Org extends CommonTreeableDeletableEntity<Long> {
 
     public void setResIdentity(String resIdentity) {
         this.resIdentity = resIdentity;
-    }
-
-    public Org getParent() {
-        return parent;
-    }
-
-    public void setParent(Org parent) {
-        this.parent = parent;
     }
 
     public List<Org> getChildren() {

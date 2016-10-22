@@ -46,7 +46,7 @@ public abstract class CRUDWithVOController<M extends BaseEntity<ID> & CommonData
         ID extends Serializable, V extends BaseVO<ID>> {
 
     private final static String noAuthViewName = "global/errorpage/NOPrivilege";
-    private final static String noAuthString = "NOPrivilege";
+    protected final static String noAuthString = "NOPrivilege";
     private final BaseServiceWithVO<M, ID, V> service;
     private final String initFormParam;
     private final String[] nameDic;
@@ -288,13 +288,14 @@ public abstract class CRUDWithVOController<M extends BaseEntity<ID> & CommonData
                 M po = aClass.newInstance();
                 BeanUtils.copyProperties(realmodel, po, getNullPropertyNames(realmodel));
 
-                if (po instanceof CommonData) {
-                    po.setCreateTime(new Date());
-                    //noinspection unchecked,ConstantConditions
-                    po.setCreaterID((ID) SpringSecurityUtil.getCurrentPrincipal().getId());
-                    po.setUpdateTime(po.getCreateTime());
-                    po.setUpdaterID(po.getCreaterID());
-                }
+                po.setCreateTime(new Date());
+                //noinspection unchecked,ConstantConditions
+                po.setCreaterID((ID) SpringSecurityUtil.getCurrentPrincipal().getId());
+                po.setUpdateTime(po.getCreateTime());
+                po.setUpdaterID(po.getCreaterID());
+
+                extendSave(po, updateID, pid);
+
                 service.save(po);
             } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
@@ -309,12 +310,12 @@ public abstract class CRUDWithVOController<M extends BaseEntity<ID> & CommonData
 
             try {
                 M entity = InternalSaveUpdate(realmodel, updateID, pid);
-                if (entity instanceof CommonData) {
-                    entity.setUpdateTime(new Date());
-                    //noinspection unchecked,ConstantConditions
-                    entity.setUpdaterID((ID) SpringSecurityUtil.getCurrentPrincipal().getId());
-                    service.save(entity);
-                }
+
+                entity.setUpdateTime(new Date());
+                //noinspection unchecked,ConstantConditions
+                entity.setUpdaterID((ID) SpringSecurityUtil.getCurrentPrincipal().getId());
+                service.save(entity);
+
             } catch (SaveNewException e) {
                 return e.getMessage();
             }
@@ -331,6 +332,8 @@ public abstract class CRUDWithVOController<M extends BaseEntity<ID> & CommonData
     protected abstract void InternalSaveNew(V realmodel, ID updateID, ID pid) throws SaveNewException;
 
     protected abstract M InternalSaveUpdate(V realmodel, ID updateID, ID pid) throws SaveNewException;
+
+    protected abstract void extendSave(M po, ID updateID, ID pid);
 
     @RequestMapping(value = "/b", method = RequestMethod.POST)
     @ResponseBody

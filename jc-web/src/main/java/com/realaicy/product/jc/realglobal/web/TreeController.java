@@ -4,14 +4,15 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.realaicy.lib.core.mapper.JsonMapper;
-import com.realaicy.lib.core.orm.jpa.entity.BaseEntity;
-import com.realaicy.lib.core.orm.plugin.CommonData;
-import com.realaicy.lib.core.orm.plugin.Treeable;
-import com.realaicy.lib.core.service.BaseService;
+import com.realaicy.lib.core.model.vo.BaseVO;
+import com.realaicy.lib.core.orm.jpa.entity.CommonTreeableDeletableEntity;
+import com.realaicy.lib.core.orm.jpa.search.BaseSpecificationsBuilder;
+import com.realaicy.lib.core.service.BaseServiceWithVO;
 import com.realaicy.product.jc.common.security.OrgRestricted;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,29 +21,52 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by realaicy on 16/8/18.
  * xxx
  */
 @Controller
-public abstract class TreeController<M extends BaseEntity<ID> & Treeable<ID> & CommonData<ID>,
-        ID extends Serializable> extends CRUDController<M, ID> {
+public abstract class TreeController<M extends CommonTreeableDeletableEntity<ID, M>,
+        ID extends Serializable, V extends BaseVO<ID>> extends CRUDWithVOController<M, ID, V> {
+
+    @Override
+    protected void extendSave(M po, ID updateID, ID pid) {
+
+        M parent = service.findOne(pid);
+        po.setParent(parent);
+        po.setDeleteFlag(false);
+
+        final BaseSpecificationsBuilder<M> builder = new BaseSpecificationsBuilder<>();
+        builder.with("cascadeID", ":", parent.getCascadeID(), "", "*");
+        final Specification<M> spec = builder.build();
+        Long childSize = service.count(spec);
+        if (childSize == 1) {
+            po.setCascadeID(parent.getCascadeID() + ".001");
+        } else {
+            po.setCascadeID(parent.getCascadeID() + "." + String.format("%03d", childSize));
+        }
+        po.setFolder(true);
+    }
 
     private static JsonMapper binder = JsonMapper.nonDefaultMapper();
-    private final BaseService<M, ID> service;
+    private final BaseServiceWithVO<M, ID, V> service;
     private final Class<M> aClass;
+    private final Class<V> voClass;
     private final String newEntityUrl;
+
 
     private Logger log = LoggerFactory.getLogger(getClass());
 
-    public TreeController(BaseService<M, ID> service, String initFormParam, String[] nameDic, String pageUrl,
+    public TreeController(BaseServiceWithVO<M, ID, V> service, String initFormParam, String[] nameDic, String pageUrl,
                           String newEntityUrl, String editEntityUrl, String listUrl, String searchEntityUrl,
-                          Class<M> aClass) {
-        super(service, initFormParam, nameDic, pageUrl, newEntityUrl, editEntityUrl, listUrl, searchEntityUrl, aClass);
+                          Class<M> aClass, Class<V> voClass, List<String> editBindWhiteList) {
+        super(service, initFormParam, nameDic, pageUrl, newEntityUrl, editEntityUrl, listUrl, searchEntityUrl, aClass, voClass, editBindWhiteList);
         this.service = service;
         this.newEntityUrl = newEntityUrl;
         this.aClass = aClass;
+        this.voClass = voClass;
     }
 
     @SuppressWarnings("unused")
@@ -60,7 +84,7 @@ public abstract class TreeController<M extends BaseEntity<ID> & Treeable<ID> & C
         if (!checkAuth("c", aClass.getSimpleName()))
             return getNoAuthViewName();
         try {
-            model.addAttribute("realmodel", aClass.newInstance());
+            model.addAttribute("realmodel", voClass.newInstance());
             model.addAttribute("pname", pname);
             model.addAttribute("pid", pid);
         } catch (InstantiationException | IllegalAccessException e) {
@@ -98,7 +122,7 @@ public abstract class TreeController<M extends BaseEntity<ID> & Treeable<ID> & C
     }
 
 
-    public abstract ID getRealID();
+    protected abstract ID getRealID();
 
 
 }

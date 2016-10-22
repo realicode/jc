@@ -182,4 +182,9 @@ public class UserController extends CRUDWithVOController<User, Long, UserVO> {
         user.setSex(realmodel.getSex());
         return user;
     }
+
+    @Override
+    protected void extendSave(User po, Long updateID, Long pid) {
+
+    }
 }
