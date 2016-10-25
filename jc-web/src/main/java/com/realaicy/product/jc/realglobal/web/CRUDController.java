@@ -73,14 +73,6 @@ public abstract class CRUDController<M extends BaseEntity<ID> & CommonData<ID>,
         this.aClass = aClass;
     }
 
-    static String getNoAuthString() {
-        return noAuthString;
-    }
-
-    static String getNoAuthViewName() {
-        return noAuthViewName;
-    }
-
     @Autowired
     public void setOrgService(OrgService orgService) {
         this.orgService = orgService;
@@ -202,7 +194,7 @@ public abstract class CRUDController<M extends BaseEntity<ID> & CommonData<ID>,
             orgID = SpringSecurityUtil.getCurrentRealUserDetails().getOrgID().toString();
         }
 
-        Org org = orgService.findOne(Long.parseLong(orgID));
+        Org org = orgService.findOne(new BigInteger(orgID));
         List<BigInteger> bigIntegersTemp = orgService.findAllChildIDs(org.getCascadeID());
         builder.with("orgID", "$",
                 bigIntegersTemp, "", "");
@@ -298,7 +290,7 @@ public abstract class CRUDController<M extends BaseEntity<ID> & CommonData<ID>,
     }
 
 
-    boolean checkAuth(String reqAuthString, String objType) {
+    private boolean checkAuth(String reqAuthString, String objType) {
         return SpringSecurityUtil.hasPrivilege(objType + "-" + "a") || SpringSecurityUtil.hasPrivilege(objType + "-" + reqAuthString);
     }
 

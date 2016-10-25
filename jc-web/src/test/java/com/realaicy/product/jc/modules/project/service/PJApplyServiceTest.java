@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.math.BigInteger;
+
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.*;
 
@@ -24,7 +26,7 @@ public class PJApplyServiceTest {
 
     @Test
     public void find() throws Exception {
-        assertThat(service.findOne(1L).getSubject(), equalTo("河南肿瘤医院GCP稽查申请"));
+        assertThat(service.findOne(BigInteger.valueOf(1)).getSubject(), equalTo("河南肿瘤医院GCP稽查申请"));
 
     }
 

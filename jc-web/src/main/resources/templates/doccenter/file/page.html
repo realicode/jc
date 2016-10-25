@@ -1,36 +1,39 @@
-<title>组织机构</title>
+<title>文档中心</title>
 <link rel="stylesheet" xmlns:th="http://www.thymeleaf.org"
       th:href="@{/realaicy/css/fancytree/ui.fancytree.css}"
       href="../../../static/realaicy/css/fancytree/ui.fancytree.css"/>
+<link rel="stylesheet" xmlns:th="http://www.thymeleaf.org"
+      th:href="@{/smartadmin/css/realaicy.css}"
+      href="../../../static/smartadmin/css/realaicy.css"/>
 <link rel="stylesheet" xmlns:th="http://www.thymeleaf.org"
       th:href="@{/realaicy/css/bootstrap-dialog.min.css}"
       href="../../../static/realaicy/css/bootstrap-dialog.min.css"/>
 <div class="row no-margin no-padding" style="height: 40px">
     <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4 no-margin no-padding" style="height: 40px;font-size: 16px">
         <i class="fa-fw fa fa-home"></i>
-        系统管理
+        文档管理中心
         <span>>
-				角色管理
+				文档管理
 			</span>
     </div>
 </div>
 <div class="row realheight">
     <section id="widget-grid" class="realheight">
-        <div class="alert alert-suaccess  collapse alert-dismissible" role="alert" id="realalert">
+        <div class="alert alert-success  collapse alert-dismissible" role="alert" id="realalert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                     aria-hidden="true">&times;</span></button>
             <strong>操作成功!</strong> <span id="realalertinfo"></span>
         </div>
         <div class="row realheight">
             <article id="article_real_entity" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-margin" hidden="hidden">
-                <div class="jarviswidget jarviswidget-color-darken widget-realaicy" id="real_entity"
+                <div class="jarviswidget jarviswidget-color-darken widget-realaicy" id="real_entity_file"
                      data-widget-editbutton="false"
                      data-widget-collapsed="false"
                      data-widget-deletebutton="false"
                      data-widget-fullscreenbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2>新增 || 修改 || 查询角色 —— 控制面板</h2>
+                        <h2>新增 || 修改 || 查询文档 —— 控制面板</h2>
                     </header>
                     <div id="realeditdiv">
                     </div>
@@ -40,10 +43,12 @@
                 <div class="realheight">
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 no-margin"
                          style="min-height: 100%;padding-bottom: 30px;padding-left: 2px;padding-right: 6px">
-                        <div class="jarviswidget no-padding realheight" id="wid-id-1">
+                        <div class="jarviswidget no-padding realheight" id="wid-id-1"
+                             data-widget-deletebutton="false"
+                             data-widget-togglebutton="false">
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-comments"></i> </span>
-                                <h2>组织结构树</h2>
+                                <h2>文档目录树</h2>
                             </header>
                             <div class="realheight">
                                 <div class="jarviswidget-editbox">
@@ -61,7 +66,7 @@
                                             <tr>
                                                 <th></th>
                                                 <th>编号</th>
-                                                <th>组织机构名称</th>
+                                                <th>文档目录</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -75,10 +80,25 @@
                     <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-margin"
                          style="min-height: 100%;padding-bottom: 30px;padding-left: 1px;padding-right: 1px">
                         <div class="jarviswidget jarviswidget-color-darken" id="wid-id-real0" style="min-height: 100%"
-                             data-widget-editbutton="false">
+                             data-widget-editbutton="false"
+                             data-widget-deletebutton="false"
+                             data-widget-togglebutton="false">
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                                <h2>角色列表</h2>
+                                <h2>文档列表</h2>
+                                <div class="widget-toolbar" id="switch-1">
+
+                                    <span class="onoffswitch-title"><i class="fa fa-location-arrow"></i>是否当前文件夹过滤</span>
+                                    <span class="onoffswitch">
+                                        <input type="checkbox" name="real_f_cascade" class="onoffswitch-checkbox"
+                                               id="real_f_cascade"
+                                               checked="checked">
+							            <label class="onoffswitch-label" for="real_f_cascade">
+								    <span class="onoffswitch-inner" data-swchon-text="YES"
+                                          data-swchoff-text="ON"></span>
+								    <span class="onoffswitch-switch"></span> </label>
+							        </span>
+                                </div>
                             </header>
                             <div style="min-height: 100%">
                                 <div class="jarviswidget-editbox">
@@ -92,7 +112,7 @@
                                             </th>
                                             <th>
                                                 <input type="text" id='real_filter_name' class="form-control"
-                                                       placeholder="过滤角色名"/>
+                                                       placeholder="过滤文档名称"/>
                                             </th>
                                             <th>
                                             </th>
@@ -102,7 +122,7 @@
                                             </th>
                                             <th data-class="expand" class="realaicy_table_header"><i
                                                     class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>
-                                                角色名称
+                                                文档名称
                                             </th>
                                             <th class="realaicy_table_header">操作按钮</th>
                                         </tr>
@@ -122,7 +142,8 @@
 <script type="text/javascript">
     pageSetUp();
 
-    var realOrgID = "";
+    var catalogID = "";
+    var real_l_var_searchflag;
 
     var pagefunction = function () {
 
@@ -144,7 +165,7 @@
                 checkboxColumnIdx: 0
             },
             source: {
-                url: "/system/org/list",
+                url: "/doccenter/catalog/list",
                 cache: false
             },
             renderColumns: function (event, data) {
@@ -154,7 +175,7 @@
             },
             activate: function (event, data) {
                 var node = data.node;
-                realOrgID = node.data.id;
+                catalogID = node.data.id;
                 realtable.draw();
             }
         });
@@ -162,45 +183,43 @@
         var realtable = $('#dt_basic_real').DataTable(
                 {
                     sScrollX: true,
-//                    sScrollY: "300px",
                     scrollCollapse: true,
                     bcrollCollapse: true,
                     "pagingType": "full_numbers",
                     "searching": true,
                     "language": realaicy_g_var_tableopt_lang,
-                    // "dom": 'rt<"bottom"iflp<"clear">>',
                     "dom": "<'dt-toolbar'<'col-xs-12 col-sm-10'B><'col-sm-2 col-xs-2 hidden-xs'C>r>" +
                     "t" +
                     "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
                     "autoWidth": true,
                     buttons: [
                         {
-                            text: '<i class="glyphicon glyphicon-plus"></i> 新增',
+                            text: '<i class="fa fa-upload fa-lg"></i> 上传',
                             className: 'btn btn-info real_datatables_button_class_left btn-realaicy',
                             action: function (e, dt, node, config) {
-                                if (realOrgID == '') {
-                                    realalert("请选择组织机构")
+                                if (catalogID == '') {
+                                    realalert("请选择目录")
                                 } else {
-                                    realloadpage("/system/role/new/" + realOrgID);
+                                    realloadpage("/doccenter/file/new/" + catalogID);
                                 }
                             }
                         },
                         {
-                            text: '<i style="font-size:0.5em;" class="glyphicon glyphicon-pencil"></i> 修改',
+                            text: '<i style="font-size:0.5em;" class="glyphicon glyphicon-pencil"></i> 编辑文件信息',
                             className: 'btn btn-info real_datatables_button_class_ingroup btn-realaicy',
                             action: function (e, dt, node, config) {
                                 var rows_selected = realtable.column(0).checkboxes.selected();
                                 if (rows_selected.length <= 0 || rows_selected.length > 1) {
                                     var msg;
                                     if (rows_selected.length <= 0)
-                                        msg = "请选择一个待修改的角色";
+                                        msg = "请选择一个待修改的文件";
                                     else
-                                        msg = "请求操作不支持多选，请选择一个并且只选择一个待修改角色！";
+                                        msg = "请求操作不支持多选，请选择一个并且只选择一个待修改文件！";
                                     realalert(msg);
                                 } else {
 
                                     $.each(rows_selected, function (index, rowId) {
-                                        realloadpage("/system/role/show/" + rowId);
+                                        realloadpage("/doccenter/file/show/" + rowId);
                                     });
                                 }
                             }
@@ -209,29 +228,24 @@
                             text: '<i  class="fa fa-trash-o"></i> 删除',
                             className: 'btn btn-info real_datatables_button_class_ingroup btn-realaicy',
                             action: function (e, dt, node, config) {
-                                real_g_del("角色", '/system/role/del/');
+                                real_g_del("角色", '/doccenter/file/del/');
                             }
                         },
                         {
                             text: '<i  class="fa fa-trash-o"></i> 批量删除',
                             className: 'btn btn-danger real_datatables_button_class_right btn-realaicy',
                             action: function (e, dt, node, config) {
-                                //alert('Button activated');
                                 realalert("功能实现敬请期待。。。。。。");
-                                /*var rows_selected = realtable.column(0).checkboxes.selected();
-                                 $.each(rows_selected, function (index, rowId) {
-                                 console.log("id: " + rowId);
-                                 });
-                                 if (rows_selected.length > 0) {
-                                 console.log("youyouyou: ");
-                                 }*/
                             }
                         },
                         {
                             text: '快速查询',
                             className: 'btn btn-info real_datatables_button_class_left btn-realaicy',
                             action: function (e, dt, node, config) {
+                                real_l_var_searchflag = "1";
                                 realtable.draw();
+                                real_l_var_searchflag = "0";
+
                             }
                         },
                         {
@@ -251,7 +265,7 @@
                         'excel'
                     ],
                     ajax: {
-                        url: "/system/role/list4dt",
+                        url: "/doccenter/file/list4dt",
                         type: "POST",
                         'beforeSend': function (request) {
                             var token = $("meta[name='_csrf']").attr("content");
@@ -272,8 +286,11 @@
 
                             }
                             d.search = searchString;
-                            d.orgID = realOrgID;
-
+                            if ($('input[name="real_f_cascade"]:checked').length == 0 && real_l_var_searchflag == "1") {
+                                d.catalogID = "";
+                            } else {
+                                d.catalogID = catalogID;
+                            }
                         },
                         error: function (xhr, status, error) {
                             if (xhr.responseText.indexOf("invalid") == 0) {
@@ -288,14 +305,13 @@
                         {"data": "name"},
                         {
                             "data": null,
-                            "defaultContent": "<a  class='btn btn-danger btn-intable-realaicy real-test'>操作按钮</a>"
+                            "defaultContent": "<a class='btn btn-primary btn-xs real_dt_btn_icon real_v_dl' title='下载文件'><i class='fa fa-cloud-download fa-2x'></i></a>"
                         }
                     ],
                     columnDefs: [
                         {
                             searchable: false,
                             orderable: false,
-//                                className: 'select-checkbox',
                             targets: 0,
                             'checkboxes': {
                                 'selectRow': false
@@ -303,15 +319,12 @@
                         }],
                     select: {
                         style: 'multi'
-//                            selector: ':not(:last-child)'
                     },
                     "order": [[1, 'asc']]
                 });
 
-        $('#dt_basic_real').on('click', '.btn-intable-realaicy', function () {
-            //var data = realtable.row($(this).parents('tr')).data();
-            //console.log("data: " + data.id);
-            realalert("功能实现敬请期待");
+        $('#dt_basic_real').on('click', '.real_v_dl', function () {
+            window.downloadFile(realaicy_g_var_dlurl + realtable.row($(this).parents('tr')).data().uri);
         });
 
     };

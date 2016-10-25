@@ -14,9 +14,9 @@ import java.util.List;
  * Created by realaicy on 16/3/14.
  * xxx
  */
-public interface OrgService extends BaseServiceWithVO<Org, Long, OrgVO>, OrgRestricted<Long> {
+public interface OrgService extends BaseServiceWithVO<Org, BigInteger, OrgVO>, OrgRestricted<BigInteger> {
 
-    Org findByNameWithInAParent(String name, Long pid);
+    Org findByNameWithInAParent(String name, BigInteger pid);
 
     List<Org> findByCascadeIDStartingWith(String cascadeID);
 

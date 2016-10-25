@@ -2,13 +2,17 @@ package com.realaicy.product.jc;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.realaicy.lib.core.orm.jpa.RealRepositoryFactoryBean;
+import com.realaicy.lib.core.orm.jpa.SimpleBaseRepository;
 import com.realaicy.product.jc.realglobal.security.SessionCounterListener;
 import net.sf.ehcache.config.CacheConfiguration;
 import org.activiti.spring.SpringProcessEngineConfiguration;
 import org.activiti.spring.boot.ProcessEngineConfigurationConfigurer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
@@ -22,6 +26,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import javax.servlet.http.HttpSessionListener;
 import javax.sql.DataSource;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
@@ -67,7 +72,7 @@ public class Application extends CachingConfigurerSupport {
         net.sf.ehcache.config.Configuration config = new net.sf.ehcache.config.Configuration();
 
         CacheConfiguration defaultCacheConfiguration = new CacheConfiguration();
-        defaultCacheConfiguration.setName("realdefault");
+        defaultCacheConfiguration.setName("realdefaultcache");
         defaultCacheConfiguration.setEternal(false);
         defaultCacheConfiguration.setMaxEntriesLocalHeap(200);
         //defaultCacheConfiguration.setMaxBytesLocalHeap("52428800");//50MB
@@ -135,6 +140,9 @@ public class Application extends CachingConfigurerSupport {
      */
     private static class RuntimeCacheResolver extends AbstractCacheResolver {
 
+        Logger logger = LoggerFactory.getLogger(RuntimeCacheResolver.class);
+
+
         private RuntimeCacheResolver(CacheManager cacheManager) {
             super(cacheManager);
         }
@@ -153,6 +161,28 @@ public class Application extends CachingConfigurerSupport {
             }
 
 
+        }
+
+        @Override
+        public Collection<? extends Cache> resolveCaches(CacheOperationInvocationContext<?> context) {
+            Collection<String> cacheNames = getCacheNames(context);
+            if (cacheNames == null) {
+                return Collections.emptyList();
+            } else {
+                Collection<Cache> result = new ArrayList<Cache>();
+                for (String cacheName : cacheNames) {
+                    Cache cache = this.getCacheManager().getCache(cacheName);
+                    if (cache == null) {
+                        //realaicy modified!
+                        logger.warn("Cannot find cache named : {} for {}", cacheName, context.getOperation());
+                        cache = this.getCacheManager().getCache("realdefaultcache");
+//                        throw new IllegalArgumentException("Cannot find cache named '" +
+//                                cacheName + "' for " + context.getOperation());
+                    }
+                    result.add(cache);
+                }
+                return result;
+            }
         }
 
 

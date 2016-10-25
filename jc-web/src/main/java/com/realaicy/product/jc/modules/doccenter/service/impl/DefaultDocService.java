@@ -6,6 +6,7 @@ import com.realaicy.product.jc.modules.doccenter.model.vo.DocVO;
 import com.realaicy.product.jc.modules.doccenter.repos.DocRepos;
 import com.realaicy.product.jc.modules.doccenter.service.DocService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
 
@@ -14,18 +15,19 @@ import java.math.BigInteger;
  * xxx
  */
 @Service
-public class DefaultDocService extends DefaultBaseServiceImpl<DocRes, Long>
+@Transactional
+public class DefaultDocService extends DefaultBaseServiceImpl<DocRes, BigInteger>
         implements DocService {
 
 
     @Override
-    public String updateDocCatalog(Long ID, String title) {
+    public String updateDocCatalog(BigInteger ID, String title) {
 
         return "success";
     }
 
     @Override
-    public String createDocCatalog(Long ID, String title, Boolean ifSub) {
+    public String createDocCatalog(BigInteger ID, String title, Boolean ifSub) {
 
         return "success";
     }
@@ -33,6 +35,11 @@ public class DefaultDocService extends DefaultBaseServiceImpl<DocRes, Long>
     @Override
     public DocRes findOrgRootDocCatalogID(BigInteger orgID) {
         return ((DocRepos) baseRepository).findByOrgIDAndOrgRootFlagAndDeleteFlag(orgID, true, false);
+    }
+
+    @Override
+    public DocRes findByNameWithInAParent(String name, BigInteger pid) {
+        return baseRepository.findByNameWithInAParent(name, pid);
     }
 
     @Override

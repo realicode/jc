@@ -1,0 +1,187 @@
+<div class="jarviswidget-editbox">
+</div>
+<div class="widget-body no-padding">
+    <!--/*@thymesVar id="realmodel" type=""*/-->
+    <form th:object="${realmodel}" method="POST" th:action="@{/doccenter/file/savefile}"
+          id="realentity" class="smart-form"
+          xmlns:th="http://www.thymeleaf.org">
+        <fieldset>
+            <div class="row">
+                <section class="col col-6">
+                    <label class="input"> <i class="icon-prepend fa fa-user"></i>
+                        <input type="text" name="name" th:field="*{name}" placeholder="文件名称"
+                               data-rule-required="true" data-msg-required="请输入文件名称">
+                        <b class="tooltip tooltip-bottom-right tooltip-realaicy"><span
+                                class="tooltip-realaicy">请输入文件名称</span></b>
+                        <input id="updateflag" name="updateflag" type="hidden" th:value="${realneworupdate}">
+                        <input id="updateID" name="updateID" type="hidden" th:value="${realUpdateID}">
+                        <input id="catalogID" name="catalogID" type="hidden" th:value="${orgID}">
+                        <input id="realMF" name="realMF" type="hidden" value="doccenter">
+
+                    </label>
+                </section>
+            </div>
+        </fieldset>
+        <fieldset>
+            <div class="row">
+                <section class="col col-4">
+                    <label for="realfile" class="input input-file">
+                        <div class="button"><input type="file" name="realfile" id="realfile">
+                            点击上传
+                        </div>
+                        <input type="text" id="realfilePath" name="realfilePath" placeholder="请上传文件" readonly="">
+                        <input type="hidden" id="realfileUrl" name="realfileUrl">
+
+                    </label>
+
+                </section>
+
+                <section class=" col col-8">
+                    <span id="filestatus" style="font-size: 15px;line-height: 30px "></span>
+                </section>
+            </div>
+        </fieldset>
+        <fieldset style="padding-top: 2px">
+            <section class="col col-6">
+                <span id="realerrormsg"></span>
+            </section>
+            <section class="col col-6" align="right" style="padding-top: 6px">
+                <button type="reset" class="btn btn-primary"
+                        style="height: 32px;width: 80px;font-size: 13px;margin-right: 20px">
+                    重置数据
+                </button>
+                <button type="submit" class="btn btn-primary" style="height: 32px;width: 80px">
+                    提交数据
+                </button>
+            </section>
+        </fieldset>
+    </form>
+</div>
+
+<script>
+
+    pageSetUp();
+
+    $(document).ready(function () {
+
+    });
+
+    var real_f_fileok = '0';
+    var real_filename;
+
+    function uploadFile() {
+        console.log("In uploadFile()");
+        $("#realfilePath").attr("value", $("#realfile").val());
+        $.ajax({
+            'beforeSend': function (request) {
+                var token = $("meta[name='_csrf']").attr("content");
+                var header = $("meta[name='_csrf_header']").attr("content");
+                request.setRequestHeader(header, token);
+            },
+            url: "/uploadFile",
+            type: "POST",
+            data: new FormData($("#realentity")[0]),
+            enctype: 'multipart/form-data',
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function (data) {
+                console.log(data);
+                $('#filestatus').html("上传成功");
+                real_filename = data;
+                $('#realfileUrl').val(data);
+                real_f_fileok = '1';
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown);
+                console.log(textStatus);
+                console.log(jqXHR.responseText);
+                $('#filestatus').html("上传失败：" + jqXHR.responseText);
+
+            }
+        });
+    } // f
+
+    $("#realentity").validate({
+        invalidHandler: function (event, validator) {
+            var errors = validator.numberOfInvalids();
+            if (errors) {
+                var message = errors == 1
+                        ? 'You missed 1 field. It has been highlighted'
+                        : 'You missed ' + errors + ' fields. They have been highlighted';
+                $("#realerrormsg").html(message);
+            } else {
+                $("div.error").hide();
+            }
+        },
+        errorLabelContainer: "#realerrormsg",
+        wrapper: "li",
+        errorClass: "state-error",
+        validClass: "state-success",
+        highlight: function (element, errorClass, validClass) {
+            $(element).parent().parent().addClass(errorClass).removeClass(validClass);
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).parent().parent().removeClass(errorClass).addClass(validClass);
+        },
+        rules: {
+            name: {
+                required: true
+            }
+        },
+        messages: {
+            name: {
+                required: '请输入文件名'
+            }
+        },
+
+        submitHandler: function (form) {
+            if ($("#updateflag").val() == "new") {
+                if (real_f_fileok == '1') {
+                    console.log($(form).serialize());
+                    $.ajax({
+                        url: form.action,
+                        type: form.method,
+                        data: $(form).serialize(),
+                        success: function (response) {
+                            if (response == "ok") {
+                                real_g_success("新建文件成功！");
+                            }
+                            else {
+                                real_g_fail(response);
+                            }
+                        }
+                    });
+                }
+            } else {
+                $("#updateflag").attr("value", 'editedit');
+                $.ajax({
+                    url: form.action,
+                    type: form.method,
+                    data: $(form).serialize(),
+                    success: function (response) {
+                        if (response == "ok") {
+                            real_g_success("修改文件信息成功！");
+                        } else {
+                            real_g_fail(response);
+                        }
+                    }
+                });
+            }
+        }
+    });
+
+    var pagefunction = function () {
+        console.log("add pagefunction");
+        if ($("#updateflag").val() == "new") {
+            $("#realfile").attr("disabled", false);
+            $("#realfilePath").attr("disabled", false);
+        } else {
+            $("#realfile").attr("disabled", true);
+            $("#realfilePath").attr("disabled", true);
+        }
+        $("#realfile").on("change", uploadFile);
+    };
+    pagefunction();
+
+</script>

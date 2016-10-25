@@ -34,7 +34,7 @@ public class OrgReposTest {
 
     @Test
     public void testGetFromRoot() throws Exception {
-        Org org = orgRepos.findOne(2L);
+        Org org = orgRepos.findOne(BigInteger.valueOf(2));
         assertThat(org.getName(), equalTo("ROOT"));
         assertThat(org.getCascadeID(), equalTo("1"));
         assertThat(org.getResIcon(), equalTo("1"));
@@ -49,7 +49,7 @@ public class OrgReposTest {
 
     @Test
     public void testGreate() throws Exception {
-        Org orgParent = orgRepos.findOne(2L);
+        Org orgParent = orgRepos.findOne(BigInteger.valueOf(2));
         Org org = new Org();
         org.setContactTel("13920234616");
         org.setContactName("刘旭东");
@@ -59,9 +59,9 @@ public class OrgReposTest {
         org.setStatus(Short.parseShort("1"));
         org.setAutoExpand(true);
         org.setCascadeID("1.001");
-        org.setCreaterID(1L);
+        org.setCreaterID(BigInteger.valueOf(1));
         org.setCreateTime(new Date());
-        org.setUpdaterID(1L);
+        org.setUpdaterID(BigInteger.valueOf(1));
         org.setUpdateTime(new Date());
         org.setCustomCode("11");
         org.setName("测试");

@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 import java.util.Date;
 
 /**
@@ -13,7 +14,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "jc_pj_info")
-public class ProjectInfo extends CommonEntity<Long> {
+public class ProjectInfo extends CommonEntity<BigInteger> {
 
 
     /**

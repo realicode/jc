@@ -10,6 +10,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -31,7 +32,7 @@ public class TenantReposTest {
 
     @Test
     public void testGet() throws Exception {
-        Tenant tenant = repos.findOne(2L);
+        Tenant tenant = repos.findOne(BigInteger.valueOf(2));
         assertThat(tenant.getName(), equalTo("中国肿瘤临床试验稽查协作组"));
         assertThat(tenant.getResIcon(), equalTo("1"));
         assertThat(tenant.getResWeight(), equalTo(Short.parseShort("1")));
@@ -45,14 +46,14 @@ public class TenantReposTest {
 
     @Test
     public void testGreate() throws Exception {
-        Tenant tenant = repos.findOne(2L);
+        Tenant tenant = repos.findOne(BigInteger.valueOf(2));
         tenant.setContactTel("13920234616");
         tenant.setContactName("刘旭东");
         tenant.setResWeight(Short.parseShort("1"));
         tenant.setStatus(Short.parseShort("1"));
-        tenant.setCreaterID(1L);
+        tenant.setCreaterID(BigInteger.valueOf(1));
         tenant.setCreateTime(new Date());
-        tenant.setUpdaterID(1L);
+        tenant.setUpdaterID(BigInteger.valueOf(1));
         tenant.setUpdateTime(new Date());
         tenant.setCustomCode("11");
         tenant.setName("测试");

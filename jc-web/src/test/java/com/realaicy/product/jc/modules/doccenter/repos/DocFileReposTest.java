@@ -1,8 +1,9 @@
-package com.realaicy.product.jc.modules.system.repos;
+package com.realaicy.product.jc.modules.doccenter.repos;
 
 import com.realaicy.product.jc.Application;
-import com.realaicy.product.jc.modules.system.model.UserSec;
-
+import com.realaicy.product.jc.modules.doccenter.model.DocFileRes;
+import com.realaicy.product.jc.modules.project.model.PJApply;
+import com.sun.tools.doclets.internal.toolkit.util.DocFile;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,25 +14,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
 
-import static org.junit.Assert.assertNotNull;
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.*;
 
 /**
- * Created by realaicy on 16/7/6.
+ * Created by realaicy on 2016/10/24.
  * xxx
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
-@Transactional
-@Rollback
-public class UserSecReposTest {
-
+public class DocFileReposTest {
     @Autowired
-    UserSecRepos userSecRepos;
+    DocFileRepos docFileRepos;
 
     @Test
-    public void testFindUser() throws Exception {
-        UserSec userDetails = userSecRepos.findOne(BigInteger.valueOf(6));
-        assertNotNull(userDetails);
-    }
+    public void testFind() throws Exception {
+        DocFileRes docFileRes = docFileRepos.findOne(BigInteger.valueOf(2));
 
+        System.out.println();
+
+    }
 }

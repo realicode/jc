@@ -17,7 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = "jc_m_doc_allinone")
 @JsonFilter("realFilter")
-public class DocRes extends CommonTreeableDeletableEntity<Long, DocRes> {
+public class DocRes extends CommonTreeableDeletableEntity<BigInteger, DocRes> {
 
 
     /**
@@ -33,7 +33,7 @@ public class DocRes extends CommonTreeableDeletableEntity<Long, DocRes> {
     private BigInteger orgID;
 
     /**
-     * 角色所属组织
+     * 是否是组织根目录
      */
     @Column(name = "F_ORGROOT")
 
@@ -60,7 +60,7 @@ public class DocRes extends CommonTreeableDeletableEntity<Long, DocRes> {
      */
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent")
     @OrderBy("resWeight")
-    @Where(clause = "IS_FOLDER='1'")
+    @Where(clause = "IS_FOLDER='1' and F_DELETED='0'")
     private List<DocRes> children = new ArrayList<>();
 
     public BigInteger getOrgID() {

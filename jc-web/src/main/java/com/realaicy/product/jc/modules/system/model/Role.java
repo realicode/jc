@@ -11,7 +11,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "jc_sys_role")
-public class Role extends CommonDeletableEntity<Long> {
+public class Role extends CommonDeletableEntity<BigInteger> {
 
 
     /**

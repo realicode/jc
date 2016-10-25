@@ -1,6 +1,8 @@
 package com.realaicy.product.jc.realglobal.web;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.tika.Tika;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,49 +23,30 @@ import java.nio.file.Paths;
 @Controller
 public class FileController {
 
-    static final Tika tika = new Tika();
+    private static final Tika tika = new Tika();
+    @Value("${realupload.path.tmp}")
+    private String uploadfiletmppath;
 
     @RequestMapping(value = "/uploadPortrait", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<?> uploadPortrait(
             @RequestParam(value = "portrait", required = false) MultipartFile uploadfile) {
 
-        //String filename = uploadfile.getOriginalFilename();
-
         String filename = "realfile_" + System.currentTimeMillis();
         try {
-            // Get the filename and build the local file path (be sure that the
-            // application have write permissions on such directory)
-           /* try {
-                ImageIO.read(input).toString();
-                // It's an image (only BMP, GIF, JPG and PNG are recognized).
-            } catch (Exception e) {
-                // It's not an image.
-            }*/
 
             if (!tika.detect(uploadfile.getInputStream()).startsWith("image")) {
                 return new ResponseEntity<>("not a image file!", HttpStatus.BAD_REQUEST);
             }
             if (uploadfile.getSize() > 1048576) {
                 return new ResponseEntity<>("image size over 1M!", HttpStatus.BAD_REQUEST);
-
             }
 
             System.out.println(ImageIO.read(uploadfile.getInputStream()).getWidth());
             System.out.println(ImageIO.read(uploadfile.getInputStream()).getHeight());
 
+            Files.copy(uploadfile.getInputStream(), Paths.get(uploadfiletmppath, filename));
 
-            String directory = "/Users/realaicy/OSS/Code/UI/tmp/upload/tmp";
-            String filepath = Paths.get(directory, filename).toString();
-
-
-            Files.copy(uploadfile.getInputStream(), Paths.get(directory, filename));
-
-            // Save the file locally
-//            BufferedOutputStream stream =
-//                    new BufferedOutputStream(new FileOutputStream(new File(filepath)));
-//            stream.write(uploadfile.getBytes());
-//            stream.close();
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -72,11 +55,38 @@ public class FileController {
         return new ResponseEntity<>(filename, HttpStatus.OK);
     } // method uploadFile
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
     @ResponseBody
-    public String test(
-            @RequestParam(value = "portrait", required = false) MultipartFile uploadfile) {
+    public ResponseEntity<?> uploadFile(
+            @RequestParam(value = "realfile") MultipartFile uploadfile) {
 
-        return "ok";
-    } // method uploadFile
+        String strTypeTemp1 = FilenameUtils.getExtension(uploadfile.getOriginalFilename());
+        String filename;
+        if (!strTypeTemp1.equalsIgnoreCase("pdf") &&
+                !strTypeTemp1.equalsIgnoreCase("txt") &&
+                !strTypeTemp1.equalsIgnoreCase("doc") &&
+                !strTypeTemp1.equalsIgnoreCase("docx")) {
+            return new ResponseEntity<>("文件格式错误!", HttpStatus.BAD_REQUEST);
+        }
+        try {
+
+            String strTypeTemp2 = tika.detect(uploadfile.getInputStream());
+
+            if (!strTypeTemp2.equals("text/plain") &&
+                    !strTypeTemp2.equals("application/pdf") &&
+                    !strTypeTemp2.equals("application/x-tika-msoffice") &&
+                    !strTypeTemp2.equals("application/x-tika-ooxml")) {
+                return new ResponseEntity<>("文件格式错误!", HttpStatus.BAD_REQUEST);
+            }
+            if (uploadfile.getSize() > 1048576) {
+                return new ResponseEntity<>("file size over 1M!", HttpStatus.BAD_REQUEST);
+            }
+            filename = "realfile_" + System.currentTimeMillis() + "." + strTypeTemp1;
+            Files.copy(uploadfile.getInputStream(), Paths.get(uploadfiletmppath, filename));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(filename, HttpStatus.OK);
+    }
 }

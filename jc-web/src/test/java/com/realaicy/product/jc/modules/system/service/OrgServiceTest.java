@@ -10,6 +10,8 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.math.BigInteger;
+
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -27,10 +29,10 @@ public class OrgServiceTest {
 
     @Test
     public void findByNameWithInAParent() throws Exception {
-        Org org = orgService.findByNameWithInAParent("中国肿瘤临床试验稽查协作组", 2L);
+        Org org = orgService.findByNameWithInAParent("中国肿瘤临床试验稽查协作组", BigInteger.valueOf(2));
         assertNotNull(org);
 
-        Org orgNotExist = orgService.findByNameWithInAParent("中国肿瘤临床试验稽查协作组XXX", 2L);
+        Org orgNotExist = orgService.findByNameWithInAParent("中国肿瘤临床试验稽查协作组XXX", BigInteger.valueOf(2));
         assertNull(orgNotExist);
     }
 

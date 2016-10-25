@@ -2,12 +2,12 @@ package com.realaicy.product.jc.modules.system.model;
 
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.realaicy.lib.core.orm.jpa.entity.CommonTreeableDeletableEntity;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = "jc_sys_menu")
 @JsonFilter("rfMenu")
-public class Menu extends CommonTreeableDeletableEntity<Long, Menu> implements Cloneable {
+public class Menu extends CommonTreeableDeletableEntity<BigInteger, Menu> implements Cloneable {
 
     @Override
     public Object clone() throws CloneNotSupportedException {

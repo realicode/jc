@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.math.BigInteger;
+
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.*;
 
@@ -41,9 +43,9 @@ public class DocReposTest {
 
     @Test
     public void testFindOne() throws Exception {
-        DocRes docRes = docRepos.findOne(1L);
+        DocRes docRes = docRepos.findOne(BigInteger.valueOf(1));
         assertThat(docRes.getName(), equalTo("文档中心资源库"));
-        DocRes docRes2 = docRepos.findOne(2L);
+        DocRes docRes2 = docRepos.findOne(BigInteger.valueOf(2));
         assertThat(docRes2.getName(), equalTo("SOP文档"));
 
     }
@@ -51,7 +53,7 @@ public class DocReposTest {
     @Test
     public void testCreateRes() throws Exception {
 
-        Long parentID = 12L;
+        BigInteger parentID = BigInteger.valueOf(12);
 
         DocRes docResParent = docRepos.findOne(parentID);
         assertThat(docResParent.getName(), equalTo("测试文档目录层4"));
@@ -87,7 +89,7 @@ public class DocReposTest {
     @Test
     public void testPrintRoot() throws Exception {
 
-        DocRes docRes = docRepos.findOne(1L);
+        DocRes docRes = docRepos.findOne(BigInteger.valueOf(1));
 
         assertThat(docRes.getChildren().get(0).getName(), equalTo("测试文档目录层1"));
 

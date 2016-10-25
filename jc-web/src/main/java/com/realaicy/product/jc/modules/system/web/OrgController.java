@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.math.BigInteger;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -24,7 +25,7 @@ import static com.realaicy.lib.core.utils.RealBeanUtils.getNullPropertyNames;
 
 @Controller
 @RequestMapping("/system/org")
-public class OrgController extends TreeController<Org, Long, OrgVO> {
+public class OrgController extends TreeController<Org, BigInteger, OrgVO> {
 
     private OrgService orgService;
     static final private String[] nameDic = {"username", "password", "nickname", "createTime"};
@@ -43,19 +44,19 @@ public class OrgController extends TreeController<Org, Long, OrgVO> {
     }
 
     @Override
-    public Long getRealID() {
+    public BigInteger getRealID() {
         //noinspection ConstantConditions
         return SpringSecurityUtil.getCurrentRealUserDetails().getOrgID();
     }
 
     @Override
-    protected void InternalSaveNew(OrgVO realmodel, Long updateID, Long pid) throws SaveNewException {
+    protected void InternalSaveNew(OrgVO realmodel, BigInteger updateID, BigInteger pid) throws SaveNewException {
         if (orgService.findByNameWithInAParent(realmodel.getName(), pid) != null)
             throw new SaveNewException("error组织名称已存在!");
     }
 
     @Override
-    protected Org InternalSaveUpdate(OrgVO realmodel, Long updateID, Long pid) throws SaveNewException {
+    protected Org InternalSaveUpdate(OrgVO realmodel, BigInteger updateID, BigInteger pid) throws SaveNewException {
 
         Org org = orgService.findOne(updateID);
         Org orgTemp = orgService.findByNameWithInAParent(realmodel.getName(), org.getParent().getId());

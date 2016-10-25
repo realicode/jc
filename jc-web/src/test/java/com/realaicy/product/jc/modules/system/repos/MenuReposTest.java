@@ -10,6 +10,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class MenuReposTest {
 
     @Test
     public void testGet() throws Exception {
-        Menu menus = menuRepos.findOne(2L);
+        Menu menus = menuRepos.findOne(BigInteger.valueOf(2));
         assertNotNull(menus);
 
         assertThat(menus.getAutoExpand(), equalTo(true));
@@ -58,7 +59,7 @@ public class MenuReposTest {
     @Test
     public void testGreate() throws Exception {
 
-        Menu menuParent = menuRepos.findOne(2L);
+        Menu menuParent = menuRepos.findOne(BigInteger.valueOf(2));
         assertNotNull(menuParent);
 
         Menu menuToBeCreated = new Menu();
@@ -71,9 +72,9 @@ public class MenuReposTest {
         menuToBeCreated.setStatus(Short.parseShort("1"));
         menuToBeCreated.setAutoExpand(true);
         menuToBeCreated.setCascadeID("1.001");
-        menuToBeCreated.setCreaterID(1L);
+        menuToBeCreated.setCreaterID(BigInteger.valueOf(1));
         menuToBeCreated.setCreateTime(new Date());
-        menuToBeCreated.setUpdaterID(1L);
+        menuToBeCreated.setUpdaterID(BigInteger.valueOf(1));
         menuToBeCreated.setUpdateTime(new Date());
         menuToBeCreated.setCustomCode("11");
         menuToBeCreated.setName("测试");

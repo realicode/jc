@@ -49,7 +49,7 @@ public class RoleReposTest {
 
     @Test
     public void testGet() throws Exception {
-        Role role = repos.findOne(6L);
+        Role role = repos.findOne(BigInteger.valueOf(6));
         MatcherAssert.assertThat(role.getRealauthorities(), equalTo("org-r,org-c"));
         MatcherAssert.assertThat(role.getRoleType(), equalTo("1"));
         MatcherAssert.assertThat(role.getRoleStatus(), equalTo("1"));

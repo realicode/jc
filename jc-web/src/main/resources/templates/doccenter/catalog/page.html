@@ -222,7 +222,7 @@
             if (node == null || node == undefined || node == '') {
                 realalert("请先选择目录");
             } else {
-                realloadpage("/system/org/new?pid=" + node.data.id + "&pname=" + encodeURIComponent(node.title));
+                realloadpage("/doccenter/catalog/new?pid=" + node.data.id + "&pname=" + encodeURIComponent(node.title));
             }
 
         });
@@ -232,7 +232,7 @@
             if (node == null || node == undefined || node == '') {
                 realalert("请先选择目录");
             } else {
-                realloadpage("/system/org/show/" + node.data.id);
+                realloadpage("/doccenter/catalog/show/" + node.data.id);
             }
         });
 
@@ -250,16 +250,17 @@
                             dialog.close()
                             $("#updateflag").attr("value", 'deldel');
                             $.ajax({
-                                url: '/system/org/del/' + node.data.id,
+                                url: '/doccenter/catalog/del/' + node.data.id,
                                 type: 'GET',
                                 success: function (response) {
                                     if (response.substring(0, 2) == "ok") {
                                         real_g_success("删除目录成功！");
+                                        $("#treetable").fancytree("getTree").clearFilter();
+                                        $("#treetable").fancytree("getTree").reload();
                                     }
                                     else {
                                         real_g_fail(response);
                                     }
-                                    $("#treetable").fancytree("getTree").reload();
                                 }
                             });
                         }

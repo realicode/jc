@@ -30,7 +30,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/system/user")
-public class UserController extends CRUDWithVOController<User, Long, UserVO> {
+public class UserController extends CRUDWithVOController<User, BigInteger, UserVO> {
 
     private static JsonMapper binder = JsonMapper.nonDefaultMapper();
 
@@ -75,7 +75,7 @@ public class UserController extends CRUDWithVOController<User, Long, UserVO> {
     }
 
     @RequestMapping(value = "/user2role/{userid}", method = RequestMethod.GET)
-    public String userToRole(@PathVariable("userid") final Long userid,
+    public String userToRole(@PathVariable("userid") final BigInteger userid,
                              Model model) {
 
         User user = userService.findOne(userid);
@@ -95,7 +95,7 @@ public class UserController extends CRUDWithVOController<User, Long, UserVO> {
 
     @RequestMapping(value = "/u2rsave", method = RequestMethod.POST)
     @ResponseBody
-    public String userToRoleSave(@RequestParam(value = "userid", required = false) Long userid,
+    public String userToRoleSave(@RequestParam(value = "userid", required = false) BigInteger userid,
                                  @RequestParam(value = "user2role", required = false) String user2role) {
 
         User user = userService.findOne(userid);
@@ -106,8 +106,8 @@ public class UserController extends CRUDWithVOController<User, Long, UserVO> {
         userService.save(user);
         if (user2role != null && !Objects.equals(user2role, "")) {
             for (String str : user2role.split(",")) {
-                Role roleTemp = roleService.findOne(Long.valueOf(str));
-                user.getRoles().add(roleService.findOne(Long.valueOf(str)));
+                Role roleTemp = roleService.findOne(new BigInteger(str));
+                user.getRoles().add(roleService.findOne(new BigInteger(str)));
                 roleNames += roleTemp.getName();
                 roleNames += ",";
             }
@@ -126,7 +126,7 @@ public class UserController extends CRUDWithVOController<User, Long, UserVO> {
         user2RoleVO.setName(org.getName());
         user2RoleVO.setFolder(true);
         user2RoleVO.setIfHideCheckbox(true);
-        List<Role> rolesTemp = roleService.findByOrgIDAndDeleteFlag(BigInteger.valueOf(org.getId()), false);
+        List<Role> rolesTemp = roleService.findByOrgIDAndDeleteFlag(org.getId(), false);
         List<User2RoleVO> childrenTemp = new ArrayList<>();
         if (rolesTemp.size() > 1) {
             for (Role role : rolesTemp) {
@@ -150,7 +150,7 @@ public class UserController extends CRUDWithVOController<User, Long, UserVO> {
     }
 
     @Override
-    protected void InternalSaveNew(UserVO realmodel, Long updateID, Long pid) throws SaveNewException {
+    protected void InternalSaveNew(UserVO realmodel, BigInteger updateID, BigInteger pid) throws SaveNewException {
 
         if (userService.findByName(realmodel.getUsername()) != null)
             throw new SaveNewException("error用户名称已存在!");
@@ -175,7 +175,7 @@ public class UserController extends CRUDWithVOController<User, Long, UserVO> {
     }
 
     @Override
-    protected User InternalSaveUpdate(UserVO realmodel, Long updateID, Long pid) throws SaveNewException {
+    protected User InternalSaveUpdate(UserVO realmodel, BigInteger updateID, BigInteger pid) throws SaveNewException {
         User user = userService.findOne(updateID);
         user.setNickname(realmodel.getNickname());
         user.setEmail(realmodel.getEmail());
@@ -184,7 +184,7 @@ public class UserController extends CRUDWithVOController<User, Long, UserVO> {
     }
 
     @Override
-    protected void extendSave(User po, Long updateID, Long pid) {
+    protected void extendSave(User po, BigInteger updateID, BigInteger pid) {
 
     }
 }

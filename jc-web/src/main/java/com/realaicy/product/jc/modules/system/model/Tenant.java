@@ -6,13 +6,14 @@ import com.realaicy.lib.core.orm.jpa.entity.CommonDeletableEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.math.BigInteger;
 
 /**
  * 多租户
  */
 @Entity
 @Table(name = "JC_SYS_TENANT")
-public class Tenant extends CommonDeletableEntity<Long> {
+public class Tenant extends CommonDeletableEntity<BigInteger> {
 
 
     /**

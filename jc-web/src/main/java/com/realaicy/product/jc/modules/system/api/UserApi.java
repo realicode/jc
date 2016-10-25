@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigInteger;
+
 /**
  * Created by realaicy on 16/7/15.
  * xxx
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/system/users")
-public class UserApi extends CRUDController<User, Long> {
+public class UserApi extends CRUDController<User, BigInteger> {
 
     private UserService userService;
 
@@ -34,12 +36,12 @@ public class UserApi extends CRUDController<User, Long> {
     }
 
     @Override
-    protected void InternalSaveNew(User realmodel, Long updateID, Long pid) throws SaveNewException {
+    protected void InternalSaveNew(User realmodel, BigInteger updateID, BigInteger pid) throws SaveNewException {
 
     }
 
     @Override
-    protected User InternalSaveUpdate(User realmodel, Long updateID, Long pid) throws SaveNewException {
+    protected User InternalSaveUpdate(User realmodel, BigInteger updateID, BigInteger pid) throws SaveNewException {
         return null;
     }
 }

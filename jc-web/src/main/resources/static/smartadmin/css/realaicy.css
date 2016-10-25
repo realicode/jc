@@ -187,6 +187,10 @@ select.error, input.error {
 .real_btn {
     height: 10px;
 }
+.real_dt_btn_icon{
+margin-bottom: 2px;  margin-top: -4px;
+
+}
 
 .real_datatables_button_class_left {
     margin-right: 5px;

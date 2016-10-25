@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.math.BigInteger;
 import java.util.Collections;
 import java.util.List;
 
@@ -19,7 +20,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/system/role")
-public class RoleController extends CRUDWithVOController<Role, Long, RoleVO> {
+public class RoleController extends CRUDWithVOController<Role, BigInteger, RoleVO> {
 
     private RoleService roleService;
     static final private String[] nameDic = {"name"};
@@ -39,20 +40,20 @@ public class RoleController extends CRUDWithVOController<Role, Long, RoleVO> {
     }
 
     @Override
-    protected void InternalSaveNew(RoleVO realmodel, Long updateID, Long pid) throws SaveNewException {
+    protected void InternalSaveNew(RoleVO realmodel, BigInteger updateID, BigInteger pid) throws SaveNewException {
         if (roleService.findByNameWithInAOrg(realmodel.getName(), realmodel.getOrgID()) != null)
             throw new SaveNewException("error角色名称已存在!");
     }
 
     @Override
-    protected Role InternalSaveUpdate(RoleVO realmodel, Long updateID, Long pid) throws SaveNewException {
+    protected Role InternalSaveUpdate(RoleVO realmodel, BigInteger updateID, BigInteger pid) throws SaveNewException {
         Role org = roleService.findOne(updateID);
         org.setName(realmodel.getName());
         return org;
     }
 
     @Override
-    protected void extendSave(Role po, Long updateID, Long pid) {
+    protected void extendSave(Role po, BigInteger updateID, BigInteger pid) {
 
     }
 }

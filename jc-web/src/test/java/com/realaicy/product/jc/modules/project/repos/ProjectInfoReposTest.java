@@ -11,6 +11,8 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
+
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.*;
 
@@ -29,7 +31,7 @@ public class ProjectInfoReposTest {
 
     @Test
     public void testFind() throws Exception {
-        ProjectInfo projectInfo = repos.findOne(4L);
+        ProjectInfo projectInfo = repos.findOne(BigInteger.valueOf(4));
         assertThat(projectInfo.getManager().getUsername(), equalTo("realaicy"));
 
     }

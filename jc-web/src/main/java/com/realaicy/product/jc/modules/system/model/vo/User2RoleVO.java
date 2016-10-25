@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.realaicy.lib.core.model.vo.BaseVO;
 
 import javax.persistence.Column;
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -11,13 +12,14 @@ import java.util.List;
  * <p>
  * xxs
  */
-public class User2RoleVO extends BaseVO<Long> {
+public class User2RoleVO extends BaseVO<BigInteger> {
 
     @JsonProperty("title")
     private String name;
     @JsonProperty("realid")
-    private Long id;
+    private BigInteger id;
     private boolean selected;
+
     @JsonProperty("hideCheckbox")
     public boolean isIfHideCheckbox() {
         return ifHideCheckbox;
@@ -54,11 +56,11 @@ public class User2RoleVO extends BaseVO<Long> {
         this.name = name;
     }
 
-    public Long getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
 

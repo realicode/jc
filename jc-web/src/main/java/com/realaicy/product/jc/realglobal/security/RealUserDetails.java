@@ -3,6 +3,7 @@ package com.realaicy.product.jc.realglobal.security;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
+import java.math.BigInteger;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -13,15 +14,15 @@ import java.util.HashSet;
 
 public class RealUserDetails extends User {
 
-    private final Long id;
+    private final BigInteger id;
     private final HashSet<String> realAuthorities;
-    private final Long orgID;
+    private final BigInteger orgID;
     private final String orgCascadeID;
 
-    RealUserDetails(final Long id, final String username, final String password, final String nickName, boolean enabled,
+    RealUserDetails(final BigInteger id, final String username, final String password, final String nickName, boolean enabled,
                     boolean accountNonExpired, boolean credentialsNonExpired,
                     boolean accountNonLocked,
-                    final Collection<? extends GrantedAuthority> authorities, HashSet<String> realAuthorities, Long orgID, String orgCascadeID) {
+                    final Collection<? extends GrantedAuthority> authorities, HashSet<String> realAuthorities, BigInteger orgID, String orgCascadeID) {
         super(username, password, enabled, true, true, true, authorities);
         this.realAuthorities = realAuthorities;
         this.orgID = orgID;
@@ -33,7 +34,7 @@ public class RealUserDetails extends User {
         return orgCascadeID;
     }
 
-    public Long getOrgID() {
+    public BigInteger getOrgID() {
         return orgID;
     }
 
@@ -41,7 +42,7 @@ public class RealUserDetails extends User {
         return realAuthorities;
     }
 
-    public Long getId() {
+    public BigInteger getId() {
         return id;
     }
 

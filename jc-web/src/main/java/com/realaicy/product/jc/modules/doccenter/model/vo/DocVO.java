@@ -3,13 +3,14 @@ package com.realaicy.product.jc.modules.doccenter.model.vo;
 import com.realaicy.lib.core.model.vo.BaseVO;
 
 import javax.validation.constraints.NotNull;
+import java.math.BigInteger;
 
 /**
  * Created by realaicy on 2016/10/16.
  * <p>
  * xxs
  */
-public class DocVO extends BaseVO<Long> {
+public class DocVO extends BaseVO<BigInteger> {
 
     /**
      * 角色名称

@@ -12,7 +12,7 @@ import java.util.List;
  * Created by realaicy on 16/3/14.
  * xxx
  */
-public interface RoleService extends BaseServiceWithVO<Role, Long, RoleVO> {
+public interface RoleService extends BaseServiceWithVO<Role, BigInteger, RoleVO> {
 
 
     Role findByRoleName(String roleName);

@@ -4,6 +4,7 @@ import com.realaicy.lib.core.orm.jpa.BaseRepository;
 import com.realaicy.product.jc.modules.system.model.Menu;
 import org.springframework.data.jpa.repository.Query;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ import java.util.List;
  * XXX
  */
 @SuppressWarnings("JpaQlInspection")
-public interface MenuRepos extends BaseRepository<Menu, Long> {
+public interface MenuRepos extends BaseRepository<Menu, BigInteger> {
 
 
     /**

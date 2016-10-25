@@ -9,6 +9,7 @@ import com.realaicy.product.jc.modules.system.service.OrgService;
 import com.realaicy.product.jc.uitl.SpringSecurityUtil;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -18,11 +19,12 @@ import java.util.List;
  * xxx
  */
 @Service
-public class DefaultOrgService extends DefaultBaseServiceImpl<Org, Long>
+@Transactional
+public class DefaultOrgService extends DefaultBaseServiceImpl<Org, BigInteger>
         implements OrgService {
 
     @Override
-    public Org findByNameWithInAParent(String name, Long pid) {
+    public Org findByNameWithInAParent(String name, BigInteger pid) {
         return ((OrgRepos) baseRepository).findByNameWithInAParent(name, pid);
     }
 
@@ -38,8 +40,9 @@ public class DefaultOrgService extends DefaultBaseServiceImpl<Org, Long>
 
 
     @Override
-    public boolean withinOrgRestrict(Long id) {
+    public boolean withinOrgRestrict(BigInteger id) {
 
+        //noinspection ConstantConditions
         return findOne(id).getCascadeID().startsWith(SpringSecurityUtil.getCurrentRealUserDetails().getOrgCascadeID());
     }
 

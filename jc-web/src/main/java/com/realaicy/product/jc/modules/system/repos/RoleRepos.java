@@ -14,7 +14,7 @@ import java.util.List;
  * Created by realaicy on 2016/3/13.
  * XXX
  */
-public interface RoleRepos extends BaseRepository<Role, Long> {
+public interface RoleRepos extends BaseRepository<Role, BigInteger> {
 
     Role findByName(String roleName);
 

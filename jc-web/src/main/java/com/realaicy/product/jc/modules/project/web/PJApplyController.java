@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/project/apply")
-public class PJApplyController extends CRUDController<PJApply, Long> {
+public class PJApplyController extends CRUDController<PJApply, BigInteger> {
 
     private PJApplyService service;
     static final private String[] nameDic = {"status"};
@@ -43,7 +44,7 @@ public class PJApplyController extends CRUDController<PJApply, Long> {
 
 
     @RequestMapping(value = "/process/{id}", method = RequestMethod.GET)
-    public String showProcess(@PathVariable("id") final Long id, Model model) {
+    public String showProcess(@PathVariable("id") final BigInteger id, Model model) {
         model.addAttribute("realmodel", service.findOne(id));
         model.addAttribute("realUpdateID", id);
         return processUrl;
@@ -52,7 +53,7 @@ public class PJApplyController extends CRUDController<PJApply, Long> {
     @ResponseBody
     @RequestMapping(value = "/process", method = RequestMethod.POST)
     public String doProcess(@ModelAttribute("realmodel") final PJApply realmodel,
-                            @RequestParam(value = "updateID", required = false) Long updateID) {
+                            @RequestParam(value = "updateID", required = false) BigInteger updateID) {
 
         PJApply pjApply = service.findOne(updateID);
         pjApply.setStatus(realmodel.getStatus());
@@ -63,12 +64,12 @@ public class PJApplyController extends CRUDController<PJApply, Long> {
     }
 
     @Override
-    protected void InternalSaveNew(PJApply realmodel, Long updateID, Long pid) throws SaveNewException {
+    protected void InternalSaveNew(PJApply realmodel, BigInteger updateID, BigInteger pid) throws SaveNewException {
 
     }
 
     @Override
-    protected PJApply InternalSaveUpdate(PJApply realmodel, Long updateID, Long pid) throws SaveNewException {
+    protected PJApply InternalSaveUpdate(PJApply realmodel, BigInteger updateID, BigInteger pid) throws SaveNewException {
         return null;
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.*;
 
 /**
@@ -19,7 +20,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/project/info")
-public class ProjectInfoController extends CRUDController<ProjectInfo, Long> {
+public class ProjectInfoController extends CRUDController<ProjectInfo, BigInteger> {
 
     private ProjectInfoService service;
     static final private String[] nameDic = {"status"};
@@ -42,12 +43,12 @@ public class ProjectInfoController extends CRUDController<ProjectInfo, Long> {
     }
 
     @Override
-    protected void InternalSaveNew(ProjectInfo realmodel, Long updateID, Long pid) throws SaveNewException {
+    protected void InternalSaveNew(ProjectInfo realmodel, BigInteger updateID, BigInteger pid) throws SaveNewException {
 
     }
 
     @Override
-    protected ProjectInfo InternalSaveUpdate(ProjectInfo realmodel, Long updateID, Long pid) throws SaveNewException {
+    protected ProjectInfo InternalSaveUpdate(ProjectInfo realmodel, BigInteger updateID, BigInteger pid) throws SaveNewException {
         return null
                 ;
     }

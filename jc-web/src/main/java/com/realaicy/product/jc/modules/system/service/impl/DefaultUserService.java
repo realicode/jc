@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class DefaultUserService extends DefaultBaseServiceImpl<User, Long>
+public class DefaultUserService extends DefaultBaseServiceImpl<User, BigInteger>
         implements UserService {
 
 

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -45,8 +46,8 @@ public class UserRoleReposTest {
     @Test
     public void testUpdateUserRole() throws Exception {
 
-        User user = userRepos.findOne(5L);
-        Role role = roleRepos.findOne(2L);
+        User user = userRepos.findOne(BigInteger.valueOf(5));
+        Role role = roleRepos.findOne(BigInteger.valueOf(5));
 
         Set<Role> roleList = user.getRoles();
         roleList.add(role);

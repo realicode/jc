@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class DefaultRoleService extends DefaultBaseServiceImpl<Role, Long>
+public class DefaultRoleService extends DefaultBaseServiceImpl<Role, BigInteger>
         implements RoleService {
 
     @Override

@@ -1,63 +1,71 @@
 package com.realaicy.product.jc.modules.doccenter.model;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.realaicy.lib.core.orm.jpa.entity.CommonTreeableDeletableEntity;
+import com.realaicy.lib.core.orm.jpa.entity.CommonDeletableEntity;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.math.BigInteger;
 
 /**
  * 文档实体类
  */
 @Entity
-@Table(name = "jc_m_doc_allinone")
-@JsonFilter("realFilter2")
-public class DocFileRes extends CommonTreeableDeletableEntity<Long,DocFileRes> {
+@Table(name = "jc_m_doc_file")
+public class DocFileRes extends CommonDeletableEntity<BigInteger> {
 
+    /**
+     * 文件所属文件夹ID
+     */
+    @Column(name = "CATALOGID")
+    private BigInteger catalogID;
+
+    /**
+     * 文件所属模块
+     */
+    @Column(name = "MODULE")
+    private String module;
+    /**
+     * 文件所属文件夹语义ID
+     */
+    @Column(name = "CAT_CASCADE_ID")
+    private String catCascadeID;
     /**
      * 资源类型
      */
     @Column(name = "RES_TYPE")
     private short resType;
-
     /**
      * 资源名称
      */
     @Column(name = "NAME")
-    @JsonProperty("title")
     private String name;
-
     /**
      * 资源URI
      */
     @Column(name = "URI")
     private String uri;
-
     /**
      * 资源标识字符串(对应用户所持有的权限字符串)
      */
     @Column(name = "IDENTITY")
     private String resIdentity = "";
 
+    public String getModule() {
+        return module;
+    }
 
-//    /**
-//     * 父亲菜单对象
-//     */
-//    @ManyToOne
-//    @JoinColumn(name = "PID")
-//    @JsonIgnore
-//    private DocFileRes parent;
+    public void setModule(String module) {
+        this.module = module;
+    }
 
-    /**
-     * 孩子菜单对象
-     */
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent")
-    @OrderBy("resWeight")
-    private List<DocFileRes> children = new ArrayList<>();
+    public String getCatCascadeID() {
+        return catCascadeID;
+    }
 
+    public void setCatCascadeID(String catCascadeID) {
+        this.catCascadeID = catCascadeID;
+    }
 
     public short getResType() {
         return resType;
@@ -91,12 +99,11 @@ public class DocFileRes extends CommonTreeableDeletableEntity<Long,DocFileRes> {
         this.resIdentity = resIdentity;
     }
 
-    public List<DocFileRes> getChildren() {
-        return children;
+    public BigInteger getCatalogID() {
+        return catalogID;
     }
 
-    public void setChildren(List<DocFileRes> children) {
-        this.children = children;
+    public void setCatalogID(BigInteger catalogID) {
+        this.catalogID = catalogID;
     }
-
 }

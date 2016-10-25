@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.realaicy.lib.core.orm.jpa.entity.CommonDeletableEntity;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -12,20 +13,20 @@ import java.util.List;
  */
 @Entity
 @Table(name = "jc_sys_user_sec")
-public class UserSec extends CommonDeletableEntity<Long> {
+public class UserSec extends CommonDeletableEntity<BigInteger> {
 
 
     /**
      * 所属租户
      */
     @Column(name = "TENANTID")
-    private Long tenantID;
+    private BigInteger tenantID;
 
     /**
      * 所属组织
      */
     @Column(name = "ORGID")
-    private Long orgID;
+    private BigInteger orgID;
     /**
      * 用户名称
      */
@@ -76,19 +77,19 @@ public class UserSec extends CommonDeletableEntity<Long> {
     @JsonIgnore
     private List<Role> roles;
 
-    public Long getOrgID() {
+    public BigInteger getOrgID() {
         return orgID;
     }
 
-    public void setOrgID(Long orgID) {
+    public void setOrgID(BigInteger orgID) {
         this.orgID = orgID;
     }
 
-    public Long getTenantID() {
+    public BigInteger getTenantID() {
         return tenantID;
     }
 
-    public void setTenantID(Long tenantID) {
+    public void setTenantID(BigInteger tenantID) {
         this.tenantID = tenantID;
     }
 

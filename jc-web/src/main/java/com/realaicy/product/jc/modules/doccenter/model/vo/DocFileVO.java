@@ -1,8 +1,7 @@
-package com.realaicy.product.jc.modules.system.model.vo;
+package com.realaicy.product.jc.modules.doccenter.model.vo;
 
 import com.realaicy.lib.core.model.vo.BaseVO;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 
@@ -11,25 +10,13 @@ import java.math.BigInteger;
  * <p>
  * xxs
  */
-public class RoleVO extends BaseVO<BigInteger> {
+public class DocFileVO extends BaseVO<BigInteger> {
 
     /**
      * 角色名称
      */
     @NotNull
     private String name;
-    /**
-     * 角色所属组织
-     */
-    private BigInteger orgID;
-
-    public BigInteger getOrgID() {
-        return orgID;
-    }
-
-    public void setOrgID(BigInteger orgID) {
-        this.orgID = orgID;
-    }
 
     public String getName() {
         return name;

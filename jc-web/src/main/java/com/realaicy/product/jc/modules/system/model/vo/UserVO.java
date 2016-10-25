@@ -4,16 +4,17 @@ import com.realaicy.lib.core.model.vo.BaseVO;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Column;
+import java.math.BigInteger;
 
 /**
  * Created by realaicy on 2016/10/16.
  * <p>
  * xxs
  */
-public class UserVO extends BaseVO<Long> {
+public class UserVO extends BaseVO<BigInteger> {
 
 
-    private Long id;
+    private BigInteger id;
     /**
      * 用户名称
      */
@@ -32,7 +33,7 @@ public class UserVO extends BaseVO<Long> {
     /**
      * 所属组织
      */
-    private Long orgID;
+    private BigInteger orgID;
     /**
      * 用户所属组织语义ID
      */
@@ -51,19 +52,19 @@ public class UserVO extends BaseVO<Long> {
      */
     private char sex;
 
-    public Long getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
 
-    public Long getOrgID() {
+    public BigInteger getOrgID() {
         return orgID;
     }
 
-    public void setOrgID(Long orgID) {
+    public void setOrgID(BigInteger orgID) {
         this.orgID = orgID;
     }
 

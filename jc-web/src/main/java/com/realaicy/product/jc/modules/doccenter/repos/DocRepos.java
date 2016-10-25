@@ -12,7 +12,7 @@ import java.util.List;
  * Created by realaicy on 2016/3/13.
  * XXX
  */
-public interface DocRepos extends BaseRepository<DocRes, Long> {
+public interface DocRepos extends BaseRepository<DocRes, BigInteger> {
 
 
     /**
@@ -27,5 +27,5 @@ public interface DocRepos extends BaseRepository<DocRes, Long> {
     @Query(value = "select * from jc_m_doc_allinone as a where a.id=:id", nativeQuery = true)
     DocRes findAResWithNative(@Param("id") Long id);
 
-    DocRes findByOrgIDAndOrgRootFlagAndDeleteFlag(BigInteger orgID, Boolean orgRootFlag, Boolean deleteFlay);
+    DocRes findByOrgIDAndOrgRootFlagAndDeleteFlag(BigInteger orgID, Boolean orgRootFlag, Boolean deleteFlag);
 }

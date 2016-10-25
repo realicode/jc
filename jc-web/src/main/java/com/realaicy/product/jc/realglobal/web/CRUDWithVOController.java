@@ -46,7 +46,7 @@ public abstract class CRUDWithVOController<M extends BaseEntity<ID> & CommonData
         ID extends Serializable, V extends BaseVO<ID>> {
 
     private final static String noAuthViewName = "global/errorpage/NOPrivilege";
-    protected final static String noAuthString = "NOPrivilege";
+    private final static String noAuthString = "NOPrivilege";
     private final BaseServiceWithVO<M, ID, V> service;
     private final String initFormParam;
     private final String[] nameDic;
@@ -59,12 +59,6 @@ public abstract class CRUDWithVOController<M extends BaseEntity<ID> & CommonData
     private final Class<M> aClass;
     private final Class<V> voClass;
     private final List<String> editBindWhiteList;
-
-
-    protected OrgService getOrgService() {
-        return orgService;
-    }
-
     private OrgService orgService;
 
     public CRUDWithVOController(BaseServiceWithVO<M, ID, V> service, String initFormParam, String[] nameDic, String pageUrl,
@@ -83,12 +77,24 @@ public abstract class CRUDWithVOController<M extends BaseEntity<ID> & CommonData
         this.editBindWhiteList = editBindWhiteList;
     }
 
-    static String getNoAuthString() {
+    protected static String getNoAuthString() {
         return noAuthString;
     }
 
     static String getNoAuthViewName() {
         return noAuthViewName;
+    }
+
+    protected BaseServiceWithVO<M, ID, V> getService() {
+        return service;
+    }
+
+    protected Class<M> getaClass() {
+        return aClass;
+    }
+
+    protected OrgService getOrgService() {
+        return orgService;
     }
 
     @Autowired
@@ -121,7 +127,7 @@ public abstract class CRUDWithVOController<M extends BaseEntity<ID> & CommonData
     }
 
     @RequestMapping(value = "/new/{orgID}", method = RequestMethod.GET)
-    public String newModel(@PathVariable("orgID") final Long orgID, Model model) {
+    public String newModel(@PathVariable("orgID") final BigInteger orgID, Model model) {
         if (!checkAuth("c", aClass.getSimpleName()))
             return noAuthViewName;
         try {
@@ -218,7 +224,7 @@ public abstract class CRUDWithVOController<M extends BaseEntity<ID> & CommonData
             orgID = SpringSecurityUtil.getCurrentRealUserDetails().getOrgID().toString();
         }
 
-        Org org = orgService.findOne(Long.parseLong(orgID));
+        Org org = orgService.findOne(new BigInteger(orgID));
         List<BigInteger> bigIntegersTemp = orgService.findAllChildIDs(org.getCascadeID());
         builder.with("orgID", "$",
                 bigIntegersTemp, "", "");
@@ -325,7 +331,7 @@ public abstract class CRUDWithVOController<M extends BaseEntity<ID> & CommonData
     }
 
 
-    boolean checkAuth(String reqAuthString, String objType) {
+    protected boolean checkAuth(String reqAuthString, String objType) {
         return SpringSecurityUtil.hasPrivilege(objType + "-" + "a") || SpringSecurityUtil.hasPrivilege(objType + "-" + reqAuthString);
     }
 
@@ -334,13 +340,5 @@ public abstract class CRUDWithVOController<M extends BaseEntity<ID> & CommonData
     protected abstract M InternalSaveUpdate(V realmodel, ID updateID, ID pid) throws SaveNewException;
 
     protected abstract void extendSave(M po, ID updateID, ID pid);
-
-    @RequestMapping(value = "/b", method = RequestMethod.POST)
-    @ResponseBody
-    public String real4test(@RequestParam(value = "userid", required = false) String userid) {
-
-
-        return "ok";
-    }
 
 }

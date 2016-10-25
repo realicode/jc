@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
 import java.util.*;
 
 /**
@@ -18,7 +20,8 @@ import java.util.*;
  * xxx
  */
 @Service
-public class DefaultMenuService extends DefaultBaseServiceImpl<Menu, Long>
+@Transactional
+public class DefaultMenuService extends DefaultBaseServiceImpl<Menu, BigInteger>
         implements MenuService {
 
     //private Logger log = LoggerFactory.getLogger(getClass());

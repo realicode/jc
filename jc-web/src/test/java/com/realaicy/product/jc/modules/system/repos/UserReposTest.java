@@ -10,6 +10,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
@@ -27,7 +28,7 @@ public class UserReposTest {
 
     @Test
     public void testFindUser() throws Exception {
-        User user = userRepos.findOne(6L);
+        User user = userRepos.findOne(BigInteger.valueOf(6));
         assertNotNull(user);
     }
 

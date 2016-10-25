@@ -6,13 +6,14 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.math.BigInteger;
 
 /**
  * 文档实体类
  */
 @Entity
 @Table(name = "jc_pj_application")
-public class PJApply extends CommonEntity<Long> {
+public class PJApply extends CommonEntity<BigInteger> {
 
 
     /**
