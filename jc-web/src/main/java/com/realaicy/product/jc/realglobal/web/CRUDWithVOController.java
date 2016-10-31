@@ -6,11 +6,11 @@ import com.realaicy.lib.core.orm.jpa.entity.BaseEntity;
 import com.realaicy.lib.core.orm.jpa.search.BaseSpecificationsBuilder;
 import com.realaicy.lib.core.orm.jpa.search.SearchOperation;
 import com.realaicy.lib.core.orm.plugin.CommonData;
+import com.realaicy.lib.core.orm.plugin.IOrgRestricted;
 import com.realaicy.lib.core.orm.plugin.LogicDeletable;
 import com.realaicy.lib.core.service.BaseServiceWithVO;
 import com.realaicy.product.jc.common.aop.annotations.Perfable;
 import com.realaicy.product.jc.common.exception.SaveNewException;
-import com.realaicy.product.jc.modules.system.model.Org;
 import com.realaicy.product.jc.modules.system.service.OrgService;
 import com.realaicy.product.jc.uitl.SpringSecurityUtil;
 import org.springframework.beans.BeanUtils;
@@ -213,26 +213,28 @@ public abstract class CRUDWithVOController<M extends BaseEntity<ID> & CommonData
 
         final BaseSpecificationsBuilder<M> builder = new BaseSpecificationsBuilder<>();
         final String operationSetExper = Joiner.on("|").join(SearchOperation.SIMPLE_OPERATION_SET);
-        final Pattern pattern = Pattern.compile("(\\w+?)(" + operationSetExper + ")(\\p{Punct}?)(\\p{L}+?)(\\p{Punct}?),");
+        final Pattern pattern = Pattern.compile("(\\w+?)(" + operationSetExper + ")(\\p{Punct}?)((\\p{L}|\\p{N})+?)(\\p{Punct}?),");
         final Matcher matcher = pattern.matcher(search + ",");
         while (matcher.find()) {
             builder.with(matcher.group(1), matcher.group(2), matcher.group(4), matcher.group(3), matcher.group(5));
         }
 
-        if (orgID == null || orgID.equals("")) {
-            //noinspection ConstantConditions
-            orgID = SpringSecurityUtil.getCurrentRealUserDetails().getOrgID().toString();
+        if (IOrgRestricted.class.isAssignableFrom(aClass)) {
+            if (orgID == null || orgID.equals("")) {
+                //noinspection ConstantConditions
+                orgID = SpringSecurityUtil.getCurrentRealUserDetails().getOrgID().toString();
+            }
+            //Org org = orgService.findOne(new BigInteger(orgID));
+            List<BigInteger> bigIntegersTemp = orgService.findAllChildIDs(
+                    orgService.findOne(new BigInteger(orgID)).getCascadeID());
+            builder.with("orgID", "$",
+                    bigIntegersTemp, "", "");
         }
 
-        Org org = orgService.findOne(new BigInteger(orgID));
-        List<BigInteger> bigIntegersTemp = orgService.findAllChildIDs(org.getCascadeID());
-        builder.with("orgID", "$",
-                bigIntegersTemp, "", "");
 
         if (LogicDeletable.class.isAssignableFrom(aClass)) {
             builder.with("deleteFlag", ":", false, "", "");
         }
-
 
         final Specification<M> spec = builder.build();
         info.put("data", service.findAll(spec, pageRequest));
@@ -292,7 +294,8 @@ public abstract class CRUDWithVOController<M extends BaseEntity<ID> & CommonData
 
             try {
                 M po = aClass.newInstance();
-                BeanUtils.copyProperties(realmodel, po, getNullPropertyNames(realmodel));
+                String[] atemp = getNullPropertyNames(realmodel);
+                BeanUtils.copyProperties(realmodel, po, atemp);
 
                 po.setCreateTime(new Date());
                 //noinspection unchecked,ConstantConditions
@@ -301,7 +304,6 @@ public abstract class CRUDWithVOController<M extends BaseEntity<ID> & CommonData
                 po.setUpdaterID(po.getCreaterID());
 
                 extendSave(po, updateID, pid);
-
                 service.save(po);
             } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();

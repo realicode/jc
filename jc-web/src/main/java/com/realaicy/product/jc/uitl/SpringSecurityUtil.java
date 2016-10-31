@@ -160,7 +160,9 @@ public final class SpringSecurityUtil {
     public static boolean hasPrivilege(final String privilege) {
 
         final RealUserDetails realUserDetails = SpringSecurityUtil.getCurrentRealUserDetails();
-        return realUserDetails != null && realUserDetails.getRealAuthorities().contains(privilege);
+        return realUserDetails != null &&
+                (realUserDetails.getRealAuthorities().contains("superadmin") ||
+                        realUserDetails.getRealAuthorities().contains(privilege));
 
     }
 

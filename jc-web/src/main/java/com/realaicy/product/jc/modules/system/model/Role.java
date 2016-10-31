@@ -1,6 +1,7 @@
 package com.realaicy.product.jc.modules.system.model;
 
 import com.realaicy.lib.core.orm.jpa.entity.CommonDeletableEntity;
+import com.realaicy.lib.core.orm.plugin.IOrgRestricted;
 
 import javax.persistence.*;
 import java.math.BigInteger;
@@ -11,7 +12,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "jc_sys_role")
-public class Role extends CommonDeletableEntity<BigInteger> {
+public class Role extends CommonDeletableEntity<BigInteger> implements IOrgRestricted {
 
 
     /**

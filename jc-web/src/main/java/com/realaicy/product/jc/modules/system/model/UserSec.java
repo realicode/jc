@@ -3,6 +3,7 @@ package com.realaicy.product.jc.modules.system.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.realaicy.lib.core.orm.jpa.entity.CommonDeletableEntity;
+import com.realaicy.lib.core.orm.plugin.IOrgRestricted;
 
 import javax.persistence.*;
 import java.math.BigInteger;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "jc_sys_user_sec")
-public class UserSec extends CommonDeletableEntity<BigInteger> {
+public class UserSec extends CommonDeletableEntity<BigInteger> implements IOrgRestricted {
 
 
     /**
@@ -42,7 +43,6 @@ public class UserSec extends CommonDeletableEntity<BigInteger> {
     }
 
     /**
-
      * 用户密码(加密后的密文)
      */
     @Column(name = "PASSWORD")

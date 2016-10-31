@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.realaicy.lib.core.orm.jpa.entity.CommonTreeableDeletableEntity;
+import com.realaicy.lib.core.orm.plugin.IOrgRestricted;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -17,7 +18,7 @@ import java.util.List;
 @Entity
 @Table(name = "jc_m_doc_allinone")
 @JsonFilter("realFilter")
-public class DocRes extends CommonTreeableDeletableEntity<BigInteger, DocRes> {
+public class DocRes extends CommonTreeableDeletableEntity<BigInteger, DocRes> implements IOrgRestricted {
 
 
     /**

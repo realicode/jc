@@ -290,7 +290,7 @@
                 $tdList.eq(1).text(node.getIndexHier()).addClass("alignRight");
                 // Index #2 is rendered by fancytree, but we make the title cell
                 // span the remaining columns if it is a folder:
-                if (node.isFolder()) {
+                if (node.folder()) {
                     $tdList.eq(3).html("<ul class='demo-btns'><li> <a href='javascript:void(0);' class='btn btn-sm btn-primary'>上传文件</a></li></ul>");
 
                 } else {

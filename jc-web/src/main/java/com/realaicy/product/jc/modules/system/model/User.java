@@ -8,6 +8,7 @@ package com.realaicy.product.jc.modules.system.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.realaicy.lib.core.orm.jpa.entity.CommonDeletableEntity;
+import com.realaicy.lib.core.orm.plugin.IOrgRestricted;
 import com.realaicy.product.jc.modules.project.model.ProjectInfo;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -21,7 +22,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "jc_sys_user")
-public class User extends CommonDeletableEntity<BigInteger> {
+public class User extends CommonDeletableEntity<BigInteger> implements IOrgRestricted {
 
 
     /**

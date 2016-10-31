@@ -32,7 +32,7 @@
 </head>
 <body class="smart-style-0 desktop-detected fixed-navigation fixed-header fixed-page-footer fixed-ribbon"
       style="min-height: 99%;height: 99%">
-<header id="header" >
+<header id="header">
     <div id="logo-group" style="width: 220px;">
         <span id="logo" style="padding: 0;margin: 0;height: 100%;font-size: 16px">
             <img th:src="@{/realaicy/img/logo.png}" style="height: 50px;width:50px;padding-top: 4px"
@@ -82,8 +82,17 @@
 
                 <ul th:if="${not #lists.isEmpty(menu.children)}">
                     <li class="" th:each="submenu : ${menu.children}">
-                        <a th:href="${submenu.uri}" title="aaa"><span
+                        <a th:href="${submenu.uri}" title="test">
+                            <i th:class="${submenu.resIcon}"></i><span
                                 class="menu-item-parent" th:text="${submenu.name}"></span></a>
+
+                        <ul th:if="${not #lists.isEmpty(submenu.children)}">
+                            <li class="" th:each="subsubmenu : ${submenu.children}">
+                                <a th:href="${subsubmenu.uri}" title="test">
+                                    <i th:class="${subsubmenu.resIcon}"></i><span
+                                        class="menu-item-parent" th:text="${subsubmenu.name}"></span></a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </li>

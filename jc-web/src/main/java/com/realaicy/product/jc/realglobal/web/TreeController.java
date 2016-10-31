@@ -47,7 +47,6 @@ public abstract class TreeController<M extends CommonTreeableDeletableEntity<ID,
         } else {
             po.setCascadeID(parent.getCascadeID() + "." + String.format("%03d", childSize));
         }
-        po.setFolder(true);
     }
 
     private static JsonMapper binder = JsonMapper.nonDefaultMapper();

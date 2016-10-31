@@ -1,6 +1,7 @@
 package com.realaicy.product.jc.modules.doccenter.model;
 
 import com.realaicy.lib.core.orm.jpa.entity.CommonDeletableEntity;
+import com.realaicy.lib.core.orm.plugin.IOrgRestricted;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +13,7 @@ import java.math.BigInteger;
  */
 @Entity
 @Table(name = "jc_m_doc_file")
-public class DocFileRes extends CommonDeletableEntity<BigInteger> {
+public class DocFileRes extends CommonDeletableEntity<BigInteger> implements IOrgRestricted {
 
     /**
      * 文件所属文件夹ID

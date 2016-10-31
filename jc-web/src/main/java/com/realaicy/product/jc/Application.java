@@ -174,7 +174,7 @@ public class Application extends CachingConfigurerSupport {
                     Cache cache = this.getCacheManager().getCache(cacheName);
                     if (cache == null) {
                         //realaicy modified!
-                        logger.warn("Cannot find cache named : {} for {}", cacheName, context.getOperation());
+                        logger.warn("Cannot find cache named : {} for {},so realaicy try to use default", cacheName, context.getOperation());
                         cache = this.getCacheManager().getCache("realdefaultcache");
 //                        throw new IllegalArgumentException("Cannot find cache named '" +
 //                                cacheName + "' for " + context.getOperation());
