@@ -32,6 +32,10 @@ public class DefaultAuditCheckStepService extends DefaultBaseServiceImpl<AuditCh
 
     @Override
     public Integer findTopByCheckitemIDOrderByStepNoDesc(BigInteger checkitemID) {
-        return auditCheckStepRepos.findTopByCheckitemIDAndDeleteFlagOrderByStepNoDesc(checkitemID, false).getStepNo();
+        AuditCheckStep auditCheckStep = auditCheckStepRepos.findTopByCheckitemIDAndDeleteFlagOrderByStepNoDesc(checkitemID, false);
+        if(auditCheckStep == null)
+            return 0;
+        else
+        return auditCheckStep.getStepNo();
     }
 }

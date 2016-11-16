@@ -15,6 +15,14 @@ import java.util.Date;
 @Controller
 @RequestMapping("/project")
 public class ProjectController {
+
+    @RequestMapping(value = "/wf/new", method = RequestMethod.GET)
+    public String initCreatePage(Model model) {
+        return "project/wf/create";
+    }
+
+
+
     @RequestMapping("/projects")
     public String dashboard(@RequestParam(value = "name", required = false, defaultValue = "World V2") String name, Model model) {
         model.addAttribute("name", name + "V2");
@@ -45,14 +53,6 @@ public class ProjectController {
         model.addAttribute("realsign", new Date());
 
         return "project/calendar";
-    }
-
-    @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public String initCreatePage(@RequestParam(value = "name", required = false, defaultValue = "World V2") String name, Model model) {
-        model.addAttribute("name", name + "V2");
-        model.addAttribute("realsign", new Date());
-
-        return "project/create";
     }
 
     @RequestMapping(value = "/process", method = RequestMethod.GET)

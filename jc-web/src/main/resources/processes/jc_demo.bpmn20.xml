@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
+  <process id="jc_demo" name="稽查演示" isExecutable="true">
+    <documentation>稽查演示</documentation>
+    <startEvent id="realstart" name="开始节点"></startEvent>
+    <userTask id="pjstart" name="项目启动" activiti:candidateGroups="mishu"></userTask>
+    <serviceTask id="pjstartnotify" name="项目启动会会议纪要 邮件方式通知到各个干系人" activiti:type="mail">
+      <extensionElements>
+        <activiti:field name="to">
+          <activiti:string><![CDATA[realaicy@126.com]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="from">
+          <activiti:string><![CDATA[realtemp@126.com]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="subject">
+          <activiti:string><![CDATA[项目启动会会议纪要]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="text">
+          <activiti:string><![CDATA[测试测试]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <userTask id="preaudit" name="预稽查" activiti:candidateGroups="yjcgroup"></userTask>
+    <userTask id="pjpreauditcheck" name="预稽查报告审批" activiti:assignee="doctoryan">
+      <extensionElements>
+        <activiti:formProperty id="approve" name="realifapprove" type="string"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <exclusiveGateway id="exgw1"></exclusiveGateway>
+    <userTask id="pjreport" name="生成报告" activiti:assignee="wym"></userTask>
+    <endEvent id="realend" name="结束节点"></endEvent>
+    <sequenceFlow id="flow_1" sourceRef="realstart" targetRef="pjstart"></sequenceFlow>
+    <sequenceFlow id="flow_2" sourceRef="pjstart" targetRef="pjstartnotify"></sequenceFlow>
+    <sequenceFlow id="flow_3" sourceRef="pjstartnotify" targetRef="preaudit"></sequenceFlow>
+    <sequenceFlow id="flow_4" sourceRef="preaudit" targetRef="pjpreauditcheck"></sequenceFlow>
+    <sequenceFlow id="flow_5" sourceRef="pjpreauditcheck" targetRef="exgw1"></sequenceFlow>
+    <sequenceFlow id="flow_7" sourceRef="pjreport" targetRef="realend"></sequenceFlow>
+    <sequenceFlow id="flow_6_1" name="未通过" sourceRef="exgw1" targetRef="preaudit">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approve==1}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_6_2" name="通过" sourceRef="exgw1" targetRef="pjreport">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approve==2}]]></conditionExpression>
+    </sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_jc_demo">
+    <bpmndi:BPMNPlane bpmnElement="jc_demo" id="BPMNPlane_jc_demo">
+      <bpmndi:BPMNShape bpmnElement="realstart" id="BPMNShape_realstart">
+        <omgdc:Bounds height="30.0" width="30.0" x="75.0" y="65.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="pjstart" id="BPMNShape_pjstart">
+        <omgdc:Bounds height="40.0" width="152.0" x="165.0" y="60.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="pjstartnotify" id="BPMNShape_pjstartnotify">
+        <omgdc:Bounds height="63.0" width="183.0" x="360.0" y="48.5"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="preaudit" id="BPMNShape_preaudit">
+        <omgdc:Bounds height="40.0" width="119.0" x="600.0" y="60.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="pjpreauditcheck" id="BPMNShape_pjpreauditcheck">
+        <omgdc:Bounds height="45.0" width="136.0" x="591.5" y="180.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exgw1" id="BPMNShape_exgw1">
+        <omgdc:Bounds height="40.0" width="40.0" x="639.5" y="285.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="pjreport" id="BPMNShape_pjreport">
+        <omgdc:Bounds height="40.0" width="134.0" x="360.0" y="285.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="realend" id="BPMNShape_realend">
+        <omgdc:Bounds height="28.0" width="28.0" x="76.0" y="291.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow_1" id="BPMNEdge_flow_1">
+        <omgdi:waypoint x="105.0" y="80.0"></omgdi:waypoint>
+        <omgdi:waypoint x="165.0" y="80.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow_2" id="BPMNEdge_flow_2">
+        <omgdi:waypoint x="317.0" y="80.0"></omgdi:waypoint>
+        <omgdi:waypoint x="360.0" y="80.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow_6_1" id="BPMNEdge_flow_6_1">
+        <omgdi:waypoint x="679.5" y="305.0"></omgdi:waypoint>
+        <omgdi:waypoint x="819.0" y="305.0"></omgdi:waypoint>
+        <omgdi:waypoint x="819.0" y="80.0"></omgdi:waypoint>
+        <omgdi:waypoint x="719.0" y="80.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow_3" id="BPMNEdge_flow_3">
+        <omgdi:waypoint x="543.0" y="80.0"></omgdi:waypoint>
+        <omgdi:waypoint x="600.0" y="80.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow_4" id="BPMNEdge_flow_4">
+        <omgdi:waypoint x="659.5" y="100.0"></omgdi:waypoint>
+        <omgdi:waypoint x="659.5" y="180.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow_5" id="BPMNEdge_flow_5">
+        <omgdi:waypoint x="659.5" y="225.0"></omgdi:waypoint>
+        <omgdi:waypoint x="659.5" y="285.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow_7" id="BPMNEdge_flow_7">
+        <omgdi:waypoint x="360.0" y="305.0"></omgdi:waypoint>
+        <omgdi:waypoint x="104.0" y="305.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow_6_2" id="BPMNEdge_flow_6_2">
+        <omgdi:waypoint x="639.5" y="305.0"></omgdi:waypoint>
+        <omgdi:waypoint x="494.0" y="305.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

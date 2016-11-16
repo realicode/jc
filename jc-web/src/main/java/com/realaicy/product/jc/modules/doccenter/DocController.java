@@ -1,6 +1,7 @@
 package com.realaicy.product.jc.modules.doccenter;
 
 import com.realaicy.lib.core.mapper.JsonMapper;
+import com.realaicy.lib.core.orm.jpa.search.BaseSpecificationsBuilder;
 import com.realaicy.product.jc.common.exception.SaveNewException;
 import com.realaicy.product.jc.modules.doccenter.model.DocRes;
 import com.realaicy.product.jc.modules.doccenter.model.vo.DocVO;
@@ -9,6 +10,7 @@ import com.realaicy.product.jc.realglobal.web.TreeController;
 import com.realaicy.product.jc.uitl.SpringSecurityUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -85,6 +87,29 @@ public class DocController extends TreeController<DocRes, BigInteger, DocVO> {
     }
 
     @Override
+    protected void extendSave(DocRes po, BigInteger updateID, BigInteger pid) {
+        super.extendSave(po, updateID, pid);
+
+
+        DocRes parent = docService.findOne(pid);
+        po.setParent(parent);
+        po.setDeleteFlag(false);
+
+        po.setFolder(true);
+        po.setOrgID(parent.getOrgID());
+
+        final BaseSpecificationsBuilder<DocRes> builder = new BaseSpecificationsBuilder<>();
+        builder.with("cascadeID", ":", parent.getCascadeID(), "", "*");
+        final Specification<DocRes> spec = builder.build();
+        Long childSize = docService.count(spec);
+        if (childSize == 1) {
+            po.setCascadeID(parent.getCascadeID() + ".001");
+        } else {
+            po.setCascadeID(parent.getCascadeID() + "." + String.format("%03d", childSize));
+        }
+    }
+
+    @Override
     public BigInteger getRealID() {
         //noinspection ConstantConditions
         BigInteger orgID = SpringSecurityUtil.getCurrentRealUserDetails().getOrgID();
@@ -94,7 +119,7 @@ public class DocController extends TreeController<DocRes, BigInteger, DocVO> {
     @Override
     protected void InternalSaveNew(DocVO realmodel, BigInteger updateID, BigInteger pid) throws SaveNewException {
         if (docService.findByNameWithInAParent(realmodel.getName(), pid) != null)
-            throw new SaveNewException("error组织名称已存在!");
+            throw new SaveNewException("error文档目录已存在!");
 
 
     }
@@ -106,9 +131,12 @@ public class DocController extends TreeController<DocRes, BigInteger, DocVO> {
 
         if (docResTemp != null
                 && !Objects.equals(docResTemp.getId(), updateID))
-            throw new SaveNewException("error组织名称已存在!");
+            throw new SaveNewException("error文档目录已存在!");
 
         BeanUtils.copyProperties(realmodel, docRes, getNullPropertyNames(realmodel));
         return docRes;
     }
+
+
+
 }
