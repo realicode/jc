@@ -808,7 +808,7 @@ function runAllForms() {
      * Usage:
      * Dependency: js/plugin/select2/
      */
-    if ($.fn.select2) {
+    /*if ($.fn.select2) {
         $('select.select2').each(function () {
             var $this = $(this),
                 width = $this.attr('data-select-width') || '100%';
@@ -822,7 +822,7 @@ function runAllForms() {
             //clear memory reference
             $this = null;
         });
-    }
+    }*/
 
     /*
      * MASKING
@@ -1854,13 +1854,13 @@ function loadURL(url, container) {
 
                 // destroy form controls: Datepicker, select2, autocomplete, mask, bootstrap slider
 
-                if ($.fn.select2 && $("#content select.select2")[0]) {
+               /* if ($.fn.select2 && $("#content select.select2")[0]) {
                     $("#content select.select2").select2('destroy');
 
                     if (debugState) {
                         root.console.log("✔ Select2 destroyed!");
                     }
-                }
+                }*/
 
                 if ($.fn.mask && $('#content [data-mask]')[0]) {
                     $('#content [data-mask]').unmask();

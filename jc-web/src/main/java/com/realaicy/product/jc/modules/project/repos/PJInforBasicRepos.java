@@ -1,7 +1,7 @@
 package com.realaicy.product.jc.modules.project.repos;
 
 import com.realaicy.lib.core.orm.jpa.BaseRepository;
-import com.realaicy.product.jc.modules.project.model.ProjectInfo;
+import com.realaicy.product.jc.modules.project.model.PJInforBasic;
 
 import java.math.BigInteger;
 
@@ -9,6 +9,6 @@ import java.math.BigInteger;
  * Created by realaicy on 2016/3/13.
  * XXX
  */
-public interface ProjectInfoRepos extends BaseRepository<ProjectInfo, BigInteger> {
+public interface PJInforBasicRepos extends BaseRepository<PJInforBasic, BigInteger> {
 
 }

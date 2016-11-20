@@ -1,18 +1,15 @@
 package com.realaicy.product.jc.common.wf.temp;
 
 import com.realaicy.product.jc.Application;
-import com.realaicy.product.jc.modules.project.model.ProjectInfo;
-import com.realaicy.product.jc.modules.project.repos.ProjectInfoRepos;
+import com.realaicy.product.jc.modules.project.model.PJInforBasic;
+import com.realaicy.product.jc.modules.project.repos.PJInforBasicRepos;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
-import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +17,6 @@ import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.subethamail.wiser.Wiser;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -46,7 +42,7 @@ public class SimpleJCTest {
     private HistoryService historyService;
 
     @Autowired
-    private ProjectInfoRepos projectInfoRepos;
+    private PJInforBasicRepos PJInforBasicRepos;
 
     @Autowired
     private RepositoryService repositoryService;
@@ -69,14 +65,14 @@ public class SimpleJCTest {
     public void testHappyPath() {
 
         // Create test applicant
-        ProjectInfo projectInfo = new ProjectInfo();
-        projectInfo.setPjName("测试流程" + LocalDateTime.now());
-        ProjectInfo projectInfoSaved = projectInfoRepos.save(projectInfo);
+        PJInforBasic PJInforBasic = new PJInforBasic();
+        PJInforBasic.setPjName("测试流程" + LocalDateTime.now());
+        PJInforBasic PJInforBasicSaved = PJInforBasicRepos.save(PJInforBasic);
 
         // Start process instance
         Map<String, Object> variables = new HashMap<String, Object>();
-        variables.put("projectInfo", projectInfoSaved);
-        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("simplejc", projectInfoSaved.getId().toString(), variables);
+        variables.put("projectInfo", PJInforBasicSaved);
+        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("simplejc", PJInforBasicSaved.getId().toString(), variables);
 
         // First, the 'phone interview' should be active
         Task task = taskService.createTaskQuery()

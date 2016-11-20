@@ -31,7 +31,7 @@ public class DashBoardController {
     }
 
     @RequestMapping("/map")
-    public String f3() {
+    public String mapData() {
 
         return "dashboard/map";
     }

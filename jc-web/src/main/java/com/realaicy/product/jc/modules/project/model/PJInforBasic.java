@@ -1,6 +1,6 @@
 package com.realaicy.product.jc.modules.project.model;
 
-import com.realaicy.lib.core.orm.jpa.entity.CommonEntity;
+import com.realaicy.lib.core.orm.jpa.entity.CommonDeletableEntity;
 import com.realaicy.product.jc.modules.system.model.User;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -10,11 +10,11 @@ import java.math.BigInteger;
 import java.util.Date;
 
 /**
- * 文档实体类
+ * 实体类
  */
 @Entity
-@Table(name = "jc_pj_info")
-public class ProjectInfo extends CommonEntity<BigInteger> {
+@Table(name = "jc_pj_info_basic")
+public class PJInforBasic extends CommonDeletableEntity<BigInteger> {
 
 
     /**
@@ -31,10 +31,15 @@ public class ProjectInfo extends CommonEntity<BigInteger> {
     private String pjContractUri;
 
     /**
-     * 申请单位联系人电话
+     * 稽查工作流ID
      */
-    @Column(name = "PJManagerTEL")
-    private String pjManagerTel;
+    @Column(name = "WFDEFID")
+    private String wfID;
+    /**
+     * 稽查工作检查项模板ID
+     */
+    @Column(name = "CHKTEPID")
+    private String chkTepID;
     /**
      * 项目预算
      */
@@ -44,7 +49,7 @@ public class ProjectInfo extends CommonEntity<BigInteger> {
     /**
      * 项目启动时间
      */
-    @Column(name = "PJSTARTDATE")
+    @Column(name = "STARTDATE")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Temporal(TemporalType.TIMESTAMP)
     private Date pjStartDate;
@@ -52,7 +57,7 @@ public class ProjectInfo extends CommonEntity<BigInteger> {
     /**
      * 项目截止时间
      */
-    @Column(name = "PJDEADLINEDATE")
+    @Column(name = "DEADLINEDATE")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Temporal(TemporalType.TIMESTAMP)
     private Date pjDeadlineDate;
@@ -62,7 +67,6 @@ public class ProjectInfo extends CommonEntity<BigInteger> {
      */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "MANAGERID")
-
     private User manager;
 
     public User getManager() {
@@ -87,15 +91,6 @@ public class ProjectInfo extends CommonEntity<BigInteger> {
 
     public void setPjContractUri(String pjContractUri) {
         this.pjContractUri = pjContractUri;
-    }
-
-
-    public String getPjManagerTel() {
-        return pjManagerTel;
-    }
-
-    public void setPjManagerTel(String pjManagerTel) {
-        this.pjManagerTel = pjManagerTel;
     }
 
     public int getBudget() {

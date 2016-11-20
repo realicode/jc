@@ -1,5 +1,3 @@
-
-
 <div class="row" xmlns:th="http://www.thymeleaf.org">
     <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
         <h1 class="page-title txt-color-blueDark"><i class="fa fa-pencil-square-o fa-fw "></i> 项目管理 <span>>
@@ -54,8 +52,10 @@
                     <div class="widget-body">
 
                         <div class="row">
-                            <form  novalidate="novalidate" th:object="${realmodel}" method="POST" th:action="@{/system/org/save}"
-                                   id="realentity">
+                            <!--/*@thymesVar id="realmodel" type=""*/-->
+                            <form novalidate="novalidate" th:object="${realmodel}" method="POST"
+                                  th:action="@{/project/infor/basic/save}"
+                                  id="realentity" xmlns:th="http://www.thymeleaf.org">
                                 <div id="bootstrap-wizard-1" class="col-sm-12">
                                     <div class="form-bootstrapWizard">
                                         <ul class="bootstrapWizard form-wizard">
@@ -97,43 +97,59 @@
                                                             <label class="col-md-2 control-label"
                                                                    style="padding-top: 6px">项目名称：</label>
                                                             <div class="col-md-10">
-                                                                <input class="form-control"
-                                                                       placeholder="项目名称" type="text">
+                                                                <input class="form-control" name="pjName"
+                                                                       th:field="*{pjName}"
+                                                                       placeholder="项目名称" type="text"
+                                                                       data-rule-required="true"
+                                                                       data-msg-required="项目名称">
                                                             </div>
+                                                            <input id="updateflag" name="updateflag" type="hidden" th:value="${realneworupdate}">
+
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="row">
                                                     <div class="col-sm-12" style="margin-bottom: 10px">
                                                         <div class="form-group">
                                                             <label class="col-md-2 control-label"
                                                                    style="padding-top: 6px">项目预算：</label>
                                                             <div class="col-md-10">
                                                                 <input class="form-control"
-                                                                       placeholder="项目预算" type="text">
+                                                                       placeholder="项目预算" type="text" name="budget"
+                                                                       th:field="*{budget}"
+                                                                       data-rule-required="true"
+                                                                       data-msg-required="项目预算">
                                                             </div>
                                                         </div>
                                                     </div>
-
+                                                </div>
+                                                <div class="row">
                                                     <div class="col-sm-12" style="margin-bottom: 10px">
                                                         <div class="form-group">
                                                             <label class="col-md-2 control-label"
                                                                    style="text-align: left ;padding-top: 6px">请选择项目经理：</label>
 
                                                             <div class="col-md-10">
-                                                                <select class="js-example-data-array" style="width: 50%"></select>
+                                                                <select class="js-data-example-ajax"
+                                                                        style="width: 50%"></select>
                                                             </div>
 
 
                                                         </div>
                                                     </div>
-
+                                                </div>
+                                                <div class="row">
                                                     <div class="col-sm-12">
                                                         <label>请选择项目生命周期起止时间:</label>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
                                                             <div class="input-group">
-                                                                <input type="text" name="mystartdate" placeholder="开始时间" class="form-control datepicker" data-dateformat="dd/mm/yy">
-                                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                                <input type="text" name="mystartdate" placeholder="开始时间"
+                                                                       class="form-control datepicker"
+                                                                       data-dateformat="dd/mm/yy">
+                                                                <span class="input-group-addon"><i
+                                                                        class="fa fa-calendar"></i></span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -141,14 +157,18 @@
 
                                                         <div class="form-group">
                                                             <div class="input-group">
-                                                                <input type="text" name="myenddate" placeholder="结束时间" class="form-control datepicker" data-dateformat="dd/mm/yy">
-                                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                                <input type="text" name="myenddate" placeholder="结束时间"
+                                                                       class="form-control datepicker"
+                                                                       data-dateformat="dd/mm/yy">
+                                                                <span class="input-group-addon"><i
+                                                                        class="fa fa-calendar"></i></span>
                                                             </div>
                                                         </div>
 
                                                     </div>
 
                                                 </div>
+
 
                                             </fieldset>
 
@@ -400,15 +420,18 @@
                                             <br>
                                             <h4><strong>Step 5</strong> - 确认保存</h4>
                                             <br>
-                                            <div class="input-group">
-                                                <div class="input-group-btn">
-                                                    <a href="javascript:void(0);" id="btnNew"
-                                                       class="btn btn-labeled btn-primary"> <span
-                                                            class="btn-label"><i
-                                                            class="glyphicon glyphicon-ok"></i></span>创建项目
-                                                    </a>
-                                                </div>
-                                            </div>
+                                            <fieldset style="padding-top: 2px">
+                                                <section class="col col-6" align="right" style="padding-top: 6px">
+                                                    <button type="reset" class="btn btn-primary"
+                                                            style="height: 32px;width: 80px;font-size: 13px;margin-right: 20px">
+                                                        重置数据
+                                                    </button>
+                                                    <button type="submit" class="btn btn-primary"
+                                                            style="height: 32px;width: 80px">
+                                                        提交数据
+                                                    </button>
+                                                </section>
+                                            </fieldset>
                                             <br>
                                             <br>
                                         </div>
@@ -422,20 +445,25 @@
                                                         </li>-->
                                                         <li class="previous disabled">
                                                             <a href="javascript:void(0);"
-                                                               class="btn btn-lg btn-default"> 上一步 </a>
+                                                               class="btn btn-lg btn-default"> Previous </a>
+                                                        </li>
+                                                        <li>
+                                                            <section class="col col-6">
+                                                                <span id="realerrormsg"></span>
+                                                            </section>
                                                         </li>
                                                         <!--<li class="next last">
                                                         <a href="javascript:void(0);" class="btn btn-lg btn-primary"> Last </a>
                                                         </li>-->
                                                         <li class="next">
                                                             <a href="javascript:void(0);"
-                                                               class="btn btn-lg txt-color-darken"> 下一步 </a>
+                                                               class="btn btn-lg txt-color-darken" id="realnext">
+                                                                Next </a>
                                                         </li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </form>
@@ -464,18 +492,47 @@
 
     pageSetUp();
 
-    // pagefunction
-
     var pagefunction = function () {
 
-        loadScript("realaicy/js/s2/select2.full.min.js",runs2);
 
-        function runs2(){
-            var data = [{ id: 0, text: '王雨萌' }, { id: 1, text: '刘备' }, { id: 2, text: '关羽' }, { id: 3, text: '司马无敌' }, { id: 4, text: '刘旭东' }];
+        loadScript("realaicy/js/s2/select2.full.min.js", runs2);
 
-            $(".js-example-data-array").select2({
-                data: data
-            })
+        function runs2() {
+            var data = [{id: 0, text: '王雨萌'}, {id: 1, text: '刘备'}, {id: 2, text: '关羽'}, {id: 3, text: '司马无敌'}, {
+                id: 4,
+                text: '刘旭东'
+            }];
+
+            $(".js-data-example-ajax").select2({
+                ajax: {
+                    url: "https://api.github.com/search/repositories",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            q: 'android', // search term
+                            page: '1'
+                        };
+                    },
+                    processResults: function (data, params) {
+                        // parse the results into the format expected by Select2
+                        // since we are using custom formatting functions we do not need to
+                        // alter the remote JSON data, except to indicate that infinite
+                        // scrolling can be used
+                        params.page = params.page || 1;
+
+                        return {
+                            results: data.items,
+                            pagination: {
+                                more: (params.page * 30) < data.total_count
+                            }
+                        };
+                    },
+                    cache: true
+                },
+                escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                minimumInputLength: 1,
+            });
         }
 
         loadScript("smartadmin/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js", runBootstrapWizard);
@@ -485,14 +542,19 @@
         function runBootstrapWizard() {
 
             var $validator = $("#realentity").validate({
-
-                rules: {
+                invalidHandler: function (event, validator) {
+                    var errors = validator.numberOfInvalids();
+                    if (errors) {
+                        var message = errors == 1
+                                ? 'You missed 1 field. It has been highlighted'
+                                : 'You missed ' + errors + ' fields. They have been highlighted';
+                        $("#realerrormsg").html(message);
+                    } else {
+                        $("div.error").hide();
+                    }
                 },
-
-                messages: {
-
-                },
-
+                errorLabelContainer: "#realerrormsg",
+                //wrapper: "li",
                 highlight: function (element) {
                     $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
                 },
@@ -501,19 +563,72 @@
                 },
                 errorElement: 'span',
                 errorClass: 'help-block',
+                wrapper: "li",
                 errorPlacement: function (error, element) {
                     if (element.parent('.input-group').length) {
                         error.insertAfter(element.parent());
                     } else {
                         error.insertAfter(element);
                     }
+                },
+                rules: {
+                    pjName: {
+                        required: true
+                    },
+                    budget: {
+                        required: true
+                    }
+                },
+                messages: {
+                    username: {
+                        required: '请输入项目名称'
+                    },
+                    budget: {
+                        required: '请输入项目预算'
+                    }
+                },
+                submitHandler: function (form) {
+                    if ($("#updateflag").val() == "new") {
+                        $.ajax({
+                            url: form.action,
+                            type: form.method,
+                            data: $(form).serialize(),
+                            success: function (response) {
+                                if (response == "ok") {
+                                    real_g_success("创建项目成功！");
+                                }
+                                else {
+                                    real_g_fail(response);
+                                }
+                            }
+                        });
+                    } else {
+                        $("#updateflag").attr("value", 'editedit');
+                        $.ajax({
+                            url: form.action,
+                            type: form.method,
+                            data: $(form).serialize(),
+                            success: function (response) {
+                                if (response == "ok") {
+                                    real_g_success("修改用户成功！");
+                                } else {
+                                    real_g_fail(response);
+                                }
+                            }
+                        });
+                    }
                 }
             });
+
 
             $('#bootstrap-wizard-1').bootstrapWizard({
 
                 'tabClass': 'form-wizard',
                 'onNext': function (tab, navigation, index) {
+                    if (index == 4) {
+                        $('#realnext').attr('disabled', "true");
+                        $('#realnext').removeAttr('onclick');//去掉a标签中的href属性
+                    }
                     var $valid = $("#realentity").valid();
                     if (!$valid) {
                         $validator.focusInvalid();
@@ -521,14 +636,51 @@
                     } else {
                         $('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).addClass('complete');
                         $('bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).find('.step').html('<i class="fa fa-check"></i>');
+                        console.log("ok " + index)
                     }
                 }
             });
         }
     };
+
+    pagefunction();
     // end pagefunction
 
     // Load bootstrap wizard dependency then run pagefunction
     // pagefunction();
-    pagefunction();
+
+
+/*
+    $.ajax({
+        url:'/project/infor/basic/m2',
+        type:'GET', //GET
+        async:true,    //或false,是否异步
+        data:{
+            name:'yang',age:25
+        },
+        timeout:5000,    //超时时间
+        dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+        beforeSend:function(xhr){
+//            console.log(xhr)
+//            console.log('发送前')
+        },
+        success:function(data,textStatus,jqXHR){
+            console.log(data);
+            reals2data = data;
+//            console.log(textStatus)
+//            console.log(jqXHR)
+
+        },
+        error:function(xhr,textStatus){
+            console.log('错误')
+            console.log(xhr)
+            console.log(textStatus)
+        },
+        complete:function(){
+//            console.log('结束');
+            pagefunction();
+        }
+    })
+*/
+
 </script>

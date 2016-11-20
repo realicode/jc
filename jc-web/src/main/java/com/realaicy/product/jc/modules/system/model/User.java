@@ -9,7 +9,7 @@ package com.realaicy.product.jc.modules.system.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.realaicy.lib.core.orm.jpa.entity.CommonDeletableEntity;
 import com.realaicy.lib.core.orm.plugin.IOrgRestricted;
-import com.realaicy.product.jc.modules.project.model.ProjectInfo;
+import com.realaicy.product.jc.modules.project.model.PJInforBasic;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -100,7 +100,7 @@ public class User extends CommonDeletableEntity<BigInteger> implements IOrgRestr
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "manager")
     @JsonIgnore
-    private List<ProjectInfo> projects;
+    private List<PJInforBasic> projects;
 
     public String getRolenames() {
         return rolenames;
