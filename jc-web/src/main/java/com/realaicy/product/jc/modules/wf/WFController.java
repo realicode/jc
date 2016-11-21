@@ -3,8 +3,12 @@ package com.realaicy.product.jc.modules.wf;
 import com.google.common.base.Joiner;
 import com.realaicy.lib.core.orm.jpa.search.BaseSpecificationsBuilder;
 import com.realaicy.lib.core.orm.jpa.search.SearchOperation;
+import com.realaicy.product.jc.modules.system.model.Role;
+import com.realaicy.product.jc.modules.system.service.UserService;
+import com.realaicy.product.jc.uitl.SpringSecurityUtil;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.repository.ProcessDefinitionQuery;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +17,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.math.BigInteger;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,6 +34,10 @@ public class WFController {
 
     @Autowired
     private RepositoryService repositoryService;
+    @Autowired
+    private TaskService taskService;
+    @Autowired
+    private UserService userService;
 
     static final private String[] nameDic = {"id", "deploymentId", "name", "key"};
 
@@ -48,8 +51,27 @@ public class WFController {
     }
 
     @RequestMapping(value = "/task/page", method = RequestMethod.GET)
-    public String listTaskPage() {
+    public String listTaskPage(Model model) {
+        Set<Role> roles =userService.findOne(SpringSecurityUtil.getCurrentRealUserDetails().getId()).getRoles();
+        model.addAttribute("realroles",roles);
+        model.addAttribute("username",SpringSecurityUtil.getCurrentRealUserDetails().getUsername());
+
         return "wf/task/page";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/task/claim/{taskid}", method = RequestMethod.GET)
+    public String claimTask(@PathVariable("taskid") final String taskid) {
+        taskService.claim(taskid,SpringSecurityUtil.getCurrentRealUserDetails().getUsername());
+
+        return "ok";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/task/complete/{taskid}", method = RequestMethod.GET)
+    public String completeTask(@PathVariable("taskid") final String taskid) {
+        taskService.complete(taskid);
+        return "ok";
     }
 
 

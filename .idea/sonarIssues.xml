@@ -153,6 +153,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/jc-web/src/main/java/com/realaicy/product/jc/modules/project/ProjectController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/jc-web/src/main/java/com/realaicy/product/jc/modules/project/model/PJApply.java">
           <value>
             <set />
@@ -413,6 +418,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/jc-web/src/main/java/com/realaicy/product/jc/realglobal/web/CRUDWithVOController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/jc-web/src/main/java/com/realaicy/product/jc/realglobal/web/TreeController.java">
           <value>
             <set />
@@ -563,6 +573,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/jc-web/src/main/resources/templates/project/wf/start.html">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/jc-web/src/main/resources/templates/system/org/add.html">
           <value>
             <set />
@@ -604,6 +619,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/jc-web/src/main/resources/templates/system/user/user2role.html">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/jc-web/src/main/resources/templates/temp/blank.html">
           <value>
             <set />
           </value>

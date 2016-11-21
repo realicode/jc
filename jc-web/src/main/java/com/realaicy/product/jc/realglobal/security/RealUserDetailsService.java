@@ -49,7 +49,8 @@ public class RealUserDetailsService implements UserDetailsService {
                     StringBuilder commaBuilder = new StringBuilder();
                     for (Role role : userSec.getRoles()) {
                         commaBuilder.append(role.getName()).append(",");
-                        Collections.addAll(realAuthorities, role.getRealauthorities().split(","));
+                        if(role.getRealauthorities()!=null && role.getRealauthorities()!="")
+                            Collections.addAll(realAuthorities, role.getRealauthorities().split(","));
                     }
                     String authorities = commaBuilder.substring(0, commaBuilder.length() - 1);
                     grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);

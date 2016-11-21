@@ -8,9 +8,9 @@
 			
 			<!-- PAGE HEADER -->
 			<i class="fa-fw fa fa-home"></i> 
-				工作流演示
+				项目流程演示
 			<span>>  
-				项目启动
+				项目启动会
 			</span>
 		</h1>
 	</div>
@@ -59,7 +59,7 @@
 				-->
 				<header>
 					<span class="widget-icon"> <i class="fa fa-comments"></i> </span>
-					<h2>项目启动表单</h2>
+					<h2>项目启动会表单</h2>
 					
 				</header>
 
@@ -75,11 +75,36 @@
 					
 					<!-- widget content -->
 					<div class="widget-body">
-						
-						<!-- this is what the user will see -->
 
+						<div class="row">
+							<div class="col-sm-12" style="margin-bottom: 10px">
+								<div class="form-group">
+									<label class="col-md-2 control-label"
+										   style="padding-top: 6px">启动说明：</label>
+									<div class="col-md-10">
+										<input class="form-control" name="pjName"
+											   placeholder="启动说明" type="text"
+											   data-rule-required="true"
+											   data-msg-required="启动说明">
+									</div>
+
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<fieldset style="padding-top: 2px">
+								<section class="col col-6" align="left" style="padding-top: 6px;padding-left: 10px">
+
+									<button data-loading-text="&lt;i class='fa fa-refresh fa-spin'&gt;&lt;/i&gt; &nbsp; 努力工作中..." class="btn btn-primary" type="submit"
+											id="btnStart" onclick="realStart()">
+										启动项目 <i class="fa fa-arrow-circle-right fa-lg"></i>
+									</button>
+								</section>
+							</fieldset>
+
+						</div>
 					</div>
-					<!-- end widget content -->
+						<!-- end widget content -->
 					
 				</div>
 				<!-- end widget div -->
@@ -112,6 +137,9 @@
 
 <script type="text/javascript">
 	
+	var realdata ="processDefinitionKey=jc_demo&businessKey=myBusinessKey";
+
+	
 	/* DO NOT REMOVE : GLOBAL FUNCTIONS!
 	 *
 	 * pageSetUp(); WILL CALL THE FOLLOWING FUNCTIONS
@@ -143,6 +171,31 @@
 	 */
 
 	pageSetUp();
+	
+	function realStart() {
+		console.log("aaaa");
+		$.ajax({
+			url:'project/wf/start',
+			type:'POST', //GET
+			'beforeSend': function (request) {
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				request.setRequestHeader(header, token);
+			},
+
+			data:realdata,
+			timeout:5000,    //超时时间
+			//dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+
+			success:function(data,textStatus,jqXHR){
+				console.log($.param(data));
+			},
+			error:function(xhr,textStatus){
+			},
+			complete:function(){
+			}
+		})
+	}
 	
 	/*
 	 * ALL PAGE RELATED SCRIPTS CAN GO BELOW HERE
