@@ -20,4 +20,7 @@ public interface UserService extends BaseServiceWithVO<User, BigInteger, UserVO>
 
     List<User> findByUsernameContaining(String username);
 
+    List<User> findByRoleID( BigInteger roleid);
+
+
 }

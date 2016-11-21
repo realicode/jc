@@ -1,6 +1,11 @@
 package com.realaicy.product.jc.modules.system.web;
 
+import com.google.common.base.Joiner;
 import com.realaicy.lib.core.mapper.JsonMapper;
+import com.realaicy.lib.core.orm.jpa.search.BaseSpecificationsBuilder;
+import com.realaicy.lib.core.orm.jpa.search.SearchOperation;
+import com.realaicy.lib.core.orm.plugin.IOrgRestricted;
+import com.realaicy.lib.core.orm.plugin.LogicDeletable;
 import com.realaicy.product.jc.common.exception.SaveNewException;
 import com.realaicy.product.jc.modules.system.model.Org;
 import com.realaicy.product.jc.modules.system.model.Role;
@@ -9,11 +14,16 @@ import com.realaicy.product.jc.modules.system.model.UserSec;
 import com.realaicy.product.jc.modules.system.model.vo.User2RoleVO;
 import com.realaicy.product.jc.modules.system.model.vo.UserVO;
 import com.realaicy.product.jc.modules.system.repos.UserSecRepos;
+import com.realaicy.product.jc.modules.system.service.OrgService;
 import com.realaicy.product.jc.modules.system.service.RoleService;
 import com.realaicy.product.jc.modules.system.service.UserService;
 import com.realaicy.product.jc.realglobal.web.CRUDWithVOController;
+import com.realaicy.product.jc.uitl.SpringSecurityUtil;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +32,8 @@ import org.springframework.web.bind.annotation.*;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by realaicy on 16/7/15.
@@ -36,6 +48,8 @@ public class UserController extends CRUDWithVOController<User, BigInteger, UserV
 
 
     private UserService userService;
+    private OrgService orgService;
+
     private RoleService roleService;
     static final private String[] nameDic = {"username", "password", "nickname", "createTime"};
     @SuppressWarnings("unused")
@@ -49,13 +63,14 @@ public class UserController extends CRUDWithVOController<User, BigInteger, UserV
 
 
     @Autowired
-    public UserController(UserService userService, RoleService roleService, PasswordEncoder bcryptEncoder, UserSecRepos userSecRepos) {
+    public UserController(UserService userService, RoleService roleService, OrgService orgService,PasswordEncoder bcryptEncoder, UserSecRepos userSecRepos) {
         super(userService, "user", nameDic, pageUrl, newEntityUrl, editEntityUrl,
                 listEntityUrl, searchEntityUrl, User.class, UserVO.class, editBindWhiteList);
         this.userService = userService;
         this.roleService = roleService;
         this.bcryptEncoder = bcryptEncoder;
         this.userSecRepos = userSecRepos;
+        this.orgService = orgService;
     }
 
     private final PasswordEncoder bcryptEncoder;

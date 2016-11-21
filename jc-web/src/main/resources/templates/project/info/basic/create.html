@@ -1,3 +1,12 @@
+<link rel="stylesheet" xmlns:th="http://www.thymeleaf.org"
+      th:href="@{/realaicy/css/s2/select2.min.css}"
+      href="../../../../static/realaicy/css/s2/select2.min.css"/>
+<link rel="stylesheet" xmlns:th="http://www.thymeleaf.org"
+      th:href="@{/realaicy/css/bootstrap-datepicker.css}"
+      href="../../../../static/realaicy/css/bootstrap-datepicker.css"/>
+
+
+
 <div class="row" xmlns:th="http://www.thymeleaf.org">
     <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
         <h1 class="page-title txt-color-blueDark"><i class="fa fa-pencil-square-o fa-fw "></i> 项目管理 <span>>
@@ -130,8 +139,9 @@
                                                                    style="text-align: left ;padding-top: 6px">请选择项目经理：</label>
 
                                                             <div class="col-md-10">
-                                                                <select class="js-data-example-ajax"
-                                                                        style="width: 50%"></select>
+                                                                <select  name="managerID" th:field="*{managerID}" id="managerID" style="width: 50%;">
+
+                                                                </select>
                                                             </div>
 
 
@@ -145,21 +155,19 @@
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
                                                             <div class="input-group">
-                                                                <input type="text" name="mystartdate" placeholder="开始时间"
-                                                                       class="form-control datepicker"
-                                                                       data-dateformat="dd/mm/yy">
+                                                                <input type="text" name="pjStartDate" id="pjStartDate"  th:field="*{pjStartDate}" placeholder="开始时间"
+                                                                       class="form-control">
                                                                 <span class="input-group-addon"><i
                                                                         class="fa fa-calendar"></i></span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
-
                                                         <div class="form-group">
                                                             <div class="input-group">
-                                                                <input type="text" name="myenddate" placeholder="结束时间"
-                                                                       class="form-control datepicker"
-                                                                       data-dateformat="dd/mm/yy">
+                                                                <input type="text" name="pjDeadlineDate"  id="pjDeadlineDate"  th:field="*{pjDeadlineDate}" placeholder="结束时间"
+                                                                       class="form-control"
+                                                                       >
                                                                 <span class="input-group-addon"><i
                                                                         class="fa fa-calendar"></i></span>
                                                             </div>
@@ -421,14 +429,17 @@
                                             <h4><strong>Step 5</strong> - 确认保存</h4>
                                             <br>
                                             <fieldset style="padding-top: 2px">
-                                                <section class="col col-6" align="right" style="padding-top: 6px">
+                                                <section class="col col-6" align="left" style="padding-top: 6px">
                                                     <button type="reset" class="btn btn-primary"
                                                             style="height: 32px;width: 80px;font-size: 13px;margin-right: 20px">
                                                         重置数据
                                                     </button>
-                                                    <button type="submit" class="btn btn-primary"
+                                                   <!-- <button type="submit" class="btn btn-primary"
                                                             style="height: 32px;width: 80px">
                                                         提交数据
+                                                    </button>-->
+                                                    <button data-loading-text="&lt;i class='fa fa-refresh fa-spin'&gt;&lt;/i&gt; &nbsp; 努力创建中..." class="btn btn-primary" type="submit" id="btnsave">
+                                                        创建项目 <i class="fa fa-arrow-circle-right fa-lg"></i>
                                                     </button>
                                                 </section>
                                             </fieldset>
@@ -490,54 +501,33 @@
 
 <script type="text/javascript">
 
+    var reals2data;
+
     pageSetUp();
 
     var pagefunction = function () {
+
+        $('#pjStartDate').datepicker({
+            dateFormat: 'yy-mm-dd'
+        });
+        $('#pjDeadlineDate').datepicker({
+
+            dateFormat: 'yy-mm-dd'
+        });
+
+
 
 
         loadScript("realaicy/js/s2/select2.full.min.js", runs2);
 
         function runs2() {
-            var data = [{id: 0, text: '王雨萌'}, {id: 1, text: '刘备'}, {id: 2, text: '关羽'}, {id: 3, text: '司马无敌'}, {
-                id: 4,
-                text: '刘旭东'
-            }];
 
-            $(".js-data-example-ajax").select2({
-                ajax: {
-                    url: "https://api.github.com/search/repositories",
-                    dataType: 'json',
-                    delay: 250,
-                    data: function (params) {
-                        return {
-                            q: 'android', // search term
-                            page: '1'
-                        };
-                    },
-                    processResults: function (data, params) {
-                        // parse the results into the format expected by Select2
-                        // since we are using custom formatting functions we do not need to
-                        // alter the remote JSON data, except to indicate that infinite
-                        // scrolling can be used
-                        params.page = params.page || 1;
-
-                        return {
-                            results: data.items,
-                            pagination: {
-                                more: (params.page * 30) < data.total_count
-                            }
-                        };
-                    },
-                    cache: true
-                },
-                escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
-                minimumInputLength: 1,
+            $("#managerID").select2({
+                data:reals2data
             });
         }
 
         loadScript("smartadmin/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js", runBootstrapWizard);
-
-        //Bootstrap Wizard Validations
 
         function runBootstrapWizard() {
 
@@ -596,6 +586,11 @@
                             success: function (response) {
                                 if (response == "ok") {
                                     real_g_success("创建项目成功！");
+
+                                    // wait for animation to finish and execute send script
+                                    setTimeout(function (){
+                                        loadURL("dashboard/dashboard.html", $('#content'))
+                                    }, 1000); // how long do you want the delay to be?
                                 }
                                 else {
                                     real_g_fail(response);
@@ -643,16 +638,8 @@
         }
     };
 
-    pagefunction();
-    // end pagefunction
-
-    // Load bootstrap wizard dependency then run pagefunction
-    // pagefunction();
-
-
-/*
     $.ajax({
-        url:'/project/infor/basic/m2',
+        url:'/project/infor/basic/m3',
         type:'GET', //GET
         async:true,    //或false,是否异步
         data:{
@@ -661,26 +648,18 @@
         timeout:5000,    //超时时间
         dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
         beforeSend:function(xhr){
-//            console.log(xhr)
-//            console.log('发送前')
         },
         success:function(data,textStatus,jqXHR){
-            console.log(data);
-            reals2data = data;
-//            console.log(textStatus)
-//            console.log(jqXHR)
+            console.log("data:"+data);
+            console.log("data222:"+data.items);
 
+            reals2data = data.items;
         },
         error:function(xhr,textStatus){
-            console.log('错误')
-            console.log(xhr)
-            console.log(textStatus)
         },
         complete:function(){
-//            console.log('结束');
             pagefunction();
         }
     })
-*/
 
 </script>

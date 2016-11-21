@@ -862,11 +862,11 @@ function runAllForms() {
         });
     }
 
-    /*
+    /*/!*
      * JQUERY UI DATE
      * Dependency: js/libs/jquery-ui-1.10.3.min.js
      * Usage: <input class="datepicker" />
-     */
+     *!/
     if ($.fn.datepicker) {
         $('.datepicker').each(function () {
 
@@ -882,7 +882,7 @@ function runAllForms() {
             //clear memory reference
             $this = null;
         });
-    }
+    }*/
 
     /*
      * AJAX BUTTON LOADING TEXT
@@ -1870,14 +1870,14 @@ function loadURL(url, container) {
                     }
                 }
 
-                if ($.fn.datepicker && $('#content .datepicker')[0]) {
+                /*if ($.fn.datepicker && $('#content .datepicker')[0]) {
                     $('#content .datepicker').off();
                     $('#content .datepicker').remove();
 
                     if (debugState) {
                         root.console.log("✔ Datepicker destroyed!");
                     }
-                }
+                }*/
 
                 if ($.fn.slider && $('#content .slider')[0]) {
                     $('#content .slider').off();

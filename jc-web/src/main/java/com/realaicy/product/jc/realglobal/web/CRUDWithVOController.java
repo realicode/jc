@@ -11,6 +11,7 @@ import com.realaicy.lib.core.orm.plugin.LogicDeletable;
 import com.realaicy.lib.core.service.BaseServiceWithVO;
 import com.realaicy.product.jc.common.aop.annotations.Perfable;
 import com.realaicy.product.jc.common.exception.SaveNewException;
+import com.realaicy.product.jc.modules.system.model.Org;
 import com.realaicy.product.jc.modules.system.service.OrgService;
 import com.realaicy.product.jc.uitl.SpringSecurityUtil;
 import org.springframework.beans.BeanUtils;
@@ -116,10 +117,10 @@ public abstract class CRUDWithVOController<M extends BaseEntity<ID> & CommonData
                            @RequestParam(value = "pname", required = false) String pname) {
         if (!checkAuth("c", aClass.getSimpleName()))
             return noAuthViewName;
-
         try {
-            model.addAttribute("realmodel", aClass.newInstance());
-        } catch (InstantiationException | IllegalAccessException e) {
+            model.addAttribute("realmodel", voClass.newInstance());
+
+        } catch (IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
         }
         model.addAttribute("realneworupdate", "new");
@@ -224,13 +225,13 @@ public abstract class CRUDWithVOController<M extends BaseEntity<ID> & CommonData
                 //noinspection ConstantConditions
                 orgID = SpringSecurityUtil.getCurrentRealUserDetails().getOrgID().toString();
             }
-            //Org org = orgService.findOne(new BigInteger(orgID));
-            List<BigInteger> bigIntegersTemp = orgService.findAllChildIDs(
-                    orgService.findOne(new BigInteger(orgID)).getCascadeID());
+            String strTemp  = orgService.findOne(new BigInteger(orgID)).getCascadeID();
+
+            List<BigInteger> bigIntegersTemp = orgService.findAllChildIDs(strTemp);
+
             builder.with("orgID", "$",
                     bigIntegersTemp, "", "");
         }
-
 
         if (LogicDeletable.class.isAssignableFrom(aClass)) {
             builder.with("deleteFlag", ":", false, "", "");
@@ -304,6 +305,7 @@ public abstract class CRUDWithVOController<M extends BaseEntity<ID> & CommonData
                 po.setUpdaterID(po.getCreaterID());
 
                 extendSave(po, updateID, pid);
+                extendSave(po,realmodel);
                 service.save(po);
             } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
@@ -330,6 +332,9 @@ public abstract class CRUDWithVOController<M extends BaseEntity<ID> & CommonData
             return "ok";
         }// end of edit
         return null;
+    }
+
+    protected void extendSave(M po, V realmodel) {
     }
 
 

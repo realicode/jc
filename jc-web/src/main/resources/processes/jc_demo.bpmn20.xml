@@ -3,7 +3,7 @@
   <process id="jc_demo" name="稽查演示" isExecutable="true">
     <documentation>稽查演示</documentation>
     <startEvent id="realstart" name="开始节点"></startEvent>
-    <userTask id="pjstart" name="项目启动" activiti:candidateGroups="mishu"></userTask>
+    <userTask id="pjstart" name="项目启动" activiti:candidateGroups="demo_secretary"></userTask>
     <serviceTask id="pjstartnotify" name="项目启动会会议纪要 邮件方式通知到各个干系人" activiti:type="mail">
       <extensionElements>
         <activiti:field name="to">
@@ -20,7 +20,7 @@
         </activiti:field>
       </extensionElements>
     </serviceTask>
-    <userTask id="preaudit" name="预稽查" activiti:candidateGroups="yjcgroup"></userTask>
+    <userTask id="preaudit" name="预稽查" activiti:candidateGroups="demo_preaudit"></userTask>
     <userTask id="pjpreauditcheck" name="预稽查报告审批" activiti:assignee="doctoryan">
       <extensionElements>
         <activiti:formProperty id="approve" name="realifapprove" type="string"></activiti:formProperty>

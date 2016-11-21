@@ -27,6 +27,17 @@ public class PJInforBasicVO extends BaseVO<BigInteger> {
      * 稽查工作流ID
      */
     private String wfID;
+
+    BigInteger managerID;
+
+    public BigInteger getManagerID() {
+        return managerID;
+    }
+
+    public void setManagerID(BigInteger managerID) {
+        this.managerID = managerID;
+    }
+
     /**
      * 稽查工作检查项模板ID
      */
@@ -39,13 +50,13 @@ public class PJInforBasicVO extends BaseVO<BigInteger> {
     /**
      * 项目启动时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date pjStartDate;
 
     /**
      * 项目截止时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date pjDeadlineDate;
 
     public String getPjName() {

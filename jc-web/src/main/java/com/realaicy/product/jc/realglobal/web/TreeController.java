@@ -97,7 +97,6 @@ public abstract class TreeController<M extends CommonTreeableDeletableEntity<ID,
     //@PreAuthorize("@realSecurityService.hasPermission(#root.target.getaClass().getSimpleName() + \"-\" + \"r\")")
     //@PreAuthorize("hasPermission('r',)")
     @ResponseBody
-    @Cacheable(key = "#root.target.getRealID()", cacheResolver = "runtimeCacheResolver")
     public String listTree(@RequestParam(value = "id", required = false) final ID id) {
 
         log.info("listTree: id:" + id);

@@ -38,6 +38,12 @@ public class DefaultUserService extends DefaultBaseServiceImpl<User, BigInteger>
         return ((UserRepos) baseRepository).findTop10ByUsernameContaining(username);
     }
 
+    @Override
+    public List<User> findByRoleID(BigInteger roleid) {
+
+        return null;
+    }
+
 
     @Override
     public void saveFromVO(User po, UserVO vo) {
